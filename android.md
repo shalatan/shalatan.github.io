@@ -30,10 +30,13 @@
     - JVM : Java Virtual Machine, Java, Kotlin, Scala are compiled to JVM Bytecode.
     - Libraries
 ### Constructors
-  - 
+  -
+  -
 
 ---
+---
 ## Kotlin
+---
 ### Advantages Over Java
   - `Data Class`
   - `Extension Functions`
@@ -157,6 +160,9 @@ Functions whose sole purpose is to execute a block of code within the context of
   |`run`  |this   |lambda |Object Configuration and computing the result|
   |`apply`|this   |context|Object Configuration|
   |`also` |it     |context|Addtional Effects|
+
+---
+---
 
 # Android
 
