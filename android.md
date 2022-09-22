@@ -22,7 +22,7 @@
   - [Design Patterns](#design-patterns)
   - [Architectures](#architectures)
     - [MVVM](#mvvm)
-  - [## Compose](#-compose)
+  - [Compose](#compose)
     - [Compose Navigation](#compose-navigation)
 - [Misc](#misc)
   - [## Git](#-git)
@@ -276,7 +276,7 @@ Architecture defines boundaries between each layer, defines the responsibilities
   |What to Store?|All data for view|Data to reload view in emergency
 
 ## Compose
----
+
 - StateFlow.collectAsState() - Shows the latest value of the StateFlow, updates the composable when a item is updated
 
   ```kotlin
