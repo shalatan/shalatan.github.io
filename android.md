@@ -131,7 +131,7 @@ fun passItFunction(paramFunction: () -> Unit){
 
 // returns a function
 fun addBothValue(a: Int,b: Int){
-  return a+b
+  return a+b  
 }
 ```
 - `Extension Functions` : When you want to add some method or functionalities to an existing class without inheriting it.
@@ -278,7 +278,6 @@ Architecture defines boundaries between each layer, defines the responsibilities
 ## Compose
 
 - StateFlow.collectAsState() - Shows the latest value of the StateFlow, updates the composable when a item is updated
-
   ```kotlin
   viewmodel.destinations.collectAsState()
   ```
