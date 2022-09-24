@@ -1,4 +1,8 @@
-## Table of Content
+### Guide
+- Click 🔝 Icons To Jump To Table of Contents
+- Topic With ⭐ Icons are questions asked from me in Interviews, Click on it to jump to ***Interview Questions Section***
+  
+## Table of Contents
 - [Language](#language)
   - [Java](#java)
     - [Constructors](#constructors)
@@ -13,6 +17,7 @@
     - [Scope Functions](#scope-functions)
 - [Android](#android)
   - [Android Platform Architecture](#android-platform-architecture)
+  - [Definitons](#definitons)
   - [Android Manifest](#android-manifest)
   - [Anroid App Components](#anroid-app-components)
   - [Intents](#intents)
@@ -22,6 +27,8 @@
   - [Design Patterns](#design-patterns)
   - [Architectures](#architectures)
     - [MVVM](#mvvm)
+  - [Differences](#differences)
+  - [Interview Questions](#interview-questions)
   - [Compose](#compose)
     - [Compose Navigation](#compose-navigation)
 - [Misc](#misc)
@@ -46,6 +53,7 @@
 ## Kotlin
 ---
 ### Advantages Over Java
+[🔝](#table-of-contents)
   - `Data Class`
   - `Extension Functions`
   - `KMM`
@@ -53,6 +61,7 @@
   - `Support for Null Safety`
 
 ### Basics
+[🔝](#table-of-contents)
   - `?:` : *Elvis Operator*, for safe call, unwraps the value from Nullable 
   - `!!` : value will not be null, if null will cause runtime crash
   - `==` : check if values are equal or not
@@ -60,6 +69,7 @@
   - `init` : it is the initialiser block in Kotlin, it's executed once the primary constructor is instantiated.
 
 ### Keywords
+[🔝](#table-of-contents)
   - `var` : variable value can be changed
   - `val` : variable value cannot be changed, sets at runtime
   - `cont val` : makes val compile time constant
@@ -71,20 +81,24 @@
       11..100 -> println("Value More Than 10")
     }
     ```
-  - `lazy` : is as method or rather say lamba exppression, it's set on *val* only, the val *would be created at runtime only when it's required*, should be used for time-consuming intializations, so that code can be faster and efficient.
-  - `lateinit` : used to declare the variable with a gurantee to initialize it before using, otherwise would throw exception, used with *var*. Use `isInitialized` to check if variable has been initialized.
-  - `object` : used to create *Singleton*, ensure that only one instance of that class is created even if 2 threads try to create it, it's a *lazy* instance, hence will be created once the object is accessed, otherwise it won't even be created.
+  - [⭐](#interview-questions)
+    `lazy` : is as method or rather say lamba exppression, it's set on *val* only, the val *would be created at runtime only when it's required*, should be used for time-consuming intializations, so that code can be faster and efficient.
+  - [⭐](#interview-questions)
+    `lateinit` : used to declare the variable with a gurantee to initialize it before using, otherwise would throw exception, used with *var*. Use `isInitialized` to check if variable has been initialized.
+  - [⭐](#interview-questions)
+    `object` : used to create *Singleton*, ensure that only one instance of that class is created even if 2 threads try to create it, it's a *lazy* instance, hence will be created once the object is accessed, otherwise it won't even be created.
   - `companion object` : similar to *static* method in java, to access something by their class name without having the instance of class.
 
 ### Defaults
-
+[🔝](#table-of-contents)
   - Constructor arguments are `val` unless explicitly set to `var`
   - Visibilty modifier of a variable is `public`, other visibility modifiers are - `public internal protected private`
   - Classes are `final`, making them non-inheritable, hence use `open` to make class's inheritance possible.
 
 ### Classes
-
-  - `data classes` : used to store values, data. Generates equals(), hashCode(), copy(), toString() automatically, which can be overriden.
+[🔝](#table-of-contents)
+  - [⭐](#interview-questions)
+    `data classes` : used to store values, data. Generates equals(), hashCode(), copy(), toString() automatically, which can be overriden.
     ```kotlin
     data class User(val name, val string)
     ```
@@ -98,7 +112,7 @@
   - `sealed classes` : restricts the use of inheritance, a sealed class can only be subclassed from inside the same package where the sealed class is declared.
 
 ### Constructors
-
+[🔝](#table-of-contents)
   - `Primary Constructor` : Type of constructor that is initialized in the class header, after the class name with *constructor* keyword. Parameters are optional. If no annotations are provided, it can be skipped and if required initialization code can be placed in seperate initializer block i.e. `init`, because primary constuctor cannot contain any code.
   ```kotlin
   class Sample constructor(val a: Int){
@@ -117,6 +131,8 @@
   }
   ```
 ### Functions
+[🔝](#table-of-contents)
+
 What is `Lambda Expression` (LE) ? : Lambda expression is nothing but simplified representation of function, which can be passed as parameter, stored in a variable, even returned as a value.
 ```kotlin
 val lambda: (Int, Int) -> Unit = { param1: Int, param2: Int -> param1+param2 }
@@ -134,7 +150,8 @@ fun addBothValue(a: Int,b: Int){
   return a+b  
 }
 ```
-- `Extension Functions` : When you want to add some method or functionalities to an existing class without inheriting it.
+- [⭐](#interview-questions)
+  `Extension Functions` : When you want to add some method or functionalities to an existing class without inheriting it.
 ```kotlin
 fun View.hide() {
   this.visibility = View.INVISIBLE
@@ -160,6 +177,7 @@ fun main(){
 ```
 
 ### Scope Functions
+[🔝](#table-of-contents)[⭐](#interview-questions)
 
 Functions whose sole purpose is to execute a block of code within the context of an object. When called with a lambda expression provided, a temporary scope is formed, inside which we can access the object without its name.
   |       |Context|Return |Use Case|
@@ -174,7 +192,9 @@ Functions whose sole purpose is to execute a block of code within the context of
 ---
 
 # Android
+
 ## Android Platform Architecture
+[🔝](#table-of-contents)
 - `Linux Kernel` : Core of android platform architecture. Manages all the hardware drivers, low-level memory.
 - `Hardware Abstraction Layout (HAL)` : Bridges hardware capabilities to the higher-level Java API Framework by defining standard interfaces.
 - `Android Runtime (ART)` : Converts Dalvik Executable Format (DEX) bytecode into machine code that system can understand. Replaced Dalvik Virtual Machine for devices running Android 5.0 (Lollipop).
@@ -182,12 +202,23 @@ Functions whose sole purpose is to execute a block of code within the context of
 - `Java API Framework (Application Framework)` : Collection of Android Libraries written in Java and Kotlin. Ex: Android Jetpack
 - `System Apps` : Pre-installed apps such as email, SMS messaging, calendars, contacts
 
+## Definitons
+[🔝](#table-of-contents)
+- [⭐](#interview-questions)
+  `Context` : It is the context of the current state of application/class. Used to get information regarding the activity and application. USed to access *Resources, Databases, SharedPreferences*
+  - `Application Context` : Tied to lifecycle of an application, can be used to create singleton objects.
+  - `Application Context` : Tied to lifecycle of an activity, should be used when passing the context in activity.
+- [⭐](#interview-questions)
+  `Application Class` : Base class within an Android app that contains all other components such as activities and services. It is instantiated before any other class when the process for your application is created.
+
 ## Android Manifest
+[🔝](#table-of-contents)
 
 Describes essential information about the application such as package name, entry points, components, permissions, and metadata.
 - `Package Name` : Application's univerally unique application ID
 
 ## Anroid App Components
+[🔝](#table-of-contents)[⭐](#interview-questions)
 
 App components are like entry points that allow systems and users to interact with your application. Each component have their own function and lifecycle.
 - `Activities` : Entry point for interacting with users, represents single single with UI
@@ -199,17 +230,20 @@ App components are like entry points that allow systems and users to interact wi
 - `Content Providers` : Manages shared set of data. Through content providers, apps can query or modify other app's data ***if they have required permissions.***
 
 ## Intents
+[🔝](#table-of-contents)
 
 An asynchronous message that activates 3 of the 4 android app components i.e. Activities, Services, Broadcast Receivers.
 - `Explicit Intents` : Requires specified information, which targets an application's package name.
 - `Implicit Intents` : Implicit Intents declares a general action to perform like showing gallery image, opening URL on web browser, you can use implicit intent to request action to the android system. Then android system shows all the appropiate components for that request if found.
 
 ## Fragments
+[🔝](#table-of-contents)
 
 Reusable part of UI that interacts with users by providing UI elements on top of activities. Managed by Fragment Managers.
-- [Fragment Lifecycle]()
+- [⭐](#interview-questions)[Fragment Lifecycle]()
 
 ## Architecture Components
+[🔝](#table-of-contents)
 
 Suite of libraries to solve fundamental Android problems and guide app architecture. It comes under Android Jetpack.
 - `App Architecture` : Google's recommneded app achitecture below allows apps to scale, improve quality, robustness and makes apps easier to test.
@@ -219,7 +253,7 @@ Suite of libraries to solve fundamental Android problems and guide app architect
   - `Data Layer` : Contains the *business logic*. Made of *repositories*, that can contain zero to many data sources.
 
 ## Android Jetpack
-
+[🔝](#table-of-contents)
 - `UI Layer Libraries`
   - `ViewBinding` : Generates a binding class for each XML layout file.
   - `DataBinding` : Generates a binding class for XML layouts that includes a **layout** tag. Linkd View and ViewModel with observer pattern, properties and event callbacks.
@@ -232,6 +266,7 @@ Suite of libraries to solve fundamental Android problems and guide app architect
   - `WorkManager` : Background Processing API, gurantees background work by scheduling works, runs deferrable.
 
 ## Design Patterns
+[🔝](#table-of-contents)
 
 Reusable solutions to solve repeated and common software problems in software engineering.
 
@@ -248,9 +283,11 @@ Reusable solutions to solve repeated and common software problems in software en
 - `Repository Pattern` :
   
 ## Architectures
+[🔝](#table-of-contents)
 
 Architecture defines boundaries between each layer, defines the responsibilities clearly affecting project's complexity, scalability and robustness, and makes it easier to test.
-- `MVVM` : 
+- [⭐](#interview-questions)
+  `MVVM` : 
 - `MVI` :
 - `MVP` :
 - `MVC` :
@@ -274,6 +311,20 @@ Architecture defines boundaries between each layer, defines the responsibilities
   |Config Changes|Survices|Survives + Process Death
   |Data Capacity|Lots of data|Small
   |What to Store?|All data for view|Data to reload view in emergency
+
+## Differences
+- `ListView vs RecyclerView`
+
+## Interview Questions
+- `ListView vs RecyclerView`
+- `Coroutines vs Threads`
+- `LiveData vs Flow`
+- `lazy vs lateinit`
+- `add() vs replace()`
+- `Are object variables thread safe`
+- `Inner working of ViewModel`
+- `Inner working of Extension Functions`
+- `Context and Types of context`
 
 ## Compose
 
