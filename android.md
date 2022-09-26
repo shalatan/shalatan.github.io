@@ -5,14 +5,13 @@
 ## Table of Contents
 - [Language](#language)
   - [Java](#java)
-    - [Constructors](#constructors)
-  - [## Kotlin](#-kotlin)
+  - [Kotlin](#kotlin)
     - [Advantages Over Java](#advantages-over-java)
     - [Basics](#basics)
     - [Keywords](#keywords)
     - [Defaults](#defaults)
     - [Classes](#classes)
-    - [Constructors](#constructors-1)
+    - [Constructors](#constructors)
     - [Functions](#functions)
     - [Scope Functions](#scope-functions)
 - [Android](#android)
@@ -21,7 +20,9 @@
   - [Android Manifest](#android-manifest)
   - [Anroid App Components](#anroid-app-components)
   - [Intents](#intents)
+  - [Activities](#activities)
   - [Fragments](#fragments)
+  - [Launch Modes](#launch-modes)
   - [Architecture Components](#architecture-components)
   - [Android Jetpack](#android-jetpack)
   - [Design Patterns](#design-patterns)
@@ -31,9 +32,6 @@
   - [Interview Questions](#interview-questions)
   - [Compose](#compose)
     - [Compose Navigation](#compose-navigation)
-- [Misc](#misc)
-  - [## Git](#-git)
-  - [## Heroku](#-heroku)
 
 # Language
 
@@ -44,13 +42,12 @@
   - JRE : Java Runtime Environment
     - JVM : Java Virtual Machine, Java, Kotlin, Scala are compiled to JVM Bytecode.
     - Libraries
-### Constructors
-  -
-  -
 
 ---
 ---
+
 ## Kotlin
+
 ---
 ### Advantages Over Java
 [🔝](#table-of-contents)
@@ -222,7 +219,6 @@ Describes essential information about the application such as package name, entr
 
 App components are like entry points that allow systems and users to interact with your application. Each component have their own function and lifecycle.
 - `Activities` : Entry point for interacting with users, represents single single with UI
-  - [Activity Lifecycle](https://developer.android.com/guide/components/activities/activity-lifecycle)
 - `Services` : Entry point for keeping app running in background for all kinds of reason, like music player, youtube video player.
   - `startService()` : Allows other components to run a service in background or stop it, using *startService()* & *stopService()* respectively.
   - `bindService()` : Same as startService but also provides IBInder interface, which allows the client to communicate with the service consistently. Use *unbindService* to cancel the connection
@@ -236,11 +232,52 @@ An asynchronous message that activates 3 of the 4 android app components i.e. Ac
 - `Explicit Intents` : Requires specified information, which targets an application's package name.
 - `Implicit Intents` : Implicit Intents declares a general action to perform like showing gallery image, opening URL on web browser, you can use implicit intent to request action to the android system. Then android system shows all the appropiate components for that request if found.
 
+## Activities
+[🔝](#table-of-contents)
+  - [Activity Lifecycle](https://developer.android.com/guide/components/activities/activity-lifecycle)
+  - Q : When *onDestroy()* gets called directly without *onPause()* and *onStop()* ? 
+    And : When we call ***finish()*** in *onCreate()*
+  - `onSavedInstanceState()` : Used to store data before pausing the activity.
+  - `onRestoreInstanceState()` : Used to recover the saved state of an activity during recreation, through *Bundles*.j
+
 ## Fragments
 [🔝](#table-of-contents)
 
 Reusable part of UI that interacts with users by providing UI elements on top of activities. Managed by Fragment Managers.
 - [⭐](#interview-questions)[Fragment Lifecycle]()
+- [⭐](#interview-questions)
+  `add vs replace` : **replace** removes the existing fragment and adds a new fragment, means when you press back button the fragment that got replaced will be recreated with its *onCreateView()* being invoked, wheres **add** retains the existing fragments and adds a new fragments means existing fragment will be active, wont be in *paused* state.
+
+## Launch Modes
+[🔝](#table-of-contents)
+- `Standard` : Default launch mode, creates new instance every time even if activity instance is already present
+  ```
+  A->B->C->D
+  launch B1
+  A->B->C->D->B(new instance)
+  ```
+- `Single Top` : If instance of same activity exists on top pass the extras data though *onNewIntent(Intent intent), otherwise creates a new instance.
+  ```
+  A->B->C->D
+  launch D
+  A->B->C->D(old instance gets extra data)
+  launch C
+  A->B->C->D->C(new instance of C)
+  ```
+- `Single Task` : Can only have one instance in the system (Singleton)
+  ```
+  A->B->C->D
+  launch C
+  A->B->C(old instance gets extra data) destroyed D
+  ```
+- `Single Instance` :
+  ```
+  A->B->C->D
+  launch E
+  A->B->C->D | E
+  launch F from E
+  E | A->B->C->D->F
+  ```
 
 ## Architecture Components
 [🔝](#table-of-contents)
@@ -343,22 +380,3 @@ Architecture defines boundaries between each layer, defines the responsibilities
     ```kotlin
     val navController = rememberNavController()
     ```
-
-# Misc
-
-## Git
----
-- Git Commands
-  - `git init` : initialize a empty git
-  - `git status` : shows all the changed files
-  - `git add .` : add all the files/changed files
-  - `git commit -m "message"` : commit the changes with message
-
-## Heroku
----
-- Heroku CLI Commands
-  - `heroku login`
-  - `heroku create` : create a new app
-  - `git add .` -> `git commit -m "message"` -> `git push heroku master` : deploy the latest code
-  - `heroku open` : open the app
-  - `heroku logs` --tail : get logs
