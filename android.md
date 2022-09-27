@@ -27,7 +27,8 @@
   - [Android Jetpack](#android-jetpack)
   - [Design Patterns](#design-patterns)
   - [Architectures](#architectures)
-    - [MVVM](#mvvm)
+  - [MVVM](#mvvm)
+  - [Coroutines](#coroutines)
   - [Differences](#differences)
   - [Interview Questions](#interview-questions)
   - [Compose](#compose)
@@ -137,12 +138,10 @@ val sum: (Int, Int) -> Int = {a: Int, b: Int -> a+b}
 ```
 - `Higher Order Functions` : Functions the either takes function/LE as parameter, or returns a function/LE
 ```kotlin
-// takes a function as parameter
 fun passItFunction(paramFunction: () -> Unit){
   paramFunction()
 }
 
-// returns a function
 fun addBothValue(a: Int,b: Int){
   return a+b  
 }
@@ -167,7 +166,7 @@ inline fun printMessage(){
   println("Hehe")
 }
 
-// will become
+/* will become */
 fun main(){
   println("Hehe")
 }
@@ -330,8 +329,8 @@ Architecture defines boundaries between each layer, defines the responsibilities
 - `MVC` :
 - `Clean Architecture` :
 
-
-### MVVM
+## MVVM
+[🔝](#table-of-contents)
 - Model-View-ViewModel
 - ViewModel
   - Object that provides data for UI Components and survive configuration changes.
@@ -349,12 +348,35 @@ Architecture defines boundaries between each layer, defines the responsibilities
   |Data Capacity|Lots of data|Small
   |What to Store?|All data for view|Data to reload view in emergency
 
+## Coroutines
+[🔝](#table-of-contents)
+
+***Coroutines are Kotlin feature that converts async background processes to the sequential code***
+- `suspend` : Keyword to mark a function available to coroutines, *suspends* exceution until the result is ready then it resumes where it left off with the result.
+- `Dispatchers` : Context
+  - `Dispathcers.Main` : Lightweight tasks eg - network calls, database queries, won't block the main thread while suspended.
+  - `Dispathcers.IO` : For heavy IO work, eg - long running database queries.
+  - `Dispathcers.Default` : For CPU intensive tasks.
+  - `Dispathcers.Unconfined` : Runs coroutines unconfined on no specific thread, not recommended to use. 
+- `Scopes` : Lifetime
+  - `globalScope` : Coroutine lifecycle will be associated with the application lifecycle.
+  - `viewModelScope` : Coroutine scopre tied to *viewModel*. Extension function of the *viewModel* class, bound to *Dispatchers.Main* and will automatically be cancelled when viewModel is cleared.
+  - `lifecycleScope` : 
+- *Room* and *Retrofit* make suspending functions *main-safe*, it's safe to call these suspend functions from *Dispathers.Main*, even thought they fetch from network and write to database. Do not use ***Dispatchers.IO***.
+- `Builders` : 
+  - `runBlocking{}` : Runs a new coroutine and *blocks* the current thread until its completion.
+  - `runCatching{}` :
+  - `launch{}` : Launches a new coroutine without blocking the current thread and returns a reference to the coroutine as a *Job*, which can be used to cancel the corutine.
+  - `async{}` : Creates a coroutine and returns its future result as an implmentation of Deferred. The coroutine is cancelled when the resulting deferred is cancelled.
+- `withContext{}` : Calls the specified suspending block with a given coroutine context, suspends until it completes, and returns the result. ***Can be used to switch between dispatchers/contexts of corutine***
+- [⭐](#interview-questions)
+  `Difference between Threads & Coroutines` : Threads are expensive, require context switches which are costly, and number of threads that can be launched is limited by the underlying operating system whereas, Coroutines can be thought of as light-weight threads, means the creating of coroutines doesn't allocate new thread, instead they use predefined thread pools and smart scheduling for the purpose of which task to execute next and which tasks later.
+
 ## Differences
 - `ListView vs RecyclerView`
 
 ## Interview Questions
 - `ListView vs RecyclerView`
-- `Coroutines vs Threads`
 - `LiveData vs Flow`
 - `lazy vs lateinit`
 - `add() vs replace()`
