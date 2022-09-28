@@ -33,6 +33,7 @@
   - [Interview Questions](#interview-questions)
   - [Compose](#compose)
     - [Compose Navigation](#compose-navigation)
+  - [References](#references)
 
 # Language
 
@@ -132,11 +133,14 @@
 [🔝](#table-of-contents)
 
 What is `Lambda Expression` (LE) ? : Lambda expression is nothing but simplified representation of function, which can be passed as parameter, stored in a variable, even returned as a value.
+
 ```kotlin
 val lambda: (Int, Int) -> Unit = { param1: Int, param2: Int -> param1+param2 }
 val sum: (Int, Int) -> Int = {a: Int, b: Int -> a+b}
 ```
+
 - `Higher Order Functions` : Functions the either takes function/LE as parameter, or returns a function/LE
+
 ```kotlin
 fun passItFunction(paramFunction: () -> Unit){
   paramFunction()
@@ -146,17 +150,20 @@ fun addBothValue(a: Int,b: Int){
   return a+b  
 }
 ```
+
 - [⭐](#interview-questions)
   `Extension Functions` : When you want to add some method or functionalities to an existing class without inheriting it.
+
 ```kotlin
 fun View.hide() {
   this.visibility = View.INVISIBLE
 }
-//to call it
 appbar.hide()
 ```
+
 - `Infix Function` :
 - `Inline Function` : When a function is made *inline* function, compiler will treat the function code as direct code in the calling function instead of seperate function.
+  
 ```kotlin
 fun main(){
   printMessage()
@@ -166,7 +173,7 @@ inline fun printMessage(){
   println("Hehe")
 }
 
-/* will become */
+Becomes ->
 fun main(){
   println("Hehe")
 }
@@ -352,13 +359,13 @@ Architecture defines boundaries between each layer, defines the responsibilities
 [🔝](#table-of-contents)
 
 ***Coroutines are Kotlin feature that converts async background processes to the sequential code***
-- `suspend` : Keyword to mark a function available to coroutines, *suspends* exceution until the result is ready then it resumes where it left off with the result.
+- `suspend` : Keyword to mark a function available to coroutines, *suspends* exceution until the result is ready then it resumes where it left off with the result. ***Using suspend doesn’t tell Kotlin to run a function on a background thread.***
 - `Dispatchers` : Context
   - `Dispathcers.Main` : Lightweight tasks eg - network calls, database queries, won't block the main thread while suspended.
   - `Dispathcers.IO` : For heavy IO work, eg - long running database queries.
   - `Dispathcers.Default` : For CPU intensive tasks.
   - `Dispathcers.Unconfined` : Runs coroutines unconfined on no specific thread, not recommended to use. 
-- `Scopes` : Lifetime
+- `CoroutineScopes` : Keeps track of coroutines, even suspended ones, can cancel all of the coroutines started in it.
   - `globalScope` : Coroutine lifecycle will be associated with the application lifecycle.
   - `viewModelScope` : Coroutine scopre tied to *viewModel*. Extension function of the *viewModel* class, bound to *Dispatchers.Main* and will automatically be cancelled when viewModel is cleared.
   - `lifecycleScope` : 
@@ -366,9 +373,23 @@ Architecture defines boundaries between each layer, defines the responsibilities
 - `Builders` : 
   - `runBlocking{}` : Runs a new coroutine and *blocks* the current thread until its completion.
   - `runCatching{}` :
-  - `launch{}` : Launches a new coroutine without blocking the current thread and returns a reference to the coroutine as a *Job*, which can be used to cancel the corutine.
-  - `async{}` : Creates a coroutine and returns its future result as an implmentation of Deferred. The coroutine is cancelled when the resulting deferred is cancelled.
+  - `launch{}` : ***Launch is a bridge from regular functions into corotuines.*** Will start a new coroutine that is *fire and forget* - that means it won't return the result to the caller.
+  Launches a new coroutine without blocking the current thread and returns a reference to the coroutine as a *Job*, which can be used to cancel the corutine.
+  - `async{}` : Will start a new coroutine and it allows us to return a result with a suspended function called `await`. Hence, expects that we will eventually call `await` to get a result(or excecption) so it won't throw exceptions by default.
 - `withContext{}` : Calls the specified suspending block with a given coroutine context, suspends until it completes, and returns the result. ***Can be used to switch between dispatchers/contexts of corutine***
+- `Structured Concurrency` : *A parent coroutine scope having children coroutine scopes*. It gurantees that when a suspend function returns, all of its work is done and also when a coroutine errors, its caller or scope is notified.
+  ```kotlin
+  suspend fun callTwoAPI(){
+    coroutineScope{
+      async { callAPI(1) }
+      async { callAPI(2) }
+    }
+  }
+  ```
+  - `coroutineScope` : coroutineScope builder will suspend itself until all coroutines started inside of it are complete, hence there's no way to return from `callTwoAPI` until all coroutines are completed.
+  ***Cancels whenever any of the children coroutine fails*** meaning if one network request fails, all of the others request would be cancelled immediately.
+  - `supervisorScope` : supervisorScope builder won't cancel children when one them fails.
+  
 - [⭐](#interview-questions)
   `Difference between Threads & Coroutines` : Threads are expensive, require context switches which are costly, and number of threads that can be launched is limited by the underlying operating system whereas, Coroutines can be thought of as light-weight threads, means the creating of coroutines doesn't allocate new thread, instead they use predefined thread pools and smart scheduling for the purpose of which task to execute next and which tasks later.
 
@@ -402,3 +423,8 @@ Architecture defines boundaries between each layer, defines the responsibilities
     ```kotlin
     val navController = rememberNavController()
     ```
+
+## References
+- https://medium.com/androiddevelopers/coroutines-on-android-part-i-getting-the-background-3e0e54d20bb
+- https://medium.com/androiddevelopers/coroutines-on-android-part-ii-getting-started-3bff117176dd
+- https://medium.com/androiddevelopers/coroutines-on-android-part-iii-real-work-2ba8a2ec2f45
