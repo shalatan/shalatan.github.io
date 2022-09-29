@@ -1,6 +1,7 @@
 ### Guide
 - Click 🔝 Icons To Jump To Table of Contents
 - Topic With ⭐ Icons are questions asked from me in Interviews, Click on it to jump to ***Interview Questions Section***
+- Click 💉 before topics for detailed section of it.
   
 ## Table of Contents
 - [Language](#language)
@@ -28,7 +29,12 @@
   - [Design Patterns](#design-patterns)
   - [Architectures](#architectures)
   - [MVVM](#mvvm)
-  - [Coroutines](#coroutines)
+  - [Brief](#brief)
+    - [ViewModel](#viewmodel)
+    - [LiveData](#livedata)
+    - [Flow](#flow)
+    - [Coroutines](#coroutines)
+    - [Dependency Injection](#dependency-injection)
   - [Differences](#differences)
   - [Interview Questions](#interview-questions)
   - [Compose](#compose)
@@ -300,8 +306,10 @@ Suite of libraries to solve fundamental Android problems and guide app architect
 - `UI Layer Libraries`
   - `ViewBinding` : Generates a binding class for each XML layout file.
   - `DataBinding` : Generates a binding class for XML layouts that includes a **layout** tag. Linkd View and ViewModel with observer pattern, properties and event callbacks.
-  - `ViewModel` : It's a state holder to store and manage UI related data surviving configuration changes.
-  - `LiveData` : It's a lifecycle-aware data holder, which can be observed by multiple Observers, used to implement Observer Pattern.
+  - [💉](#viewmodel)
+    `ViewModel` : It's a state holder to store and manage UI related data surviving configuration changes.
+  - [💉](#livedata)
+    `LiveData` : It's a lifecycle-aware data holder, which can be observed by multiple Observers, used to implement Observer Pattern.
   - `Lifecycle` : Jetpack's Lifecycle allows you to build independent components, which observes the lifecycle changes of lifecycle owners like activities or fragments.
 - `Data Layer Libraries`
   - `DataStore` : Used to store lightweight key-value pairs in local storage, works with Coroutines and Flow to store data asynchonously. Can be used to replace SharedPreferences. 
@@ -317,10 +325,12 @@ Reusable solutions to solve repeated and common software problems in software en
   - `Hilt` : Compile time dependency injection tool which works on top of Dagger, reduces the boilerplate code compared to Dagger.
   - `Dagger` : Also compile time dependency injection tool based on *javax.inject* annotation.
   - `Koin` : Popular dependency injection tool for Kotlin projects.
-- 
+<br><br>
 - `Observer Pattern` : It is a behavioral design pattern that allows you to build a subscription mechanism to notify observers automatically of any state changes.
-  - `LiveData` : ***Lifecycle-aware***, ***thread-safe*** and data-holder observer pattern. Bounds to lifecycle, so we don't need to unsubscribe observers manually, ***prevents memory leaks***, but with adoption of coroutines broadly, Kotlin Flows are more preferred now.
-  - `Kotlin Flows` : Asynchronous solution that is cold streams similar to sequences working with Coroutines. They are asynchronous and non-blocking solutions.
+  - [💉](#livedata)
+    `LiveData` : ***Lifecycle-aware, thread-safe and data-holder observer pattern.*** Bounds to lifecycle, so we don't need to unsubscribe observers manually, ***prevents memory leaks***, but with adoption of coroutines broadly, Kotlin Flows are more preferred now.
+  - [💉](#flow)
+    `Kotlin Flows` : Asynchronous solution that is cold streams similar to sequences working with Coroutines. They are asynchronous and non-blocking solutions.
   - `RxKotlin` : Originated from ReactiveX, which is combination of observer pattern, iterator pattern, functional programming.
   
 - `Repository Pattern` :
@@ -355,7 +365,60 @@ Architecture defines boundaries between each layer, defines the responsibilities
   |Data Capacity|Lots of data|Small
   |What to Store?|All data for view|Data to reload view in emergency
 
-## Coroutines
+## Brief
+
+### ViewModel
+[🔝](#table-of-contents)
+
+***ViewModel is class designed to hold and manage  UI-related data in a life-cycle consious way. This allows data to survive configuration changes such a screen rotations.***
+- ViewModel exists from when you first request a ViewModel (usually `onCreate`) untill the activity is finished and destroyed.
+- Extend `AndroidViewModel` if you need context inside viewModel, which will provide Application Context.
+- `ViewModelProviders.of` method creates a new ViewModel instance when it's called first time, when it's called again, which happens whenever `onCreate` is called, it will return the pre-existing ViewModel associated with the specific Activity/Fragment. This preserves the data.
+- Advantages :
+  - Handle Configuration changes
+  - Lifecycle Awareness
+  - Data Sharing
+  - Kotlin Coroutines Support
+- [⭐](#interview-questions) `How ViewModels Work Internally` :
+  
+  Code to get the instance of `viewModel`
+  ```kotlin
+  viewModel = ViewModelProvider(this, ViewModelFactory()).get(SampleViewModel::class.java)
+  ```
+  We get the instance of `ViewModelProvider` by passing instance of the `Activity` and `ViewModelFactory`, then we are using that `ViewModelProvider` instance to get the `SampleViewModel` object.
+  ```kotlin
+  public open classViewModelProvider constructor(
+    private val store: ViewModelStore,
+    private val factory: Factory,
+    private val defaultCreationExtras: CreationExtras = CreationExtras.Empty
+    ) {
+      ..
+  }
+  ```
+  Where `ViewModelStore` looks like
+  ```kotlin
+  public class ViewModelStore {
+    private final HashMap<String, ViewModel> mMap = new HashMap<>();
+    final void put(String key, ViewModel vm) {..}
+    final ViewModel get(String key) {..}
+    ..
+  }
+  ```
+  At the lowest, the object creation of `ViewModel` is handled by `ViewModelStore`, which contains `HashMap<String, ViewModel>` 
+  
+  where, Key Format : `val canonicalName = modelClass.canonocalName`.
+  
+  Hence `ViewModelStore` checks if key for `ViewModel` exists in the HashMap.
+  - If yes, return the already existing object.
+  - If no, create a new `ViewModel`, and store the object in HashMap for future usage.
+  
+### LiveData
+[🔝](#table-of-contents)
+
+### Flow
+[🔝](#table-of-contents)
+
+### Coroutines
 [🔝](#table-of-contents)
 
 ***Coroutines are Kotlin feature that converts async background processes to the sequential code***
@@ -373,10 +436,15 @@ Architecture defines boundaries between each layer, defines the responsibilities
 - `Builders` : 
   - `runBlocking{}` : Runs a new coroutine and *blocks* the current thread until its completion.
   - `runCatching{}` :
-  - `launch{}` : ***Launch is a bridge from regular functions into corotuines.*** Will start a new coroutine that is *fire and forget* - that means it won't return the result to the caller.
+  - `launch{}` : ***Launch is a bridge from regular functions into coroutines.*** Will start a new coroutine that is *fire and forget* - that means it won't return the result to the caller.
   Launches a new coroutine without blocking the current thread and returns a reference to the coroutine as a *Job*, which can be used to cancel the corutine.
   - `async{}` : Will start a new coroutine and it allows us to return a result with a suspended function called `await`. Hence, expects that we will eventually call `await` to get a result(or excecption) so it won't throw exceptions by default.
-- `withContext{}` : Calls the specified suspending block with a given coroutine context, suspends until it completes, and returns the result. ***Can be used to switch between dispatchers/contexts of corutine***
+- `withContext{}` : Calls the specified suspending block with a given coroutine context, suspends until it completes, and returns the result. ***Can be used to switch between dispatchers/contexts of coroutine***
+  ```kotlin
+  withContext(Dispatcher.Main) {
+
+  }
+  ```
 - `Structured Concurrency` : *A parent coroutine scope having children coroutine scopes*. It gurantees that when a suspend function returns, all of its work is done and also when a coroutine errors, its caller or scope is notified.
   ```kotlin
   suspend fun callTwoAPI(){
@@ -392,6 +460,8 @@ Architecture defines boundaries between each layer, defines the responsibilities
   
 - [⭐](#interview-questions)
   `Difference between Threads & Coroutines` : Threads are expensive, require context switches which are costly, and number of threads that can be launched is limited by the underlying operating system whereas, Coroutines can be thought of as light-weight threads, means the creating of coroutines doesn't allocate new thread, instead they use predefined thread pools and smart scheduling for the purpose of which task to execute next and which tasks later.
+
+### Dependency Injection
 
 ## Differences
 - `ListView vs RecyclerView`
@@ -425,6 +495,8 @@ Architecture defines boundaries between each layer, defines the responsibilities
     ```
 
 ## References
+- https://medium.com/androiddevelopers/viewmodels-a-simple-example-ed5ac416317e
+- https://blog.mindorks.com/android-viewmodels-under-the-hood
 - https://medium.com/androiddevelopers/coroutines-on-android-part-i-getting-the-background-3e0e54d20bb
 - https://medium.com/androiddevelopers/coroutines-on-android-part-ii-getting-started-3bff117176dd
 - https://medium.com/androiddevelopers/coroutines-on-android-part-iii-real-work-2ba8a2ec2f45
