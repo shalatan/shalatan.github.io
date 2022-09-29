@@ -28,7 +28,6 @@
   - [Android Jetpack](#android-jetpack)
   - [Design Patterns](#design-patterns)
   - [Architectures](#architectures)
-  - [MVVM](#mvvm)
   - [Brief](#brief)
     - [ViewModel](#viewmodel)
     - [LiveData](#livedata)
@@ -346,25 +345,6 @@ Architecture defines boundaries between each layer, defines the responsibilities
 - `MVC` :
 - `Clean Architecture` :
 
-## MVVM
-[🔝](#table-of-contents)
-- Model-View-ViewModel
-- ViewModel
-  - Object that provides data for UI Components and survive configuration changes.
-  - Is Lifecycle Aware, knows the current callback state of attached view
-  - *ViewModel Provider* provides the new instance of ViewModel if old instance doesn't exists, otherwise returns the previous instance.
-  - Outlives the lifecycle of associated view.
-- Advantages
-  - Introduced to handle memory leaks, and lifecycle changes.
-  - Surives the orientation changes
-  - Adding savedStateHandled can add support when the View is killed by OS.
-
-  ||ViewModel|onSaveInstanceState|
-  |---|---|---|
-  |Config Changes|Survices|Survives + Process Death
-  |Data Capacity|Lots of data|Small
-  |What to Store?|All data for view|Data to reload view in emergency
-
 ## Brief
 
 ### ViewModel
@@ -495,8 +475,9 @@ Architecture defines boundaries between each layer, defines the responsibilities
     ```
 
 ## References
-- https://medium.com/androiddevelopers/viewmodels-a-simple-example-ed5ac416317e
-- https://blog.mindorks.com/android-viewmodels-under-the-hood
-- https://medium.com/androiddevelopers/coroutines-on-android-part-i-getting-the-background-3e0e54d20bb
-- https://medium.com/androiddevelopers/coroutines-on-android-part-ii-getting-started-3bff117176dd
-- https://medium.com/androiddevelopers/coroutines-on-android-part-iii-real-work-2ba8a2ec2f45
+- [ViewModel](https://medium.com/androiddevelopers/viewmodels-a-simple-example-ed5ac416317e)
+- [ViewModel](https://blog.mindorks.com/android-viewmodels-under-the-hood)
+- [ViewModel](https://www.youtube.com/watch?v=LNWpj2k9RUk&t=2988s&ab_channel=RajeshHadiya)
+- [Coroutine 1](https://medium.com/androiddevelopers/coroutines-on-android-part-i-getting-the-background-3e0e54d20bb)
+- [Coroutine 2](https://medium.com/androiddevelopers/coroutines-on-android-part-ii-getting-started-3bff117176dd)
+- [Coroutine 3](https://medium.com/androiddevelopers/coroutines-on-android-part-iii-real-work-2ba8a2ec2f45)
