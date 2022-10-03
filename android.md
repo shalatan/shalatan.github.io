@@ -34,6 +34,8 @@
     - [Flow](#flow)
     - [Coroutines](#coroutines)
     - [Dependency Injection](#dependency-injection)
+      - [Hilt](#hilt)
+    - [Notification](#notification)
   - [Differences](#differences)
   - [Interview Questions](#interview-questions)
   - [Compose](#compose)
@@ -442,6 +444,53 @@ Architecture defines boundaries between each layer, defines the responsibilities
   `Difference between Threads & Coroutines` : Threads are expensive, require context switches which are costly, and number of threads that can be launched is limited by the underlying operating system whereas, Coroutines can be thought of as light-weight threads, means the creating of coroutines doesn't allocate new thread, instead they use predefined thread pools and smart scheduling for the purpose of which task to execute next and which tasks later.
 
 ### Dependency Injection
+- `Dependency` : Object which is to be used by a dependent i.e. class
+- `Injection` : Technique which passes the dependency to dependent i.e. object to the class which wants to use it.
+- `Dependency Injection` : Technique where dependencies are provided to a class instead of creating them itself.
+- DI helps in laying the groundwork for good app architecture, greater code reuability, and ease of testing.
+  
+#### Hilt
+
+DI framework build on top of *Dagger*, brings benefits like **compile time correctness, runtime performance, scalability** that Dagger provides, but also Hilt is **integrated with Jetpack libraries and removes most of the boilerplate code** to let us focus on just the important parts.
+- Hilt Automatically generates:
+  - *Components for integrating Android framework classes*, in Dagger we have to do it manually.
+  - *Scope Annotations* for the components.
+  - *Predefined bindings and qualifiers*.
+- Annotations
+  - `@HiltAndroidApp` : Kicks off Hilt code generation. For Application class.
+  - `@AndroidEntryPoint` : Add DI container to Android class. For Classes
+  - `@Inject` :
+    - Construtor Injection : Tells which constructor to use to provide instances and which dependencies it has
+      ```kotlin
+      @AndroidEntryPoint
+      class SomeAdapter @Inject constructor(private val service: SomeService)
+      {..}
+      ```
+    - Field Injection : Populates fields in @AndroidEntryPoint classes.
+      ```kotlin
+      @AndroidEntryPoint
+      class MainActivity: AppCompatActivity(){
+        @Inject lateint var adapter: SomeAdapter
+        ...
+      }
+      ```
+  - `@HiltViewModel` : Tell hilt how to provide instances of ViewModel.
+  - `@Module` : Class in which you can add bindings for types that cannot be constructor injected.
+  - `@InstallIn` : Indicates in which Hilt generated DI container module bindings must be available
+  - `@Provides` : Adds binding for a type that cannot be constructor injected. Like ROOM instance, Retrofit Instance.
+      ```kotlin
+      @InstallIn(SingletonComponent::class)
+      @Module
+      class SomeModule {
+        @Provides
+        fun providesRetrofitInstance(..): RetrofitInstance {..}
+      }
+      ```
+  - `@Binds` : Shorthand for binding an interface type
+  - `@Singleton/@ActivityScoped` : Scoping object to container. The same instance of a type will be provided by container when using that type as a dependency.
+### Notification
+- `NotificationManager` : A system service which helps in displaying the content as notification. It is responsible for sending a notification, updating its content, and cancelling the notification.
+- `NotificationChannel` : Way to group notifications, making it easy for developers and users to control all of the notifications in the channel.
 
 ## Differences
 - `ListView vs RecyclerView`
