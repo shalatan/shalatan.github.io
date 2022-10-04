@@ -35,6 +35,7 @@
     - [Coroutines](#coroutines)
     - [Dependency Injection](#dependency-injection)
       - [Hilt](#hilt)
+    - [RecyclerView](#recyclerview)
     - [Notification](#notification)
   - [Differences](#differences)
   - [Interview Questions](#interview-questions)
@@ -488,6 +489,28 @@ DI framework build on top of *Dagger*, brings benefits like **compile time corre
       ```
   - `@Binds` : Shorthand for binding an interface type
   - `@Singleton/@ActivityScoped` : Scoping object to container. The same instance of a type will be provided by container when using that type as a dependency.
+
+### RecyclerView
+- A `ViewGroup` to efficiently display large sets of data. You supply data, and define how each item looks, and RecyclerView library dynamically creates the elements when they're needed.
+- `Components of RecyclerView`
+  - `Adapter` : Takes data and sets the data for views
+    - `onCreateViewHolder()` : To create a new ViewHolder, not filled with data.
+    - `onBindViewHolder()` : To associate a ViewHolder with data.
+    - `getItemCount()` : To get the size of the data set.
+  - `ViewHolder` : Wrapper around a `View` that contains layout of and individual item.
+  - `LayoutManager` : Manages how we need to display the items on screen.
+- [⭐](#interview-questions)
+  `Difference between ListView & RecyclerView?`
+  - `ViewHolderPattern` : In ListView it was a recommended pattern but not compulsion like in RecylerView.
+  - `LayoutManager` : ListView only supported vertical ListView, not even horizontal ListViews. While recyclerView has
+    - LinearLayoutManager : Both Vertical and Horizontal lists.
+    - GridLayoutManager : Displaying items in grid like gallery.
+    - StaggeredLayoutManager : Like Pinterest.
+  - `Performance` : As name implies RecyclerView ***recycles*** the individual elements. When an item scrolls off the screen, it doesn't destroy its view. Instead, it reuses the view for new items that have scrolled onscreen. ***This resue vastly improves performance, app's responsiveness and reduces power consumption.***
+  - `Animations & Decorations` : ListView lacks in support of good animations and decorations, but `ItemAnimator` and `ItemDecorator` classes of RecyclerView provides developers huge control over these things.
+- `Internal Working Of RecyclerView`
+  - RecyclerView loads view just ahead and behind the visible entries. So, the **Scrapped View** (View which was once visible and now not visible) gets stored in a collection of scrapped views. Now as we keep scrolling, the view from that collection is used. The view which we loaded from the scrapped view is called **Dirty view**. Now. the dirty view gets *recycled* and is relocated as the new item in queue which has to be displayed on the screen.
+
 ### Notification
 - `NotificationManager` : A system service which helps in displaying the content as notification. It is responsible for sending a notification, updating its content, and cancelling the notification.
 - `NotificationChannel` : Way to group notifications, making it easy for developers and users to control all of the notifications in the channel.
