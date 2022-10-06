@@ -59,10 +59,8 @@
 
 ## Kotlin
 
----
 ### Advantages Over Java
 [🔝](#table-of-contents)
-
   - `Data Class`
   - `Extension Functions`
   - `KMM`
@@ -71,7 +69,6 @@
 
 ### Basics
 [🔝](#table-of-contents)
-
   - `?:` : *Elvis Operator*, for safe call, unwraps the value from Nullable 
   - `!!` : value will not be null, if null will cause runtime crash
   - `==` : check if values are equal or not
@@ -80,70 +77,67 @@
 
 ### Keywords
 [🔝](#table-of-contents)
-
-- `var` : variable value can be changed
-- `val` : variable value cannot be changed, sets at runtime
-- `cont val` : makes val compile time constant
-- `open` : make the class open for inheritance by other classes
-- `when` : substitute for the *switch case* of java
-  ```kotlin
-  when(a){
-    1..10 -> println("Value Less Than 10")
-    11..100 -> println("Value More Than 10")
-  }
-  ```
-- [⭐](#interview-questions)
-  `lazy` : is as method or rather say lamba exppression, it's set on *val* only, the val *would be created at runtime only when it's required*, should be used for time-consuming intializations, so that code can be faster and efficient.
-- [⭐](#interview-questions)
-  `lateinit` : used to declare the variable with a gurantee to initialize it before using, otherwise would throw exception, used with *var*. Use `isInitialized` to check if variable has been initialized.
-- [⭐](#interview-questions)
-  `object` : used to create *Singleton*, ensure that only one instance of that class is created even if 2 threads try to create it, it's a *lazy* instance, hence will be created once the object is accessed, otherwise it won't even be created.
-- `companion object` : similar to *static* method in java, to access something by their class name without having the instance of class.
+  - `var` : variable value can be changed
+  - `val` : variable value cannot be changed, sets at runtime
+  - `cont val` : makes val compile time constant
+  - `open` : make the class open for inheritance by other classes
+  - `when` : substitute for the *switch case* of java
+    ```kotlin
+    when(a){
+      1..10 -> println("Value Less Than 10")
+      11..100 -> println("Value More Than 10")
+    }
+    ```
+  - [⭐](#interview-questions)
+    `lazy` : is as method or rather say lamba exppression, it's set on *val* only, the val *would be created at runtime only when it's required*, should be used for time-consuming intializations, so that code can be faster and efficient.
+  - [⭐](#interview-questions)
+    `lateinit` : used to declare the variable with a gurantee to initialize it before using, otherwise would throw exception, used with *var*. Use `isInitialized` to check if variable has been initialized.
+  - [⭐](#interview-questions)
+    `object` : used to create *Singleton*, ensure that only one instance of that class is created even if 2 threads try to create it, it's a *lazy* instance, hence will be created once the object is accessed, otherwise it won't even be created.
+  - `companion object` : similar to *static* method in java, to access  something by their class name without having the instance of class.
 
 ### Defaults
-
 [🔝](#table-of-contents)
-- Constructor arguments are `val` unless explicitly set to `var`
-- Visibilty modifier of a variable is `public`, other visibility modifiers are - `public internal protected private`
-- Classes are `final`, making them non-inheritable, hence use `open` to make class's inheritance possible.
+  - Constructor arguments are `val` unless explicitly set to `var`
+  - Visibilty modifier of a variable is `public`, other visibility    modifiers are - `public internal protected private`
+  - Classes are `final`, making them non-inheritable, hence use `open` to make class's inheritance possible.
 
 ### Classes
 [🔝](#table-of-contents)
-
-- [⭐](#interview-questions)
-  `data classes` : used to store values, data. Generates equals(), hashCode(), copy(), toString() automatically, which can be overriden.
-  ```kotlin
-  data class User(val name, val string)
-  ```
-- `enum classes` : used to model types that represent a finite set of distinct values
-  ```kotlin
-  enum class State {
-    IDLE, RUNNING, FINISHED
-    }
-  val state = State.RUNNING
-  ```
-- `sealed classes` : restricts the use of inheritance, a sealed class can only be subclassed from inside the same package where the sealed class is declared.
+  - [⭐](#interview-questions)
+    `data classes` : used to store values, data. Generates equals(), hashCode(), copy(), toString() automatically, which can be overriden.
+    ```kotlin
+    data class User(val name, val string)
+    ```
+  - `enum classes` : used to model types that represent a finite set of distinct values
+    ```kotlin
+    enum class State {
+      IDLE, RUNNING, FINISHED
+      }
+    val state = State.RUNNING
+    ```
+  - `sealed classes` : restricts the use of inheritance, a sealed class can only be subclassed from inside the same package where the sealed class is declared.
 
 ### Constructors
 [🔝](#table-of-contents)
 
-- `Primary Constructor` : Type of constructor that is initialized in the class header, after the class name with *constructor* keyword. Parameters are optional. If no annotations are provided, it can be skipped and if required initialization code can be placed in seperate initializer block i.e. `init`, because primary constuctor cannot contain any code.
-```kotlin
-class Sample constructor(val a: Int){
+  - `Primary Constructor` : Type of constructor that is initialized in the class header, after the class name with *constructor* keyword. Parameters are optional. If no annotations are provided, it can be skipped and if required initialization code can be placed in seperate initializer block i.e. `init`, because primary constuctor cannot contain any code.
+  ```kotlin
+  class Sample constructor(val a: Int){
 
-  init {
+    init {
 
+    }
   }
-}
-```
-- `Secondary Constructor` : It allows for the initialization of variables as well as addition of logic to the class.
-```kotlin
-class Sample{
-  constructor(a: Int){
-    println(a)
+  ```
+  - `Secondary Constructor` : It allows for the initialization of variables as well as addition of logic to the class.
+  ```kotlin
+  class Sample{
+    constructor(a: Int){
+      println(a)
+    }
   }
-}
-```
+  ```
 ### Functions
 [🔝](#table-of-contents)
 
