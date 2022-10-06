@@ -8,29 +8,29 @@
   - [Java](#java)
   - [Kotlin](#kotlin)
     - [Advantages Over Java](#advantages-over-java)
-  - [### Basics](#-basics)
-  - [### Keywords](#-keywords)
-  - [### Defaults](#-defaults)
-  - [### Classes](#-classes)
-  - [### Constructors](#-constructors)
-  - [### Functions](#-functions)
-  - [### Scope Functions](#-scope-functions)
+    - [Basics](#basics)
+    - [Keywords](#keywords)
+    - [Defaults](#defaults)
+    - [Classes](#classes)
+    - [Constructors](#constructors)
+    - [Functions](#functions)
+    - [Scope Functions](#scope-functions)
 - [Android](#android)
-  - [## Android Platform Architecture](#-android-platform-architecture)
-  - [## Definitons](#-definitons)
-  - [## Anroid App Components](#-anroid-app-components)
-  - [## Intents](#-intents)
-  - [## Activities](#-activities)
-  - [## Fragments](#-fragments)
-  - [## Launch Modes](#-launch-modes)
-  - [## Architecture Components](#-architecture-components)
-  - [## Android Jetpack](#-android-jetpack)
-  - [## Design Patterns](#-design-patterns)
-  - [## Architectures](#-architectures)
+  - [Android Platform Architecture](#android-platform-architecture)
+  - [Definitons](#definitons)
+  - [Anroid App Components](#anroid-app-components)
+  - [Intents](#intents)
+  - [Activities](#activities)
+  - [Fragments](#fragments)
+  - [Launch Modes](#launch-modes)
+  - [Architecture Components](#architecture-components)
+  - [Android Jetpack](#android-jetpack)
+  - [Design Patterns](#design-patterns)
+  - [Architectures](#architectures)
     - [MVC](#mvc)
     - [MVP](#mvp)
     - [MVVM](#mvvm)
-  - [## Brief](#-brief)
+  - [Brief](#brief)
     - [ViewModel](#viewmodel)
     - [LiveData](#livedata)
     - [Flow](#flow)
@@ -56,6 +56,7 @@
     - Libraries
 ---
 <br><br>
+
 ## Kotlin
 
 ---
@@ -69,7 +70,6 @@
   - `Support for Null Safety`
 
 ### Basics
----
 [🔝](#table-of-contents)
 
   - `?:` : *Elvis Operator*, for safe call, unwraps the value from Nullable 
@@ -79,7 +79,6 @@
   - `init` : it is the initialiser block in Kotlin, it's executed once the primary constructor is instantiated.
 
 ### Keywords
----
 [🔝](#table-of-contents)
 
 - `var` : variable value can be changed
@@ -102,15 +101,15 @@
 - `companion object` : similar to *static* method in java, to access something by their class name without having the instance of class.
 
 ### Defaults
----
+
 [🔝](#table-of-contents)
 - Constructor arguments are `val` unless explicitly set to `var`
 - Visibilty modifier of a variable is `public`, other visibility modifiers are - `public internal protected private`
 - Classes are `final`, making them non-inheritable, hence use `open` to make class's inheritance possible.
 
 ### Classes
----
 [🔝](#table-of-contents)
+
 - [⭐](#interview-questions)
   `data classes` : used to store values, data. Generates equals(), hashCode(), copy(), toString() automatically, which can be overriden.
   ```kotlin
@@ -126,7 +125,6 @@
 - `sealed classes` : restricts the use of inheritance, a sealed class can only be subclassed from inside the same package where the sealed class is declared.
 
 ### Constructors
----
 [🔝](#table-of-contents)
 
 - `Primary Constructor` : Type of constructor that is initialized in the class header, after the class name with *constructor* keyword. Parameters are optional. If no annotations are provided, it can be skipped and if required initialization code can be placed in seperate initializer block i.e. `init`, because primary constuctor cannot contain any code.
@@ -147,7 +145,6 @@ class Sample{
 }
 ```
 ### Functions
----
 [🔝](#table-of-contents)
 
 What is `Lambda Expression` (LE) ? : Lambda expression is nothing but simplified representation of function, which can be passed as parameter, stored in a variable, even returned as a value.
@@ -197,7 +194,6 @@ fun main(){
 ```
 
 ### Scope Functions
----
 [🔝](#table-of-contents)[⭐](#interview-questions)
 
 Functions whose sole purpose is to execute a block of code within the context of an object. When called with a lambda expression provided, a temporary scope is formed, inside which we can access the object without its name.
@@ -211,11 +207,12 @@ Functions whose sole purpose is to execute a block of code within the context of
 
 ---
 <br><br>
+
 # Android
 
 ## Android Platform Architecture
----
 [🔝](#table-of-contents)
+
 - `Linux Kernel` : Core of android platform architecture. Manages all the hardware drivers, low-level memory.
 - `Hardware Abstraction Layout (HAL)` : Bridges hardware capabilities to the higher-level Java API Framework by defining standard interfaces.
 - `Android Runtime (ART)` : Converts Dalvik Executable Format (DEX) bytecode into machine code that system can understand. Replaced Dalvik Virtual Machine for devices running Android 5.0 (Lollipop).
@@ -224,8 +221,8 @@ Functions whose sole purpose is to execute a block of code within the context of
 - `System Apps` : Pre-installed apps such as email, SMS messaging, calendars, contacts
 
 ## Definitons
----
 [🔝](#table-of-contents)
+
 - [⭐](#interview-questions)
   `Context` : It is the context of the current state of application/class. Used to get information regarding the activity and application. Used to access *Resources, Databases, SharedPreferences*
   - `Application Context` : Tied to lifecycle of an application, can be used to create singleton objects.
@@ -236,7 +233,6 @@ Functions whose sole purpose is to execute a block of code within the context of
   - `Package Name` : Application's univerally unique application ID
 
 ## Anroid App Components
----
 [🔝](#table-of-contents)[⭐](#interview-questions)
 
 App components are like entry points that allow systems and users to interact with your application. Each component have their own function and lifecycle.
@@ -248,7 +244,6 @@ App components are like entry points that allow systems and users to interact wi
 - `Content Providers` : Manages shared set of data. Through content providers, apps can query or modify other app's data ***if they have required permissions.***
 
 ## Intents
----
 [🔝](#table-of-contents)
 
 An asynchronous message that activates 3 of the 4 android app components i.e. Activities, Services, Broadcast Receivers.
@@ -256,7 +251,6 @@ An asynchronous message that activates 3 of the 4 android app components i.e. Ac
 - `Implicit Intents` : Implicit Intents declares a general action to perform like showing gallery image, opening URL on web browser, you can use implicit intent to request action to the android system. Then android system shows all the appropiate components for that request if found.
 
 ## Activities
----
 [🔝](#table-of-contents)
   - [Activity Lifecycle](https://developer.android.com/guide/components/activities/activity-lifecycle)
   - Q : When *onDestroy()* gets called directly without *onPause()* and *onStop()* ? 
@@ -265,7 +259,6 @@ An asynchronous message that activates 3 of the 4 android app components i.e. Ac
   - `onRestoreInstanceState()` : Used to recover the saved state of an activity during recreation, through *Bundles*.j
 
 ## Fragments
----
 [🔝](#table-of-contents)
 
 Reusable part of UI that interacts with users by providing UI elements on top of activities. Managed by Fragment Managers.
@@ -274,8 +267,8 @@ Reusable part of UI that interacts with users by providing UI elements on top of
   `add vs replace` : **replace** removes the existing fragment and adds a new fragment, means when you press back button the fragment that got replaced will be recreated with its *onCreateView()* being invoked, wheres **add** retains the existing fragments and adds a new fragments means existing fragment will be active, wont be in *paused* state.
 
 ## Launch Modes
----
 [🔝](#table-of-contents)
+
 - `Standard` : Default launch mode, creates new instance every time even if activity instance is already present
   ```
   A->B->C->D
@@ -306,7 +299,6 @@ Reusable part of UI that interacts with users by providing UI elements on top of
   ```
 
 ## Architecture Components
----
 [🔝](#table-of-contents)
 
 Suite of libraries to solve fundamental Android problems and guide app architecture. It comes under Android Jetpack.
@@ -318,8 +310,8 @@ Suite of libraries to solve fundamental Android problems and guide app architect
   - `Data Layer` : Contains the *business logic*. Made of *repositories*, that can contain zero to many data sources.
 
 ## Android Jetpack
----
 [🔝](#table-of-contents)
+
 - `UI Layer Libraries`
   - `ViewBinding` : Generates a binding class for each XML layout file.
   - `DataBinding` : Generates a binding class for XML layouts that includes a **layout** tag. Linkd View and ViewModel with observer pattern, properties and event callbacks.
@@ -334,7 +326,6 @@ Suite of libraries to solve fundamental Android problems and guide app architect
   - `WorkManager` : Background Processing API, gurantees background work by scheduling works, runs deferrable.
 
 ## Design Patterns
----
 [🔝](#table-of-contents)
 
 Reusable solutions to solve repeated and common software problems in software engineering.
@@ -353,7 +344,6 @@ Reusable solutions to solve repeated and common software problems in software en
 - `Repository Pattern` :
   
 ## Architectures
----
 [🔝](#table-of-contents)
 
 Architecture defines boundaries between each layer, defines the responsibilities clearly affecting project's complexity, scalability and robustness, and makes it easier to test.
@@ -391,7 +381,7 @@ Consists of View, ViewModel, Model
 - `Clean Architecture` :
 
 ## Brief
----
+
 ### ViewModel
 [🔝](#table-of-contents)
 
