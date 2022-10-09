@@ -20,8 +20,6 @@
   - [Definitons](#definitons)
   - [Anroid App Components](#anroid-app-components)
   - [Intents](#intents)
-  - [Activities](#activities)
-  - [Fragments](#fragments)
   - [Launch Modes](#launch-modes)
   - [Architecture Components](#architecture-components)
   - [Android Jetpack](#android-jetpack)
@@ -30,7 +28,12 @@
     - [MVC](#mvc)
     - [MVP](#mvp)
     - [MVVM](#mvvm)
+    - [MVI](#mvi)
+    - [Clean Architecture](#clean-architecture)
   - [Brief](#brief)
+    - [Services](#services)
+    - [Activities](#activities)
+    - [Fragments](#fragments)
     - [ViewModel](#viewmodel)
     - [LiveData](#livedata)
     - [Flow](#flow)
@@ -38,6 +41,7 @@
     - [Dependency Injection](#dependency-injection)
       - [Hilt](#hilt)
     - [RecyclerView](#recyclerview)
+    - [WorkManager](#workmanager)
     - [Notification](#notification)
   - [Differences](#differences)
   - [Interview Questions](#interview-questions)
@@ -61,6 +65,7 @@
 
 ### Advantages Over Java
 [🔝](#table-of-contents)
+
   - `Data Class`
   - `Extension Functions`
   - `KMM`
@@ -69,6 +74,7 @@
 
 ### Basics
 [🔝](#table-of-contents)
+
   - `?:` : *Elvis Operator*, for safe call, unwraps the value from Nullable 
   - `!!` : value will not be null, if null will cause runtime crash
   - `==` : check if values are equal or not
@@ -77,6 +83,7 @@
 
 ### Keywords
 [🔝](#table-of-contents)
+
   - `var` : variable value can be changed
   - `val` : variable value cannot be changed, sets at runtime
   - `cont val` : makes val compile time constant
@@ -94,16 +101,21 @@
     `lateinit` : used to declare the variable with a gurantee to initialize it before using, otherwise would throw exception, used with *var*. Use `isInitialized` to check if variable has been initialized.
   - [⭐](#interview-questions)
     `object` : used to create *Singleton*, ensure that only one instance of that class is created even if 2 threads try to create it, it's a *lazy* instance, hence will be created once the object is accessed, otherwise it won't even be created.
+  - [⭐](#interview-questions)
+    Q: Are `Object` declarations thread safe, even if two threads tries to create it at same time?
+    A: Yes, **object** is thread safe by construction. As it's just final class with static instance initializations, when decompiled. [ref](https://stackoverflow.com/a/30190567)
   - `companion object` : similar to *static* method in java, to access  something by their class name without having the instance of class.
 
 ### Defaults
 [🔝](#table-of-contents)
+
   - Constructor arguments are `val` unless explicitly set to `var`
   - Visibilty modifier of a variable is `public`, other visibility    modifiers are - `public internal protected private`
   - Classes are `final`, making them non-inheritable, hence use `open` to make class's inheritance possible.
 
 ### Classes
 [🔝](#table-of-contents)
+
   - [⭐](#interview-questions)
     `data classes` : used to store values, data. Generates equals(), hashCode(), copy(), toString() automatically, which can be overriden.
     ```kotlin
@@ -160,7 +172,7 @@ fun addBothValue(a: Int,b: Int){
 }
 ```
 - [⭐](#interview-questions)
-  `Extension Functions` : When you want to add some method or functionalities to an existing class without inheriting it.
+  `Extension Functions` : When you pick up a receiver class, and dynamically inject a member function into the class which acts pretty much same as regulary defined member functions of that class.
 
 ```kotlin
 fun View.hide() {
@@ -231,7 +243,7 @@ Functions whose sole purpose is to execute a block of code within the context of
 
 App components are like entry points that allow systems and users to interact with your application. Each component have their own function and lifecycle.
 - `Activities` : Entry point for interacting with users, represents single screen with UI
-- `Services` : Entry point for keeping app running in background for all kinds of reason, like music player, youtube video player.
+- [💉](#services)`Services` : Entry point for keeping app running in background for all kinds of reason, like music player, youtube video player.
   - `startService()` : Allows other components to run a service in background or stop it, using *startService()* & *stopService()* respectively.
   - `bindService()` : Same as startService but also provides IBInder interface, which allows the client to communicate with the service consistently. Use *unbindService* to cancel the connection
 - `Broadcast Receivers` : Registerable listener that listens to broadcast messages from Android system or other applications. Where Broadcasts are used to send messages across apps, outside of the normal user flow, like device starts charging. No lifecycle like Services and Activities.
@@ -243,22 +255,6 @@ App components are like entry points that allow systems and users to interact wi
 An asynchronous message that activates 3 of the 4 android app components i.e. Activities, Services, Broadcast Receivers.
 - `Explicit Intents` : Requires specified information, which targets an application's package name.
 - `Implicit Intents` : Implicit Intents declares a general action to perform like showing gallery image, opening URL on web browser, you can use implicit intent to request action to the android system. Then android system shows all the appropiate components for that request if found.
-
-## Activities
-[🔝](#table-of-contents)
-  - [Activity Lifecycle](https://developer.android.com/guide/components/activities/activity-lifecycle)
-  - Q : When *onDestroy()* gets called directly without *onPause()* and *onStop()* ? 
-    And : When we call ***finish()*** in *onCreate()*
-  - `onSavedInstanceState()` : Used to store data before pausing the activity.
-  - `onRestoreInstanceState()` : Used to recover the saved state of an activity during recreation, through *Bundles*.j
-
-## Fragments
-[🔝](#table-of-contents)
-
-Reusable part of UI that interacts with users by providing UI elements on top of activities. Managed by Fragment Managers.
-- [⭐](#interview-questions)[Fragment Lifecycle]()
-- [⭐](#interview-questions)
-  `add vs replace` : **replace** removes the existing fragment and adds a new fragment, means when you press back button the fragment that got replaced will be recreated with its *onCreateView()* being invoked, wheres **add** retains the existing fragments and adds a new fragments means existing fragment will be active, wont be in *paused* state.
 
 ## Launch Modes
 [🔝](#table-of-contents)
@@ -317,7 +313,7 @@ Suite of libraries to solve fundamental Android problems and guide app architect
 - `Data Layer Libraries`
   - `DataStore` : Used to store lightweight key-value pairs in local storage, works with Coroutines and Flow to store data asynchonously. Can be used to replace SharedPreferences. 
   - `Room` : Abstraction layer over SQLite Databases simplyfying access of database.
-  - `WorkManager` : Background Processing API, gurantees background work by scheduling works, runs deferrable.
+  - [💉](#workmanager)`WorkManager` : Background Processing API, gurantees background work by scheduling works, runs deferrable.
 
 ## Design Patterns
 [🔝](#table-of-contents)
@@ -371,10 +367,42 @@ Consists of View, ViewModel, Model
 - [💉](#viewmodel)
   `ViewModel` : Independent component that does not have any dependencies on **View**, holds buisness logic or UI states from the **Model** to propogates them into UI elements. **ViewModel** notifies data changes to **View** as domain data or UI states.
 - `Model` : Encapsulates the app's domain/data model, which typically includes buiness logic, complex computational works.
-- `MVI` : MVI (Model-View-Intent) is also a popular architecture in modern Android Development since Jetpack Compose has brought declarative programming to android.
-- `Clean Architecture` :
+
+### MVI
+
+MVI (Model-View-Intent) is also a popular architecture in modern Android Development since Jetpack Compose has brought declarative programming to android.
+
+### Clean Architecture
 
 ## Brief
+
+### Services
+[🔝](#table-of-contents)
+***A service is an application component that can perform long-running operations in the background. Moreover, main android components can bind to service to interact with it and also can perfrom InterProcess Communication (IPC)***
+- For ex: Service to handle netwrok transactions, play music, perform I/O, or interact with content provider, all from backrgound.
+- **Caution :** A service runs in the main thread, it neither creates its own thread nor run in a seperate process unless you specify otherwise. You should run any blocking operations on a seperate thread within the service to avoid Application Not Responding (ANR) erros.
+- `Types of Services`
+  - `Foreground` : Service which performs some operations that is noticeable to the user like playing audio track. **Must display a notification**, so that users are actively aware that service is running. This notification cannot be dismissed unless service is either stopped of removed from the foreground. It continues even when the user isn't interacting with the app. WorkManager API offers flexible and nearly same ways as foreground services too.
+  - `Backgound` : Service which performs an operation that isn't directly notified by the user, e.g. background service to compact its storage. System imposes restrictions on API 26 or higher from running background services, when the app itself isn't in the foreground.
+  - `Bound` : Type of service that offers a client-server interface that allows components(Activity, content provider and service can bind to the Bound service) to interact with the service, send requests, receive results, and even do so across processes with IPC. Bound service runs only as long as another application component is bound ot it. Multiple Components can bind to service at once, but when all of them unbind, the service is destroyed.
+- `Services v/s Threads` : Service is simply a component that can run the background, even when the user is not interacting with the application, whereas, if you must perform work outside of your main thread, but only while the user is interacting with your application, you should create a new thread. For example : Use service to play audio even if application is in background, and use Thread to play some video but only while the activity is running, you might create a thread in `onCreate()`, start running in `onStart()` and stop in `onStop()`
+
+### Activities
+[🔝](#table-of-contents)
+
+- [Activity Lifecycle](https://developer.android.com/guide/components/activities/activity-lifecycle)
+- Q : When *onDestroy()* gets called directly without *onPause()* and *onStop()* ? 
+  And : When we call ***finish()*** in *onCreate()*
+- `onSavedInstanceState()` : Used to store data before pausing the activity.
+- `onRestoreInstanceState()` : Used to recover the saved state of an activity during recreation, through *Bundles*.j
+
+### Fragments
+[🔝](#table-of-contents)
+
+***Reusable part of UI that interacts with users by providing UI elements on top of activities.*** Managed by Fragment Managers.
+- [⭐](#interview-questions)[Fragment Lifecycle]()
+- [⭐](#interview-questions)
+  `add vs replace` : **replace** removes the existing fragment and adds a new fragment, means when you press back button the fragment that got replaced will be recreated with its *onCreateView()* being invoked, wheres **add** retains the existing fragments and adds a new fragments means existing fragment will be active, wont be in *paused* state.
 
 ### ViewModel
 [🔝](#table-of-contents)
@@ -382,7 +410,7 @@ Consists of View, ViewModel, Model
 ***ViewModel is class designed to hold and manage UI-related data in a life-cycle consious way. This allows data to survive configuration changes such a screen rotations.***
 - ViewModel exists from when you first request a ViewModel (usually `onCreate`) untill the activity is finished and destroyed.
 - Extend `AndroidViewModel` if you need context inside viewModel, which will provide Application Context.
-- `ViewModelProviders.of` method creates a new ViewModel instance when it's called first time, when it's called again, which happens whenever `onCreate` is called, it will return the pre-existing ViewModel associated with the specific Activity/Fragment. This preserves the data.
+- `ViewModelProviders.of` method creates a new ViewModel instance when it's called first time. When it's called again, which happens whenever `onCreate` is called, it will return the pre-existing ViewModel associated with the specific Activity/Fragment. This preserves the data.
 - Advantages :
   - Handle Configuration changes
   - Lifecycle Awareness
@@ -390,7 +418,7 @@ Consists of View, ViewModel, Model
   - Kotlin Coroutines Support
 - [⭐](#interview-questions) `How ViewModels Work Internally` :
   
-  Here's code to get the instance of `viewModel`:-
+  Here's code to get the instance of `viewModel` :-
   ```kotlin
   viewModel = ViewModelProvider(this, ViewModelFactory()).get(SampleViewModel::class.java)
   ```
@@ -416,7 +444,7 @@ Consists of View, ViewModel, Model
   ```
   At the lowest, the object creation of `ViewModel` is handled by `ViewModelStore`, which contains `HashMap<String, ViewModel>` 
   
-  where, Key Format : `val canonicalName = modelClass.canonocalName`.
+  where, Key Format : `val canonicalName = modelClass.canonicalName`.
   
   Hence `ViewModelStore` checks if key for `ViewModel` exists in the HashMap.
   - If yes, return the already existing object.
@@ -472,6 +500,7 @@ Consists of View, ViewModel, Model
   `Difference between Threads & Coroutines` : Threads are expensive, require context switches which are costly, and number of threads that can be launched is limited by the underlying operating system whereas, Coroutines can be thought of as light-weight threads, means the creating of coroutines doesn't allocate new thread, instead they use predefined thread pools and smart scheduling for the purpose of which task to execute next and which tasks later.
 
 ### Dependency Injection
+[🔝](#table-of-contents)
 
 - `Dependency` : Object which is to be used by a dependent i.e. class
 - `Injection` : Technique which passes the dependency to dependent i.e. object to the class which wants to use it.
@@ -519,6 +548,7 @@ DI framework build on top of *Dagger*, brings benefits like **compile time corre
   - `@Singleton/@ActivityScoped` : Scoping object to container. The same instance of a type will be provided by container when using that type as a dependency.
 
 ### RecyclerView
+[🔝](#table-of-contents)
 
 - A `ViewGroup` to efficiently display large sets of data. You supply data, and define how each item looks, and RecyclerView library dynamically creates the elements when they're needed.
 - `Components of RecyclerView`
@@ -539,6 +569,12 @@ DI framework build on top of *Dagger*, brings benefits like **compile time corre
   - `Animations & Decorations` : ListView lacks in support of good animations and decorations, but `ItemAnimator` and `ItemDecorator` classes of RecyclerView provides developers huge control over these things.
 - `Internal Working Of RecyclerView`
   - RecyclerView loads view just ahead and behind the visible entries. So, the **Scrapped View** (View which was once visible and now not visible) gets stored in a collection of scrapped views. Now as we keep scrolling, the view from that collection is used. The view which we loaded from the scrapped view is called **Dirty view**. Now. the dirty view gets *recycled* and is relocated as the new item in queue which has to be displayed on the screen.
+
+### WorkManager
+[🔝](#table-of-contents)
+
+*WorkManager aims to simplify the developer experience by providing a first-class API for system-driven background processing. It is intended for background jobs that should run even if the app is no longer in the foreground. Where possible, it uses JobScheduler or Firebase JobDispatcher to do the work; if your app is in the foreground, it will even try to do the work directly in your process.*
+- `Components`
 
 ### Notification
 
@@ -585,3 +621,7 @@ DI framework build on top of *Dagger*, brings benefits like **compile time corre
 - [Coroutine 3](https://medium.com/androiddevelopers/coroutines-on-android-part-iii-real-work-2ba8a2ec2f45)
 - [Architecture 1](https://www.codingninjas.com/codestudio/library/difference-between-mvc-mvp-and-mvvm-architecture-in-android)
 - [Architecture 2](https://anmolsehgal.medium.com/common-android-architectures-mvc-vs-mvp-vs-mvvm-afd8461e1fee)
+- [The Ugly Truth about Extension Functions in Kotlin](https://medium.com/android-news/the-ugly-truth-about-extension-functions-in-kotlin-486ec49824f4)
+- [Services](https://developer.android.com/guide/components/services)
+- [Android Services](https://medium.com/@huseyinozkoc/android-services-tutorial-with-example-fa329e6a5b4b)
+- [Services. The life with/without. And WorkManager](https://medium.com/google-developer-experts/services-the-life-with-without-and-worker-6933111d62a6)
