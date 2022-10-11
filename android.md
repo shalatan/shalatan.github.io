@@ -242,7 +242,7 @@ Functions whose sole purpose is to execute a block of code within the context of
 [🔝](#table-of-contents)[⭐](#interview-questions)
 
 App components are like entry points that allow systems and users to interact with your application. Each component have their own function and lifecycle.
-- `Activities` : Entry point for interacting with users, represents single screen with UI
+- [💉](#activities)`Activities` : Entry point for interacting with users, represents single screen with UI
 - [💉](#services)`Services` : Entry point for keeping app running in background for all kinds of reason, like music player, youtube video player.
   - `startService()` : Allows other components to run a service in background or stop it, using *startService()* & *stopService()* respectively.
   - `bindService()` : Same as startService but also provides IBInder interface, which allows the client to communicate with the service consistently. Use *unbindService* to cancel the connection
@@ -385,16 +385,35 @@ MVI (Model-View-Intent) is also a popular architecture in modern Android Develop
   - `Foreground` : Service which performs some operations that is noticeable to the user like playing audio track. **Must display a notification**, so that users are actively aware that service is running. This notification cannot be dismissed unless service is either stopped of removed from the foreground. It continues even when the user isn't interacting with the app. WorkManager API offers flexible and nearly same ways as foreground services too.
   - `Backgound` : Service which performs an operation that isn't directly notified by the user, e.g. background service to compact its storage. System imposes restrictions on API 26 or higher from running background services, when the app itself isn't in the foreground.
   - `Bound` : Type of service that offers a client-server interface that allows components(Activity, content provider and service can bind to the Bound service) to interact with the service, send requests, receive results, and even do so across processes with IPC. Bound service runs only as long as another application component is bound ot it. Multiple Components can bind to service at once, but when all of them unbind, the service is destroyed.
-- `Services v/s Threads` : Service is simply a component that can run the background, even when the user is not interacting with the application, whereas, if you must perform work outside of your main thread, but only while the user is interacting with your application, you should create a new thread. For example : Use service to play audio even if application is in background, and use Thread to play some video but only while the activity is running, you might create a thread in `onCreate()`, start running in `onStart()` and stop in `onStop()`
+- `Services v/s Threads` : Service is simply a component that can run in the background, even when the user is not interacting with the application, whereas, if you must perform work outside of your main thread, but only while the user is interacting with your application, you should create a new thread. For example : Use service to play audio even if application is in background, and use Thread to play some video but only while the activity is running, you might create a thread in `onCreate()`, start running in `onStart()` and stop in `onStop()`
 
 ### Activities
 [🔝](#table-of-contents)
-
-- [Activity Lifecycle](https://developer.android.com/guide/components/activities/activity-lifecycle)
-- Q : When *onDestroy()* gets called directly without *onPause()* and *onStop()* ? 
-  And : When we call ***finish()*** in *onCreate()*
+***Activities is an independent and reusable component that interacts with the user by providing UI-relevant resources.***
+- [Activity Lifecycle Figure](https://developer.android.com/guide/components/activities/activity-lifecycle)<br>
+  `onCreate()` -> `onStart()` -> `onResume()` -> `onPause()` -> `onStop()` -> `onDestroy()`
+  - `onCreate()` : This callback is called when the system creates your activity, includes initilization logic, which should occur only once like creating views or binding data.
+  - `onStart()` : This callback is called when the activity becomes visible to the user.
+  - `onResume()` : Means activity is ready to come to foreground and interact with users.
+  - `onPause()` : Means activity is no longer in the foreground, and may still be partially visible.
+  - `onStop()` : This callback is called when the activity is no longer visible to the user.
+  - `onDestory()` : This callback is called before and activity is destroyed. **Release all remaining resources here.**
+  
+- LifeCycle Scenarios
+  - `Navigate A to B` : <br>
+    onPause(A) -> onCreate(B) -> onStart(B) -> onResume(B) -> onStop(A)
+  - `Navigate back to A from B` : <br>
+    onPause(B) -> onRestart(A) -> onStart(B) -> onResume(B) -> onStop(B) -> onDestory(B)
+  - `Press HomeButton\ScreenLock From A` : <br>
+    onPause(A) -> onStop(A)
+  - `Opening From ScreenLock\HomeScreen` : <br>
+    onRestart(A) -> onStart(A) -> onResume(A)
+  - `Destroying App` : <br>
+    onPause(A) -> onStop(A) -> onDestroy(A)
+  - `Calling *finish()*` : <br>
+    onDestroy(A)
 - `onSavedInstanceState()` : Used to store data before pausing the activity.
-- `onRestoreInstanceState()` : Used to recover the saved state of an activity during recreation, through *Bundles*.j
+- `onRestoreInstanceState()` : Used to recover the saved state of an activity during recreation, through *Bundles*.
 
 ### Fragments
 [🔝](#table-of-contents)
