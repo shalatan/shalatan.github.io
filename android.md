@@ -1,10 +1,3 @@
----
-title: Android Interview Notes
-date: 2022-14-09 12:00:00 +0630
-categories: [TOP_CATEGORIE, SUB_CATEGORIE]
-tags: [android]     # TAG names should always be lowercase
----
-
 ### Guide
 - Click 🔝 Icons To Jump To Table of Contents
 - Topic With ⭐ Icons are questions asked from me in Interviews, Click on it to jump to ***Interview Questions Section***
