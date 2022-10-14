@@ -180,6 +180,7 @@ compress_html:
   ignore:
     envs: [development]
 
+exclude: [vendor]
 exclude:
   - '*.gem'
   - '*.gemspec'
