@@ -35,8 +35,6 @@
     - [Activities](#activities)
     - [Fragments](#fragments)
     - [ViewModel](#viewmodel)
-    - [LiveData](#livedata)
-    - [Flow](#flow)
     - [Coroutines](#coroutines)
     - [Dependency Injection](#dependency-injection)
       - [Hilt](#hilt)
@@ -45,8 +43,6 @@
     - [Notification](#notification)
   - [Differences](#differences)
   - [Interview Questions](#interview-questions)
-  - [Compose](#compose)
-    - [Compose Navigation](#compose-navigation)
   - [References](#references)
 
 # Language
@@ -391,13 +387,15 @@ MVI (Model-View-Intent) is also a popular architecture in modern Android Develop
 [🔝](#table-of-contents)
 ***Activities is an independent and reusable component that interacts with the user by providing UI-relevant resources.***
 - [Activity Lifecycle Figure](https://developer.android.com/guide/components/activities/activity-lifecycle)<br>
-  `onCreate()` -> `onStart()` -> `onResume()` -> `onPause()` -> `onStop()` -> `onDestroy()`
-  - `onCreate()` : This callback is called when the system creates your activity, includes initilization logic, which should occur only once like creating views or binding data.
+  `onCreate()` -> `onStart()` -> `onRestoreInstanceState` -> `onResume()` -> `onPause()` -> `onStop()` -> `onDestroy()`
+  - `onCreate()` : This callback is called when the system creates your activity. **Includes initilization logic, which should occur only once like creating views or binding data**
   - `onStart()` : This callback is called when the activity becomes visible to the user.
-  - `onResume()` : Means activity is ready to come to foreground and interact with users.
-  - `onPause()` : Means activity is no longer in the foreground, and may still be partially visible.
-  - `onStop()` : This callback is called when the activity is no longer visible to the user.
-  - `onDestory()` : This callback is called before and activity is destroyed. **Release all remaining resources here.**
+  - `onRestoreInstanceState()` : Used to recover the saved state of an activity during recreation, through *Bundles*.
+  - `onResume()` : Means activity is ready to come to foreground and interact with users. **Initialize components like camera, video player**
+  - `onPause()` : Means activity is no longer in the foreground, and may still be partially visible. **Release components like camera, video player**
+  - `onStop()` : This callback is called when the activity is no longer visible to the user. **Shutdown CPU intensive operations like maybe saving data in ROOM**
+  - `onSaveInstanceState()` : Used to store data before pausing the activity.
+  - `onDestory()` : This callback is called before and activity is destroyed. **Release all remaining resources here**
   
 - LifeCycle Scenarios
   - `Navigate A to B` : <br>
@@ -412,14 +410,24 @@ MVI (Model-View-Intent) is also a popular architecture in modern Android Develop
     onPause(A) -> onStop(A) -> onDestroy(A)
   - `Calling *finish()*` : <br>
     onDestroy(A)
-- `onSavedInstanceState()` : Used to store data before pausing the activity.
-- `onRestoreInstanceState()` : Used to recover the saved state of an activity during recreation, through *Bundles*.
 
 ### Fragments
 [🔝](#table-of-contents)
 
 ***Reusable part of UI that interacts with users by providing UI elements on top of activities.*** Managed by Fragment Managers.
-- [⭐](#interview-questions)[Fragment Lifecycle]()
+- [⭐](#interview-questions)[Fragment Lifecycle Figure](https://developer.android.com/static/images/guide/fragments/fragment-view-lifecycle.png)
+  `onAttach()` - > `onCreate()` ->  `onCreateView()` -> `onActivityCreated()` -> `onStart()` -> `onResume()` -> `onPause()` -> `onStop()` -> `onDestroyView()` -> `onDestroy()` -> `onDetach()`
+  - `onAttach()` : This method is called first to know that fragment has been attached to the Activity.
+  - `onCreate()` : This method is called when the fragment instance initializes.
+  - `onCreateView()` : This callback is called when frgament is ready to draw its UI for first time. To draw UI, return the fragment's root layout view component, return null if no UI.
+  - `onActivityCreated()` : This callback is called when Activity completes its onCreate() method.
+  - `onStart()` : Means fragment is visible.
+  - `onResume()` : Means fragment is visible and ready to interact with users.
+  - `onPause()` : This method is called when a fragment is not allowing the user to interact.
+  - `onStop()` : This callback is called when the fragment is no longer visible to the user. 
+  - `onDestroyView()` : This method is called when the view and realted resources created in onCreateView() are removed from activity's view hierarchy & destroyed.
+  - `onDestory()` : This callback is called before and activity is destroyed.
+  - `onDetach()` : When fragment is detached from its host activity.
 - [⭐](#interview-questions)
   `add vs replace` : **replace** removes the existing fragment and adds a new fragment, means when you press back button the fragment that got replaced will be recreated with its *onCreateView()* being invoked, wheres **add** retains the existing fragments and adds a new fragments means existing fragment will be active, wont be in *paused* state.
 
@@ -468,12 +476,6 @@ MVI (Model-View-Intent) is also a popular architecture in modern Android Develop
   Hence `ViewModelStore` checks if key for `ViewModel` exists in the HashMap.
   - If yes, return the already existing object.
   - If no, create a new `ViewModel`, and store the object in HashMap for future usage.
-  
-### LiveData
-[🔝](#table-of-contents)
-
-### Flow
-[🔝](#table-of-contents)
 
 ### Coroutines
 [🔝](#table-of-contents)
@@ -613,24 +615,6 @@ DI framework build on top of *Dagger*, brings benefits like **compile time corre
 - `Inner working of Extension Functions`
 - `Context and Types of context`
 
-## Compose
-
-- StateFlow.collectAsState() - Shows the latest value of the StateFlow, updates the composable when a item is updated
-  ```kotlin
-  viewmodel.destinations.collectAsState()
-  ```
-- Side-Effect - Side-Effect in compose is a change to the state of the app that happens outside the scope of composable function.
-- LaunchedEffect - To call suspend function safely from inside a composable, triggers a coroutine-scoped side-effect in Compose.
-- rememberCoroutineScope() - To call suspend function from composables, automatically gets cancelled once it leaves the composition.
-
-### Compose Navigation
-- Steps
-  - Declare NavController at the top level of composable hierarchy
-  
-    ```kotlin
-    val navController = rememberNavController()
-    ```
-
 ## References
 - [ViewModel](https://medium.com/androiddevelopers/viewmodels-a-simple-example-ed5ac416317e)
 - [ViewModel](https://blog.mindorks.com/android-viewmodels-under-the-hood)
@@ -644,3 +628,8 @@ DI framework build on top of *Dagger*, brings benefits like **compile time corre
 - [Services](https://developer.android.com/guide/components/services)
 - [Android Services](https://medium.com/@huseyinozkoc/android-services-tutorial-with-example-fa329e6a5b4b)
 - [Services. The life with/without. And WorkManager](https://medium.com/google-developer-experts/services-the-life-with-without-and-worker-6933111d62a6)
+- [The Android Lifecycle cheat sheet — part I: Single Activities](https://medium.com/androiddevelopers/the-android-lifecycle-cheat-sheet-part-i-single-activities-e49fd3d202ab)
+- [The Android Lifecycle cheat sheet — part II: Multiple activities](https://medium.com/androiddevelopers/the-android-lifecycle-cheat-sheet-part-ii-multiple-activities-a411fd139f24)
+- [The Android Lifecycle cheat sheet — part III : Fragments](https://medium.com/androiddevelopers/the-android-lifecycle-cheat-sheet-part-iii-fragments-afc87d4f37fd)
+- [The Android Lifecycle cheat sheet — part IV : ViewModels, Translucent Activities and Launch Modes](https://medium.com/androiddevelopers/the-android-lifecycle-cheat-sheet-part-iv-49946659b094)
+- [Android  Fragments and its Lifecycle](https://blog.mindorks.com/android-fragments-and-its-lifecycle)
