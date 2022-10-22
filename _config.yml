@@ -1,10 +1,11 @@
 theme: minima
 
 title: Waah Notes
-description: > Android Notes for Interview Preparations.
+description: > Notes for Android Interviews.
 
-name: shalatan
-email: shalatan6688@gmail.com
+author:
+  name: shalatan
+  email: shalatan6688@gmail.com
   
 show_excerpts: true # set to true to show excerpts on the homepage
 
