@@ -132,7 +132,6 @@
   - `Primary Constructor` : Type of constructor that is initialized in the class header, after the class name with *constructor* keyword. Parameters are optional. If no annotations are provided, it can be skipped and if required initialization code can be placed in seperate initializer block i.e. `init`, because primary constuctor cannot contain any code.
   ```kotlin
   class Sample constructor(val a: Int){
-
     init {
 
     }

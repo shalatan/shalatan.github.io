@@ -1,19 +1,12 @@
 theme: minima
 
-title: Waah No
-author:
-  name: shalatan
-  email: shalatan6688@gmail.com
-description: > # this means to ignore newlines until "show_excerpts:"
-  Write an awesome description for your new site here. You can edit this
-  line in _config.yml. It will appear in your document head meta (for
-  Google search results) and in your feed.xml site description.
-  
-show_excerpts: false # set to true to show excerpts on the homepage
+title: Waah Notes
+description: > Android Notes for Interview Preparations.
 
-header_pages:
-  - android.md
-  - misc.md
+name: shalatan
+email: shalatan6688@gmail.com
+  
+show_excerpts: true # set to true to show excerpts on the homepage
 
 minima:
   social_links:
