@@ -401,7 +401,7 @@ MVI (Model-View-Intent) is also a popular architecture in modern Android Develop
   - `Navigate A to B` : <br>
     onPause(A) -> onCreate(B) -> onStart(B) -> onResume(B) -> onStop(A)
   - `Navigate back to A from B` : <br>
-    onPause(B) -> onRestart(A) -> onStart(B) -> onResume(B) -> onStop(B) -> onDestory(B)
+    onPause(B) -> onRestart(A) -> onStart(A) -> onResume(A) -> onStop(B) -> onDestory(B)
   - `Press HomeButton\ScreenLock From A` : <br>
     onPause(A) -> onStop(A)
   - `Opening From ScreenLock\HomeScreen` : <br>
@@ -480,7 +480,7 @@ MVI (Model-View-Intent) is also a popular architecture in modern Android Develop
 ### Coroutines
 [🔝](#table-of-contents)
 
-***Coroutines are Kotlin feature that converts async background processes to the sequential code***
+***Coroutines are a type of light-weight thread that can be used to improve the performance of concurrent code.***
 - `suspend` : Keyword to mark a function available to coroutines, *suspends* exceution until the result is ready then it resumes where it left off with the result. ***Using suspend doesn’t tell Kotlin to run a function on a background thread.***
 - `Dispatchers` : Context
   - `Dispathcers.Main` : Lightweight tasks eg - network calls, database queries, won't block the main thread while suspended.
