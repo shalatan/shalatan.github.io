@@ -36,11 +36,13 @@
     - [Fragments](#fragments)
     - [ViewModel](#viewmodel)
     - [Coroutines](#coroutines)
+    - [Flow](#flow)
     - [Dependency Injection](#dependency-injection)
       - [Hilt](#hilt)
     - [RecyclerView](#recyclerview)
     - [WorkManager](#workmanager)
     - [Notification](#notification)
+    - [Compose](#compose)
   - [Differences](#differences)
   - [Interview Questions](#interview-questions)
   - [References](#references)
@@ -290,7 +292,7 @@ An asynchronous message that activates 3 of the 4 android app components i.e. Ac
 Suite of libraries to solve fundamental Android problems and guide app architecture. It comes under Android Jetpack.
 - `App Architecture` : Google's recommneded app achitecture below allows apps to scale, improve quality, robustness and makes apps easier to test.
   
-  ```UI Layer``` -> ```Domain Layer``` -> ```Data Layer```    
+  `UI Layer` -> `Domain Layer` -> `Data Layer` 
   - `UI Layer` : Render the updated application data on screen. Also known as Presentation layer. Made of UI elements, and State holders, such as *ViewModel*
   - `Domain Layer` : Abstracting complex/simple business logic, converts complex data into suitable types for UI layers. **Optional**
   - `Data Layer` : Contains the *business logic*. Made of *repositories*, that can contain zero to many data sources.
@@ -520,6 +522,83 @@ MVI (Model-View-Intent) is also a popular architecture in modern Android Develop
 - [⭐](#interview-questions)
   `Difference between Threads & Coroutines` : Threads are expensive, require context switches which are costly, and number of threads that can be launched is limited by the underlying operating system whereas, Coroutines can be thought of as light-weight threads, means the creating of coroutines doesn't allocate new thread, instead they use predefined thread pools and smart scheduling for the purpose of which task to execute next and which tasks later.
 
+### Flow
+[🔝](#table-of-contents)
+
+*Flow is a kotlin language feature that can emit multiple values sequentially over some time.*
+- Types of data streams:
+  - `Hot Stream` : **Hot streams trasmit data even if there's no subscriber when the data arrives.** Ex: *Channels*, for fetching data from APIs, however since there will always be data flow in hot stream, it is necessary to keep the subscribers under control. Because it can cause data loses(if subscriber is forgotten) and memory leaks(open network cinnection)
+  - `Cold Stream` : **Cold streams trasmit data only when you start collecting.** Ex: *Kotlin Flow*, powered by Kotlin Coroutines, and because of Kotlin Coroutines, when you cancel the scope, you also dispose of the flow. We don't have to free up memory manually.
+- Flow Builders:
+  - `flow{}` : create a flow from the suspendable lambda block.
+    ```kotlin
+    flow {
+      (1..5).forEach{
+        emit(it)
+      }
+    }
+    ```
+  - `flowOf()` : to create a flow from fixed set of values
+    ```kotlin
+      fun createFlow() =  flowOf(1,2,3,4,5)
+    ```
+  - `asFlow()` : 
+    ```kotlin
+      fun createFlow() =  listOf(1,2,3,4,5).asFlow()
+
+      fun main() = runBlocking { 
+        createFlow().collect { 
+          println(it) 
+          } 
+        }
+    ```
+- Flow Operators
+  - `Intermediate Operator` : Used to modifying the data flows between the producer and consumer -OR- These operators are functions that, when applied to a stream of data, set up a chain of operations that aren't executed until the values are consumed in the future and **are executed lazily**
+    ```kotlin
+    fun main() = runBlocking { 
+      requestNumbers()
+          .filter { number -> number > 2 }
+          .map { number -> toUiModel(number) }
+          .catch { error -> println(error) }
+          .collect { println(it) } 
+    }
+    ```
+    `Upstream flow` : Flow produced by the operators that are called before the current operator whereas `Downstream flow` is Flow produced by operators that are called after the current operator.
+    - `buffer()` : Normanlly, flows are sequential, that means the code of all the operators is executed in the same coroutine. Which means the total execution time is going to be the sum of execution times of all operators. Hence *buffer* creates a seperate coroutine during execution for the flow it applies to.
+  - `Terminal Operator` : Terminal operators are either suspending function such as *collect, single, reduce, toList etc* or *launchIn* operator that starts collection of the flow in the given scope. They are applied to the *upstream flow* and triggers execution of all operations. Execution of the flow is also called collecting the flow and is always performed in a suspending manner without actual blocking.
+    - `Collect` : Collect all the values in the stream as they're emitted. Is a suspend function and needs to be executed within a coroutine. It takes a lambda as a parameter that is called on every new value. Since it's a suspend function, the coroutine that calls collect may suspend until the flow is closed.
+    - `count` : Count the values that matches specific conditions.
+    - `reduce` : 
+    - `fold` : 
+    ```kotlin
+    val count = flow.count{
+
+    }
+    val reduce= flow.reduce{accumulator, value->
+
+    }
+    ```
+- Generally flow refresents *cold streams* but there's a hot stream subtype i.e. `SharedFlow`, also any flow can be turned into *hot* one by `stateIn` or `shareIn` operators, or by converting the flow into a hot channel via `produceIn` operator.
+- `StateFlow` :
+```kotlin
+private val _stateFlow = MutableStateFlow(0)
+val stateFlow = _stateFlow.asStateFlow()
+
+fun increment(){
+  _stateFlow.value += 1
+}
+
+//fragment
+lifecycleScope.launch {
+  repeatIOnLifecycle(Lifecycle.state.STARTED) {
+    viewModel.stateFlow.collectLatest { number->
+    }
+  }
+}
+```
+  
+[ref](https://medium.com/yemeksepeti-teknoloji/introduction-to-kotlin-flows-827f5a71ad7e) [ref](https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-flow/)
+
 ### Dependency Injection
 [🔝](#table-of-contents)
 
@@ -598,9 +677,46 @@ DI framework build on top of *Dagger*, brings benefits like **compile time corre
 - `Components`
 
 ### Notification
+[🔝](#table-of-contents)
 
 - `NotificationManager` : A system service which helps in displaying the content as notification. It is responsible for sending a notification, updating its content, and cancelling the notification.
 - `NotificationChannel` : Way to group notifications, making it easy for developers and users to control all of the notifications in the channel.
+
+### Compose
+[🔝](#table-of-contents)
+
+*Jetpack compose is a modern oolkit for building native Android UI. Compose simplifies and accelerates UI development on Android with less code, powerful tools and inuitive Kotlin APIs*
+- `Key Terms` :
+  - `Composition` : Description of UI built by Compose when it executes composables.
+  - `Initial Composition` : When composables gets drawn for the first time.
+  - `Recomposition` : When composables (and their children) gets redrawn automatically when the value is updated.
+  - `State` : State or MutableState are interfaces that can hold some value and trigger UI updates whenever that value changes.
+- `Annotations` : 
+  - `@Composable`: Composable funtions are the functions where you define app's UI programmatically by describing how it should look and providing data dependencies.
+  - `@Preview`: Annotation to preview the composable functions within Android Studio. Not applicable for composable functions which does not take in parameters.
+- `Modifiers` : Modifier tell a UI elemnet how to lay out, display, or behave within its parent layout, add high-level interactions, such as making element clickable. *As a best practice, your function should include a Modifier parameter that is assigned an empty Modifier by default.*
+- `Elements`
+  - `Text` : 
+  - `Surface` : Allows the customizing like shape and elevation of items.
+  - `Layouts Elements` : 
+    - `Column` : Arrange items vertically.
+    - `Row` : Arrange items horizontally.
+    - `Box` : Stack elements
+  - `LazyColumn/LazyRow` : Composables that renders only the elements that are visible on screen, so they are designed to be very efficient for long lists. *Doesn't reyce its children like RecycleView, instead emits new composables as you scroll though it and is still performat, as emitting composables is relatively cheap compared to instantiating Views.
+- `APIs` : 
+  - `remember` : To preserve state across *recompositions*. Can store both mutable & immutable objects.
+  - `remeberSavable` : same as *remember* but also stores them in *bundle* hence survives configuration changes. Store primitive types automatically like Int, String, boolean but custom objects/data classes needs to be parecelized.
+  - `mtableStateOf` : creates an observable MutableState<T>
+  ```kotlin
+  var value by remember { mutableStateOf(default) }
+  ```
+- `State hoisting`(lift/elevate) : State that is read or modified by multiple functions should live in common ancestor. This avoids duplicating state, bugs, helps resue composables, easier for testing
+- Jetpack Compose supports other observables types also. But before reading another observable type in Jetpack COmpose, you must convert it to a `State<T>` so that Compose can automatically recompose when the state changes.
+  - `Flow` : *collectAsStateWithLifecycle()* collects value from a flow in lifecycle-aware manner, allowing app to save unneeded app resources and tranforms it into Compose State. (*collectAsStateWithLifecycle() uses *repeatOnLifecycle* API under the hood, which is the recommended way to collect flows in Andorid using the View system.)
+  - `Flow` : *collectAsState()* similar to *collectAsStateWithLifecycle()*. Use *collectAsState* for platform-agnostic code instead of *collectAsStateWithLifecycle()*, which is android-only.
+  - `LiveData`: *observeAsState()* starts observing the LiveData and represents its values via State.
+  - `RxJava2` : *subscribeAsState()* are extension functions that transform RxJava2's reactive streams into Compose State.
+  - `RxJava3` : *subscribeAsState()* same as above.
 
 ## Differences
 - `ListView vs RecyclerView`
