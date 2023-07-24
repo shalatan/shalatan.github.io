@@ -685,16 +685,17 @@ DI framework build on top of *Dagger*, brings benefits like **compile time corre
 ### Compose
 [🔝](#table-of-contents)
 
-*Jetpack compose is a modern oolkit for building native Android UI. Compose simplifies and accelerates UI development on Android with less code, powerful tools and inuitive Kotlin APIs*
+*Jetpack compose is a modern toolkit for building native Android UI. Compose simplifies and accelerates UI development on Android with less code, powerful tools and inuitive Kotlin APIs*
 - `Key Terms` :
   - `Composition` : Description of UI built by Compose when it executes composables.
   - `Initial Composition` : When composables gets drawn for the first time.
-  - `Recomposition` : When composables (and their children) gets redrawn automatically when the value is updated.
+  - `Recomposition` : When composables (and their children) gets redrawn automatically when the value is updated. The only way to modify the Composition is through recomposition.
   - `State` : State or MutableState are interfaces that can hold some value and trigger UI updates whenever that value changes.
 - `Annotations` : 
   - `@Composable`: Composable funtions are the functions where you define app's UI programmatically by describing how it should look and providing data dependencies.
   - `@Preview`: Annotation to preview the composable functions within Android Studio. Not applicable for composable functions which does not take in parameters.
 - `Modifiers` : Modifier tell a UI elemnet how to lay out, display, or behave within its parent layout, add high-level interactions, such as making element clickable. *As a best practice, your function should include a Modifier parameter that is assigned an empty Modifier by default.*
+  - `ContentPadding` : To maintain the same padding, but still scroll your content within the bounds of your parent list without clipping it, all lists provide a parameter called contentPadding
 - `Elements`
   - `Text` : 
   - `Surface` : Allows the customizing like shape and elevation of items.
@@ -703,14 +704,17 @@ DI framework build on top of *Dagger*, brings benefits like **compile time corre
     - `Row` : Arrange items horizontally.
     - `Box` : Stack elements
   - `LazyColumn/LazyRow` : Composables that renders only the elements that are visible on screen, so they are designed to be very efficient for long lists. *Doesn't reyce its children like RecycleView, instead emits new composables as you scroll though it and is still performat, as emitting composables is relatively cheap compared to instantiating Views.
+  - `Slots` : Slot-based layouts leave an empty space in the UI for the developer to fill as they wish. You can use them to create more flexible layouts.
 - `APIs` : 
   - `remember` : To preserve state across *recompositions*. Can store both mutable & immutable objects.
   - `remeberSavable` : same as *remember* but also stores them in *bundle* hence survives configuration changes. Store primitive types automatically like Int, String, boolean but custom objects/data classes needs to be parecelized.
-  - `mtableStateOf` : creates an observable MutableState<T>
+  - `mutableStateOf` : creates an observable MutableState<T>
+  - `collectAsState` : Collects value from StateFlow and represents its latest value via State. <br> *StateFlow.value* is used as an initial value, and everytime a new value is posted into the *StateFlow*, the returned *State* updates, causing recomposition of every *State.value* usage.
   ```kotlin
   var value by remember { mutableStateOf(default) }
   ```
-- `State hoisting`(lift/elevate) : State that is read or modified by multiple functions should live in common ancestor. This avoids duplicating state, bugs, helps resue composables, easier for testing
+- `State hoisting`(lift/elevate) : State that is read or modified by multiple functions should live in common ancestor. This avoids duplicating state, bugs, helps resue composables, easier for testing.
+- `Unidirectional Data Flow (UDF)` : Deisng pattern in which state *flows down* and events *flow up*. By using UDF, we can decouple composables that **display state** in the UI from the parts of your app that **store and change state**.
 - Jetpack Compose supports other observables types also. But before reading another observable type in Jetpack COmpose, you must convert it to a `State<T>` so that Compose can automatically recompose when the state changes.
   - `Flow` : *collectAsStateWithLifecycle()* collects value from a flow in lifecycle-aware manner, allowing app to save unneeded app resources and tranforms it into Compose State. (*collectAsStateWithLifecycle() uses *repeatOnLifecycle* API under the hood, which is the recommended way to collect flows in Andorid using the View system.)
   - `Flow` : *collectAsState()* similar to *collectAsStateWithLifecycle()*. Use *collectAsState* for platform-agnostic code instead of *collectAsStateWithLifecycle()*, which is android-only.

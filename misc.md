@@ -1,4 +1,4 @@
-Table of Contents
+## Table of Contents
 - [Git](#git)
 - [Heroku](#heroku)
   
