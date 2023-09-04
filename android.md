@@ -525,79 +525,136 @@ MVI (Model-View-Intent) is also a popular architecture in modern Android Develop
 ### Flow
 [🔝](#table-of-contents)
 
-*Flow is a kotlin language feature that can emit multiple values sequentially over some time.*
+*Flow is an asynchronous data stream that emits values to the collector and gets completed with or without an exception.*
 - Types of data streams:
   - `Hot Stream` : **Hot streams trasmit data even if there's no subscriber when the data arrives.** Ex: *Channels*, for fetching data from APIs, however since there will always be data flow in hot stream, it is necessary to keep the subscribers under control. Because it can cause data loses(if subscriber is forgotten) and memory leaks(open network cinnection)
   - `Cold Stream` : **Cold streams trasmit data only when you start collecting.** Ex: *Kotlin Flow*, powered by Kotlin Coroutines, and because of Kotlin Coroutines, when you cancel the scope, you also dispose of the flow. We don't have to free up memory manually.
-- Flow Builders:
-  - `flow{}` : create a flow from the suspendable lambda block.
-    ```kotlin
-    flow {
-      (1..5).forEach{
-        emit(it)
-      }
-    }
-    ```
-  - `flowOf()` : to create a flow from fixed set of values
-    ```kotlin
-      fun createFlow() =  flowOf(1,2,3,4,5)
-    ```
-  - `asFlow()` : 
-    ```kotlin
-      fun createFlow() =  listOf(1,2,3,4,5).asFlow()
-
-      fun main() = runBlocking { 
-        createFlow().collect { 
-          println(it) 
-          } 
+- Major Components of Flow:
+  - **`(a) Builders`**:
+    - `flow{}` : create a flow from the suspendable lambda block.
+      ```kotlin
+      flow {
+        (1..5).forEach{
+          emit(it)
         }
-    ```
-- Flow Operators
-  - `Intermediate Operator` : Used to modifying the data flows between the producer and consumer -OR- These operators are functions that, when applied to a stream of data, set up a chain of operations that aren't executed until the values are consumed in the future and **are executed lazily**
-    ```kotlin
-    fun main() = runBlocking { 
-      requestNumbers()
-          .filter { number -> number > 2 }
-          .map { number -> toUiModel(number) }
-          .catch { error -> println(error) }
-          .collect { println(it) } 
-    }
-    ```
-    `Upstream flow` : Flow produced by the operators that are called before the current operator whereas `Downstream flow` is Flow produced by operators that are called after the current operator.
-    - `buffer()` : Normanlly, flows are sequential, that means the code of all the operators is executed in the same coroutine. Which means the total execution time is going to be the sum of execution times of all operators. Hence *buffer* creates a seperate coroutine during execution for the flow it applies to.
-  - `Terminal Operator` : Terminal operators are either suspending function such as *collect, single, reduce, toList etc* or *launchIn* operator that starts collection of the flow in the given scope. They are applied to the *upstream flow* and triggers execution of all operations. Execution of the flow is also called collecting the flow and is always performed in a suspending manner without actual blocking.
-    - `Collect` : Collect all the values in the stream as they're emitted. Is a suspend function and needs to be executed within a coroutine. It takes a lambda as a parameter that is called on every new value. Since it's a suspend function, the coroutine that calls collect may suspend until the flow is closed.
-    - `count` : Count the values that matches specific conditions.
-    - `reduce` : 
-    - `fold` : 
-    ```kotlin
-    val count = flow.count{
+      }.collect{
+        print(it)
+      }
+      ```
+    - `flowOf()` : to create a flow from fixed set of values
+      ```kotlin
+      flowOf(1,2,3,4,5)
+        .collect {
+          print(it)
+        }
+      ```
+    - `asFlow()` : 
+      ```kotlin
+      (1,2,3,4,5).asFlow()
+      .collect {
+        print(it)
+      }
+      ```
+    - `channelFlow()` : 
+      ```kotlin
+      channelFlow {
+        (0..10).forEach{
+          send(it)
+        }
+      }.collect{
+        print(it)
+      }
+      ```
+  - **`(b) Operators: `** The operator helps in transforming the data from one format to another.
+    - `Intermediate Operator` : Used to modifying the data flows between the producer and consumer -OR- These operators are functions that, when applied to a stream of data, set up a chain of operations that aren't executed until the values are consumed in the future and **are executed lazily**
+      ```kotlin
+      fun main() = runBlocking { 
+        requestNumbers()
+            .filter { number -> number > 2 }
+            .map { number -> toUiModel(number) }
+            .catch { error -> println(error) }
+            .collect { println(it) } 
+      }
+      ```
+      `Upstream flow` : Flow produced by the operators that are called before the current operator whereas `Downstream flow` is Flow produced by operators that are called after the current operator.
+      - `buffer()` : Normanlly, flows are sequential, that means the code of all the operators is executed in the same coroutine. Which means the total execution time is going to be the sum of execution times of all operators. Hence *buffer* creates a seperate coroutine during execution for the flow it applies to.
+      - `zip()` : Zips the emissions of two flow emissions with a specified function and emits single item for each combination. Example: Merging two parallely running tasks and getting the results of both task in single callback when both are completed.
+      ```kotlin
+      fun runningTaskOne = Flow<String> { 
+        return flow {
+          delay(2000)
+          emit(one) 
+        }
+      }
+      fun runningTaskTwo = flow {
+        return flow {
+          delay(2000)
+          emit(two)
+        }
+      }
 
-    }
-    val reduce= flow.reduce{accumulator, value->
+      fun startTask() {
+        viewModelScope.launch {
+          longRunningTaskOne()
+            .zip(longRunningTaskTwo()) { resultOne resultTwo ->
+              return@zip resultOne+resultTwo
+            }
+            .flowOn(Dispatchers.Default)
+            .collect{
 
-    }
+            }
+        }
+      }
+      ```
+    - `Terminal Operator` : Terminal operators are either suspending function such as *collect, single, reduce, toList etc* or *launchIn* operator that starts collection of the flow in the given scope. They are applied to the *upstream flow* and triggers execution of all operations. Execution of the flow is also called collecting the flow and is always performed in a suspending manner without actual blocking.
+      - **`(c) Collector`** : Collect all the values in the stream as they're emitted. Is a suspend function and needs to be executed within a coroutine. It takes a lambda as a parameter that is called on every new value. Since it's a suspend function, the coroutine that calls collect may suspend until the flow is closed.
+      - `count` : Count the values that matches specific conditions.
+      - `reduce` : Apply a function to each item emitted and emit the final value
+      ```
+      val result = (1..5).asFlow()
+                  .reduce {a,b -> a+b}
+      print(result) 
+      //15
+      ```
+      - `fold` : 
+    ```kotlin
+      val count = flow.count{
+
+      }
+      val reduce= flow.reduce{accumulator, value->
+
+      }
     ```
-- Generally flow refresents *cold streams* but there's a hot stream subtype i.e. `SharedFlow`, also any flow can be turned into *hot* one by `stateIn` or `shareIn` operators, or by converting the flow into a hot channel via `produceIn` operator.
-- `StateFlow` :
+- `flowOn()` : Used to controlling the thread on which the task will be done.
 ```kotlin
-private val _stateFlow = MutableStateFlow(0)
-val stateFlow = _stateFlow.asStateFlow()
+val flow = flow {
+  (1..5).forEach {
+    emit(it)
+  }
+}.flowOn(Dispatchers.Default)
 
-fun increment(){
-  _stateFlow.value += 1
-}
-
-//fragment
-lifecycleScope.launch {
-  repeatIOnLifecycle(Lifecycle.state.STARTED) {
-    viewModel.stateFlow.collectLatest { number->
-    }
+CoroutineScope(Dispatchers.Main).launch{
+  flow.collect {
+    print(it)
   }
 }
 ```
+- `Cold Flow v/s Hot Flow` : `Cold Flow` only emits data when there's a collector, can't have multiple collectors and also can't store data whereas `Hot Flow` emits data even when there are no collectors attached to it, it can have multiple collectors and also can store data.
+```
+fun getColdFlow(): ColdFlow<T> {}
+fun getHotFlow(): HotFlow<T> {}
+```
+- `State Flow v/s Shared Flow` : Both flow types are examples of *Hot Flow*.
+  - `State Flow` : StateFlow needs an initial value and emits it as soon as collector starts collecting. It has the *value property* to check the current value, but also keeps the history of one value that we can fetch directly without collecting. StateFlow emits only distinctive values, and ignores repeated ones. It is similar to *LiveData* but without awareness of Android components lifecycle, ***repeatOnLifecycle*** scope can be used to add the lifecycle awareness to StateFlow. Ex: To store and show data from network calls so it retains value if orientation changes resulting in prohibiting the network call again.
+  - `SharedFlow` : SharedFlow doesn't needs an initial value, so does not emit any value by default, neither it supports *value property*. It can emit previous values too using *replay* operator. SharedFlow also emits all the value including the repeated ones too.
+  Ex: Show snackbars so it doesnt retains value if orientation changes and snackbar doesn't shows again.
+  ```kotlin
+  val stateFlow = MutableStateFlow(0)
+  val sharedFlow = MutableSharedFlow<Int>()
+  ```
+- Generally flow refresents *cold streams* but there's a hot stream subtype i.e. `SharedFlow`, also any flow can be turned into *hot* one by `stateIn` or `shareIn` operators, or by converting the flow into a hot channel via `produceIn` operator.
   
-[ref](https://medium.com/yemeksepeti-teknoloji/introduction-to-kotlin-flows-827f5a71ad7e) [ref](https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-flow/)
+[ref: Mastering Flow API](https://amitshekhar.me/blog/flow-api-in-kotlin)<br>[ref](https://medium.com/yemeksepeti-teknoloji/introduction-to-kotlin-flows-827f5a71ad7e)<br>[ref](https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-flow/)
 
 ### Dependency Injection
 [🔝](#table-of-contents)
