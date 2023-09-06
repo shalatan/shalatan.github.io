@@ -579,65 +579,65 @@ MVI (Model-View-Intent) is also a popular architecture in modern Android Develop
       `Upstream flow` : Flow produced by the operators that are called before the current operator whereas `Downstream flow` is Flow produced by operators that are called after the current operator.
       - `buffer()` : Normanlly, flows are sequential, that means the code of all the operators is executed in the same coroutine. Which means the total execution time is going to be the sum of execution times of all operators. Hence *buffer* creates a seperate coroutine during execution for the flow it applies to.
       - `zip()` : Zips the emissions of two flow emissions with a specified function and emits single item for each combination. Example: Merging two parallely running tasks and getting the results of both task in single callback when both are completed.
-      ```kotlin
-      fun runningTaskOne = Flow<String> { 
-        return flow {
-          delay(2000)
-          emit(one) 
-        }
-      }
-      fun runningTaskTwo = flow {
-        return flow {
-          delay(2000)
-          emit(two)
-        }
-      }
-
-      fun startTask() {
-        viewModelScope.launch {
-          longRunningTaskOne()
-            .zip(longRunningTaskTwo()) { resultOne resultTwo ->
-              return@zip resultOne+resultTwo
+        ```kotlin
+          fun runningTaskOne = Flow<String> { 
+            return flow {
+              delay(2000)
+              emit(one) 
             }
-            .flowOn(Dispatchers.Default)
-            .collect{
-
+          }
+          fun runningTaskTwo = flow {
+            return flow {
+              delay(2000)
+              emit(two)
             }
-        }
-      }
-      ```
+          }
+
+          fun startTask() {
+            viewModelScope.launch {
+              longRunningTaskOne()
+                .zip(longRunningTaskTwo()) { resultOne resultTwo ->
+                  return@zip resultOne+resultTwo
+                }
+                .flowOn(Dispatchers.Default)
+                .collect{
+
+                }
+            }
+          }
+        ```
     - `Terminal Operator` : Terminal operators are either suspending function such as *collect, single, reduce, toList etc* or *launchIn* operator that starts collection of the flow in the given scope. They are applied to the *upstream flow* and triggers execution of all operations. Execution of the flow is also called collecting the flow and is always performed in a suspending manner without actual blocking.
       - **`(c) Collector`** : Collect all the values in the stream as they're emitted. Is a suspend function and needs to be executed within a coroutine. It takes a lambda as a parameter that is called on every new value. Since it's a suspend function, the coroutine that calls collect may suspend until the flow is closed.
       - `count` : Count the values that matches specific conditions.
       - `reduce` : Apply a function to each item emitted and emit the final value
-      ```kotlin
-      val result = (1..5).asFlow()
-                  .reduce {a,b -> a+b}
-      print(result) 
-      //15
+        ```kotlin
+        val result = (1..5).asFlow()
+                    .reduce {a,b -> a+b}
+        print(result) 
+        //15
       ```
       - `fold` : 
-      ```kotlin
-      val count = flow.count{
+        ```kotlin
+          val count = flow.count{
 
-      }
-      val reduce= flow.reduce{accumulator, value->
+          }
+          val reduce= flow.reduce{accumulator, value->
 
-      }
-      ```
+          }
+        ```
 - `flowOn()` : Used to controlling the thread on which the task will be done.
-```kotlin
-val flow = flow {
-  (1..5).forEach {
-    emit(it)
-  }
-}.flowOn(Dispatchers.Default)
+  ```kotlin
+  val flow = flow {
+    (1..5).forEach {
+      emit(it)
+    }
+  }.flowOn(Dispatchers.Default)
 
-CoroutineScope(Dispatchers.Main).launch{
-  flow.collect {
-    print(it)
+  CoroutineScope(Dispatchers.Main).launch{
+    flow.collect {
+      print(it)
+    }
   }
-}
 ```
 - `Cold Flow v/s Hot Flow` : `Cold Flow` only emits data when there's a collector, can't have multiple collectors and also can't store data whereas `Hot Flow` emits data even when there are no collectors attached to it, it can have multiple collectors and also can store data.
 ```
