@@ -1,8 +1,28 @@
 # Java
 
-## Introduction
+<!-- vscode-markdown-toc -->
+* [Introduction](#Introduction)
+	* [Types of Programming Language:](#TypesofProgrammingLanguage:)
+	* [Object and Reference Variables](#ObjectandReferenceVariables)
+	* [Garbage Collection:](#GarbageCollection:)
+	* [How Java code executes:](#HowJavacodeexecutes:)
+	* [Architecture of Java:](#ArchitectureofJava:)
+* [Topics:](#Topics:)
+	* [Data types:](#Datatypes:)
+	* [Access Modifiers:](#AccessModifiers:)
+	* [Packages:](#Packages:)
+* [Keywords:](#Keywords:)
+* [Object Oriented Programming:](#ObjectOrientedProgramming:)
 
-### Types of Programming Language:
+<!-- vscode-markdown-toc-config
+	numbering=false
+	autoSave=true
+	/vscode-markdown-toc-config -->
+<!-- /vscode-markdown-toc -->
+
+## <a name='Introduction'></a>Introduction
+
+### <a name='TypesofProgrammingLanguage:'></a>Types of Programming Language:
 
 - `Procedural`
 - `Functional`
@@ -17,21 +37,21 @@
     - Perform type checking at runtime and might not show error till runtime.
     - No need to declare datatype of variables
 
-### Object and Reference Variables
+### <a name='ObjectandReferenceVariables'></a>Object and Reference Variables
 
 ![Untitled](res/obj_ref.png)
 
-### Garbage Collection:
+### <a name='GarbageCollection:'></a>Garbage Collection:
 
 When system removes all the objects from memory which don’t have any reference-variable pointing to them.
 
-### How Java code executes:
+### <a name='HowJavacodeexecutes:'></a>How Java code executes:
 
 ![Untitled](res/java_exec.png)
 
 Platform independent: Java is an independent language, while C/C++ are not cause C/C++ compiler generates .exe file which is machine code whereas, Java compiler converts it into .class (byte code) which is later converted to machine code using JVM (which is platform dependent)
 
-### Architecture of Java:
+### <a name='ArchitectureofJava:'></a>Architecture of Java:
 
 ![Untitled](res/java_arc.png)
 
@@ -60,38 +80,42 @@ Platform independent: Java is an independent language, while C/C++ are not cause
     1. after we get the .class file, class loader loads all the classes that are needed
     2. JVM sends code to Byte code verifier to check the  format of the code
 
-## Concepts:
+## <a name='Topics:'></a>Topics:
 
-1. `Data types`: 
-    - Primitive data type: Data types that are predefined by the language and store simple values like number, char, boolean, and always have a value.
-    - Non-Primitive data type: Data types created by programmer or Java to store complex values like String, Integer, Array, Interfaces, and can be null
-2. `Access Modifiers`:
-    - default: accessible in same package, use for variables that you don't want to use outisde the package
-    - public: accessible everywhere
-    - private: accessible only in that class, for sensitive data, use public getter and setter methods to access and modify
-    - protected: accessible only in subclass
+### <a name='Datatypes:'></a>Data types: 
 
-    |type|class|package|sublass|global|
-    |-|-|-|-|-|
-    |public|+|+|+|+|+|||
-    |protected|+|+|+|||||
-    |default|+|+||||||
-    |private|+|||||||
-3. `Packages`: Folders inside folders inside folders.
-    - User Defined:
-    - In-built:
-        - java.lang: 
-        - java.io: file reading/writing
-        - java.util: data structures, collections framework
-        - java.applet: 
-        - java.awt: gui
-        - java.net: networking
+- `Primitive data type`: Data types that are predefined by the language and store simple values like number, char, boolean, and always have a value.
+- `Non-Primitive data type`: Data types created by programmer or Java to store complex values like String, Integer, Array, Interfaces, and can be null
+
+### <a name='AccessModifiers:'></a>Access Modifiers:
+- `default`: accessible in same package, use for variables that you don't want to use outisde the package
+- `public`: accessible everywhere
+- `private`: accessible only in that class, for sensitive data, use public getter and setter methods to access and modify
+- `protected`: accessible only in subclass
+
+|type|class|package|sublass|global|
+|-|-|-|-|-|
+|public|+|+|+|+|+|||
+|protected|+|+|+|||||
+|default|+|+||||||
+|private|+|||||||
+
+### <a name='Packages:'></a>Packages:
+Folders inside folders inside folders.
+- User Defined:
+- In-built:
+    - java.lang: 
+    - java.io: file reading/writing
+    - java.util: data structures, collections framework
+    - java.applet: 
+    - java.awt: gui
+    - java.net: networking
     
-## Keywords:
+## <a name='Keywords:'></a>Keywords:
 
 - `new`: dynamically allocates memory and returns a reference to it
 - `this`: ****
-- `final`: 
+- `final`: non-access modifier used to make classes, methods, attributes non-changeable, impossible to inherit or override. Useful when you want a variable to always store the same value.
 - `static`: When a member is declared static, it can be accessed before any of the object of class is created, and without having reference of any its object.
     1. we can not call non-static functions from a static function, because it requires an instance.
     2. But we can call it referencing their instance in static context. 
@@ -111,13 +135,13 @@ Platform independent: Java is an independent language, while C/C++ are not cause
 - `super`: refers to super (parent) objects, it is used to call superclass methods and to access superclass constructor. By default it points to Object class.
         
 
-## Object Oriented Programming:
+## <a name='ObjectOrientedProgramming:'></a>Object Oriented Programming:
 
 - `Class`: User-defined template or prototype, which represents the set of properties and method functions.
     <br>
     - **Types of class**
         - `Singleton Class`: When only one instance of class can exist<br>
-            ```java
+        ```java
             public class Singleton {
             private Singleton() {}
                 
@@ -128,11 +152,19 @@ Platform independent: Java is an independent language, while C/C++ are not cause
                 return instance;
                 }
             }
-            ```
+        ```
         - `Abstract Class`: 
-            ```java
-            public class java()
-            ```
+            -   Classes whose objects can't be created, hence need to be inherited from other classes to be used.
+            -   Can contain **Abstract methods**, methods which does not have a body, hence body is provided by the subclass and also **regular methods** which have a body. 
+            -   Can have constructor and static methods, and also final methods which will force the sublass not to change the body of the method.
+        ```java
+            public abstract class Car(){
+                public abstract void company()
+                public void price(){
+
+                }
+            }
+        ```
 - `Objects`: Instance of class
 - `Inheritance`: When one object inherit aka acquire all the properties and behaviours of parent object.
    - Types of inheritance
@@ -148,4 +180,7 @@ Platform independent: Java is an independent language, while C/C++ are not cause
         2. Runtime/Dynamic: Achieved by method overriding.
     - Lamguages which don't support polymorphism are know as Object-based programming language instead of Object-oriented programming language.
 - `Encapsulation`: Wrapping up the implementation of the data members and methods in class.
-- `Abstraction`: Hiding unnecessary details and showing only valuable information.
+- `Abstraction`: Hiding implementation details and showing only functionality to the user.
+    Ways to achieve abstraction:
+    1. Abstract class (0 to 100%)
+    2. Interface (100%)

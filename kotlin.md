@@ -2,6 +2,7 @@
 
 ## Table of contents
 - [Basics](#basic)
+    - [Visiblity modifiers](#visiblity-modifiers)
 - [DSA](#dsa)
     - [Array](#arrays)
     - [Loop](#loop) 
