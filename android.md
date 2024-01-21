@@ -1,3 +1,5 @@
+# Android
+
 ### Guide
 - Click 🔝 Icons To Jump To Table of Contents
 - Topic With ⭐ Icons are questions asked from me in Interviews, Click on it to jump to ***Interview Questions Section***
@@ -638,12 +640,12 @@ MVI (Model-View-Intent) is also a popular architecture in modern Android Develop
       print(it)
     }
   }
-```
+  ```
 - `Cold Flow v/s Hot Flow` : `Cold Flow` only emits data when there's a collector, can't have multiple collectors and also can't store data whereas `Hot Flow` emits data even when there are no collectors attached to it, it can have multiple collectors and also can store data.
-```
-fun getColdFlow(): ColdFlow<T> {}
-fun getHotFlow(): HotFlow<T> {}
-```
+  ```kotlin
+  fun getColdFlow(): ColdFlow<T> {}
+  fun getHotFlow(): HotFlow<T> {}
+  ```
 - `State Flow v/s Shared Flow` : Both flow types are examples of *Hot Flow*.
   - `State Flow` : StateFlow needs an initial value and emits it as soon as collector starts collecting. It has the *value property* to check the current value, but also keeps the history of one value that we can fetch directly without collecting. StateFlow emits only distinctive values, and ignores repeated ones. It is similar to *LiveData* but without awareness of Android components lifecycle, ***repeatOnLifecycle*** scope can be used to add the lifecycle awareness to StateFlow. Ex: To store and show data from network calls so it retains value if orientation changes resulting in prohibiting the network call again.
   - `SharedFlow` : SharedFlow doesn't needs an initial value, so does not emit any value by default, neither it supports *value property*. It can emit previous values too using *replay* operator. SharedFlow also emits all the value including the repeated ones too.
@@ -653,6 +655,7 @@ fun getHotFlow(): HotFlow<T> {}
   val sharedFlow = MutableSharedFlow<Int>()
   ```
 - Generally flow refresents *cold streams* but there's a hot stream subtype i.e. `SharedFlow`, also any flow can be turned into *hot* one by `stateIn` or `shareIn` operators, or by converting the flow into a hot channel via `produceIn` operator.
+- Difference between `launchIn` and `collect`: Use `collect` when you want to collect and process Flow emissions within a coroutine. Use `launchIn` when you want to launch a new coroutine to collect Flow emissions and manage its lifecycle separately.
   
 [ref: Mastering Flow API](https://amitshekhar.me/blog/flow-api-in-kotlin)<br>[ref](https://medium.com/yemeksepeti-teknoloji/introduction-to-kotlin-flows-827f5a71ad7e)<br>[ref](https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-flow/)
 

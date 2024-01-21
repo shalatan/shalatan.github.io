@@ -1,14 +1,28 @@
-## Table of contents
-- [Array](#arrays)
-- [Loop](#loop) 
+# KOTLIN
 
-## Arrays
+## Table of contents
+- [Basics](#basic)
+- [DSA](#dsa)
+    - [Array](#arrays)
+    - [Loop](#loop) 
+
+## Basic
+
+### Visiblity Modifiers
+- `public`: default visibility modifier, are accessible everywhere, both, within and outside the module.
+- `internal`: visibile only within the same module
+- `protected`:  allows a declaration to be accessible within the same class and its subclasses.
+- `private`: only visible within the scope where they are declared.
+
+## DSA
+
+### Arrays
 - `Array<Int>` is an Integer[], means it will be boxed with Integer.parseInt()
 - `IntArray` is an int[], in it no boxing will occur, becuase it translates to Java primitive array.
     - val arr = IntArray(10)
     - val arr = intArrayOf(1,2,3,4,5)
 
-## HashSet
+### HashSet
 ```kotlin
 var hashSet = hashSetOf<Int>()
 var hashSet = hashSetOf<Int>(1,2,3,4,5,6)
