@@ -1,3 +1,5 @@
+# Misc
+
 ## Table of Contents
 - [Git](#git)
 - [Heroku](#heroku)

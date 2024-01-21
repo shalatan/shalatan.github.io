@@ -1,4 +1,4 @@
-# KOTLIN
+# Kotlin
 
 ## Table of contents
 - [Basics](#basic)
