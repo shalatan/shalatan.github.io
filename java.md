@@ -13,6 +13,7 @@
 	* [Packages:](#Packages:)
 * [Keywords:](#Keywords:)
 * [Object Oriented Programming:](#ObjectOrientedProgramming:)
+* [Interface](#Interface)
 
 <!-- vscode-markdown-toc-config
 	numbering=false
@@ -155,7 +156,7 @@ Folders inside folders inside folders.
         ```
         - `Abstract Class`: 
             -   Classes whose objects can't be created, hence need to be inherited from other classes to be used.
-            -   Can contain **Abstract methods**, methods which does not have a body, hence body is provided by the subclass and also **regular methods** which have a body. 
+            -   Can contain **Abstract methods**, methods which does not have a body, where body is provided by the subclass and also **regular methods** which have a body. 
             -   Can have constructor and static methods, and also final methods which will force the sublass not to change the body of the method.
         ```java
             public abstract class Car(){
@@ -170,7 +171,7 @@ Folders inside folders inside folders.
    - Types of inheritance
         1. Single Level: One class extends another class. A-> B
         2. Multilevel: Multiple level of single inheritance. A-> B-> C
-        3. Multiple (!java): One class extends more than one class. A-> C <-B (`Alternative: Interfaces`)
+        3. Multiple (!java): One class extends more than one class. A-> C <-B (**Alternative: [Interfaces](#interface)**)
         4. Hierarchial: One class is inherited by many classes. A-> B, A-> C, A-> D
         5. Hybrid (!java): Combination of single and multiple inheritance.
             A-> B, B-> C <-D, D <-A
@@ -184,3 +185,31 @@ Folders inside folders inside folders.
     Ways to achieve abstraction:
     1. Abstract class (0 to 100%)
     2. Interface (100%)
+
+## <a name='Interface'></a>Interface
+Interface is a mechanism to achieve abstraction and multiple inheritance in Java
+- Contains only abstract methods, variables are final and static, as we can't create object of Interface, hence can't intialize them using constructors.
+- Class can implement multiple interfaces but can only extend one Abstract class.
+
+```java
+public interface Engine{
+    abstract void start();
+    //by default methods are abstract in interfaces
+    void stop();
+    //static methods should always have a body, as they can't be inherited or overridden
+    static void name(){
+        System.out.print("CarName");
+    }
+}
+
+public class Car implements Engine{
+    @Override
+    public void stop(){}
+    @Override
+    public void start(){}
+    public static void main(String[] args){
+        Engine.name();
+    }
+    
+}
+```
