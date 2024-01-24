@@ -1,7 +1,9 @@
 ## <a name='Kotlin'></a>Kotlin
 
+## <a name='Tableofcontents'></a>Table of contents
 <!-- vscode-markdown-toc -->
 * [Kotlin](#Kotlin)
+* [Table of contents](#Tableofcontents)
 * [Topics](#Topics)
 	* [Advantages Over Java](#AdvantagesOverJava)
 	* [Basics](#Basics)
@@ -14,8 +16,8 @@
 * [DSA](#DSA)
 	* [Arrays](#Arrays)
 	* [HashSet](#HashSet)
-* [HashMap](#HashMap)
-* [Loop](#Loop)
+	* [HashMap](#HashMap)
+	* [Loop](#Loop)
 
 <!-- vscode-markdown-toc-config
 	numbering=false
@@ -32,7 +34,22 @@
   - `Extension Functions`
   - `KMM`
   - `Concise Code`
-  - `Support for Null Safety`
+  - `Support for Null Safety`: Kotlin provides Safe Call (?.), Elvis (?:) and Not Null Assertion (!!) operators which define what needs to be done in case of a null encounter.
+    - Safe call (?.):  Operator that simplifies things by only doing an action when the specified reference holds non-null value.
+        ```kotlin
+        name?.toLowerCase()
+        OR
+        if(name!=null) name.toLowerCase()
+        else null
+        ```
+    - Elvis Operator(?:): Operator used to return a non-null or default value. It returns the left value if it's not null, otherwise returns the right value.
+        ```kotlin
+        val a = b ?: "defaultValue"
+        OR
+        val a = if (b!=null) b
+                else "defaultValue"
+        ```
+    - Not null assertion Operator(!!): 
 
 ### <a name='Basics'></a>Basics
 [🔝](#table-of-contents)
@@ -49,7 +66,7 @@
   - `var` : variable value can be changed
   - `val` : variable value cannot be changed, sets at runtime
   - `cont val` : makes val compile time constant
-  - `open` : make the class open for inheritance by other classes
+  - `open` : make the class open for inheritance by other classes as classes are final by default in kotlin.
   - `when` : substitute for the *switch case* of java
     ```kotlin
     when(a){
@@ -172,6 +189,20 @@ Functions whose sole purpose is to execute a block of code within the context of
   |`apply`|this   |context|Object Configuration|
   |`also` |it     |context|Addtional Effects|
 
+## Questions
+
+- How to concatenate two strings in Kotlin? 
+  - Using String Interpolation: 
+  - Using + or plus() operator:
+  - Using StringBuilder:
+  ```kotlin
+  val a = "dsa"
+  val b = "algorithm"
+  val si = "$a $b"
+  val p1 = a+b
+  val p2 = a.plus(b)
+  val sb = StringBuilder().append(a).append(b).toString()
+  ```
 
 ## <a name='DSA'></a>DSA
 
@@ -212,7 +243,7 @@ hashSet.clear()
 hashSet.size
 ```
 
-## <a name='HashMap'></a>HashMap
+### <a name='HashMap'></a>HashMap
 ```kotlin
 var hashMap: HashMap<String,Int>= HashMap<String,Int>()
 
@@ -239,7 +270,7 @@ hashMap.containsValue(value)
 hashMap.remove(key)
 }
 ```
-## <a name='Loop'></a>Loop
+### <a name='Loop'></a>Loop
 ```kotlin
 - val nums = {1,2,3,4,5}
 - for(num in nums) l̥

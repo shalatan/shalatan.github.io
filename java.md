@@ -7,10 +7,11 @@
 	* [Garbage Collection:](#GarbageCollection:)
 	* [How Java code executes:](#HowJavacodeexecutes:)
 	* [Architecture of Java:](#ArchitectureofJava:)
-* [Topics:](#Topics:)
+* [Topics](#Topics)
 	* [Data types:](#Datatypes:)
-	* [Access Modifiers:](#AccessModifiers:)
-	* [Packages:](#Packages:)
+	* [Access Modifiers](#AccessModifiers)
+	* [Packages](#Packages)
+	* [Object Cloning](#ObjectCloning)
 * [Keywords:](#Keywords:)
 * [Object Oriented Programming:](#ObjectOrientedProgramming:)
 * [Interface](#Interface)
@@ -81,14 +82,14 @@ Platform independent: Java is an independent language, while C/C++ are not cause
     1. after we get the .class file, class loader loads all the classes that are needed
     2. JVM sends code to Byte code verifier to check the  format of the code
 
-## <a name='Topics:'></a>Topics:
+## <a name='Topics'></a>Topics
 
-### <a name='Datatypes:'></a>Data types: 
+### <a name='Datatypes:'></a>Data types:
 
 - `Primitive data type`: Data types that are predefined by the language and store simple values like number, char, boolean, and always have a value.
 - `Non-Primitive data type`: Data types created by programmer or Java to store complex values like String, Integer, Array, Interfaces, and can be null
 
-### <a name='AccessModifiers:'></a>Access Modifiers:
+### <a name='AccessModifiers'></a>Access Modifiers
 - `default`: accessible in same package, use for variables that you don't want to use outisde the package
 - `public`: accessible everywhere
 - `private`: accessible only in that class, for sensitive data, use public getter and setter methods to access and modify
@@ -101,7 +102,7 @@ Platform independent: Java is an independent language, while C/C++ are not cause
 |default|+|+||||||
 |private|+|||||||
 
-### <a name='Packages:'></a>Packages:
+### <a name='Packages'></a>Packages
 Folders inside folders inside folders.
 - User Defined:
 - In-built:
@@ -111,8 +112,13 @@ Folders inside folders inside folders.
     - java.applet: 
     - java.awt: gui
     - java.net: networking
+
+### <a name='ObjectCloning'></a>Object Cloning
+
+- `Shallow copy`: Primitive Data types would be copied as it is, and non-primitive data types are not exactly copied but reference variables points to the same object.
+- `Deep copy`: Both data types would be copied as it is.
     
-## <a name='Keywords:'></a>Keywords:
+## <a name='Keywords'></a>Keywords
 
 - `new`: dynamically allocates memory and returns a reference to it
 - `this`: ****
@@ -136,7 +142,7 @@ Folders inside folders inside folders.
 - `super`: refers to super (parent) objects, it is used to call superclass methods and to access superclass constructor. By default it points to Object class.
         
 
-## <a name='ObjectOrientedProgramming:'></a>Object Oriented Programming:
+## <a name='ObjectOrientedProgramming'></a>Object Oriented Programming
 
 - `Class`: User-defined template or prototype, which represents the set of properties and method functions.
     <br>
