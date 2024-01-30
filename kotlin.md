@@ -206,11 +206,26 @@ Functions whose sole purpose is to execute a block of code within the context of
 
 ## <a name='DSA'></a>DSA
 
+### Tips
+- `Find number of digits in number`: (Math.log10(num))
+
+### String
+```kotlin
+var str = "KOTLIN"
+
+str.size    //5
+```
+
 ### <a name='Arrays'></a>Arrays
 - `Array<Int>` is an Integer[], means it will be boxed with Integer.parseInt()
 - `IntArray` is an int[], in it no boxing will occur, becuase it translates to Java primitive array.
     - val arr = IntArray(10)
-    - val arr = intArrayOf(1,2,3,4,5)
+    - 
+```kotlin
+val arr = intArrayOf(1,2,3,4,5)
+
+arr.length    //4
+```
 
 ### <a name='HashSet'></a>HashSet
 ```kotlin

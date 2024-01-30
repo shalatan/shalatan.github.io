@@ -1,4 +1,3 @@
-## <a name='Anndroid'></a>Anndroid
 
 ## <a name='Guide'></a>Guide
 - Click 🔝 Icons To Jump To Table of Contents
@@ -7,7 +6,6 @@
 
 ## <a name='TableofContents'></a>Table of Contents
 <!-- vscode-markdown-toc -->
-* [Anndroid](#Anndroid)
 * [Guide](#Guide)
 * [Table of Contents](#TableofContents)
 * [Topics](#Topics)
@@ -318,7 +316,11 @@ MVI (Model-View-Intent) is also a popular architecture in modern Android Develop
 ### <a name='Coroutines'></a>Coroutines
 [🔝](#table-of-contents)
 
-***Coroutines are a type of light-weight thread that can be used to improve the performance of concurrent code.***
+***Coroutines are powerful feature introduced in Kotlin to handle asyncgronous programming in a more concise and efficient manner. In context of Android development, corotuines provide a way to perform asynchronous operations, such as network requests, database queries, without blocking the main thread.***
+- Advantages of coroutines:
+  - **Main thread safety**: Coroutines allows developers to perform asynchronous tasks without blocking the main thread.
+  - **Simplified asynchronous code**: Coroutines provide a more concise and readable way to write asynchronous code compared to traditional callback-based approaches. This leads to code that is easier to understand, maintain, and debug.
+  - **Integration with Lifecycles**: Coroutines can be seamlessly integrated with the Android components lifecycle like Activity or fragment, helping to avoid memory leaks and waste of resources,
 - `suspend` : Keyword to mark a function available to coroutines, *suspends* exceution until the result is ready then it resumes where it left off with the result. ***Using suspend doesn’t tell Kotlin to run a function on a background thread.***
 - `Dispatchers` : Context
   - `Dispathcers.Main` : Lightweight tasks eg - network calls, database queries, won't block the main thread while suspended.
@@ -326,10 +328,29 @@ MVI (Model-View-Intent) is also a popular architecture in modern Android Develop
   - `Dispathcers.Default` : For CPU intensive tasks.
   - `Dispathcers.Unconfined` : Runs coroutines unconfined on no specific thread, not recommended to use. 
 - `CoroutineScopes` : Keeps track of coroutines, even suspended ones, can cancel all of the coroutines started in it.
-  - `globalScope` : Coroutine lifecycle will be associated with the application lifecycle.
+  - `globalScope` : Top level Coroutine scope that will be associated with the application lifecycle. Since it's alive along the application lifetime, it's a *Singleton* object
   - `viewModelScope` : Coroutine scopre tied to *viewModel*. Extension function of the *viewModel* class, bound to *Dispatchers.Main* and will automatically be cancelled when viewModel is cleared.
-  - `lifecycleScope` : 
-- *Room* and *Retrofit* make suspending functions *main-safe*, it's safe to call these suspend functions from *Dispathers.Main*, even thought they fetch from network and write to database. Do not use ***Dispatchers.IO***.
+  - `lifecycleScope` : Bound to lifecycle of the Activity/Fragment to avoid memory leak and resource waste.
+  > **Q**: What if we want to cancel only some coroutines and retain some other coroutines inside the scope? <br>
+  **Ans**: We can define Job using launch and cancel it whenever we want. Job is actually coroutine itself.
+  ```kotlin
+  private lateinit var coroutineScope: CoroutineScope
+  private lateinit var job1: Job
+  private lateinit var job2: Job
+
+  private fun startCoroutine(){
+    coroutineScope = CoroutineScope(Dispatchers.Main)
+    job1 = coroutineScope.launch {  println("job1") }
+    job2 = coroutineScope.launch {  println("job2") }
+  }
+
+  private fun cancel() {
+    if (::mJob1.isInitialized && mJob1.isActive) { 
+      mJob1.cancel() 
+      }
+  }
+  ```
+- *Room* and *Retrofit* make suspending functions *main-safe*, it's safe to call these suspend functions from *Dispathers.Main*, even though they fetch from network and write to database. Do not use ***Dispatchers.IO***.
 - `Builders` : 
   - `runBlocking{}` : Runs a new coroutine and *blocks* the current thread until its completion.
   - `runCatching{}` :
@@ -355,8 +376,9 @@ MVI (Model-View-Intent) is also a popular architecture in modern Android Develop
   ***Cancels whenever any of the children coroutine fails*** meaning if one network request fails, all of the others request would be cancelled immediately.
   - `supervisorScope` : supervisorScope builder won't cancel children when one them fails.
   
-- [⭐](#interview-questions)
-  `Difference between Threads & Coroutines` : Threads are expensive, require context switches which are costly, and number of threads that can be launched is limited by the underlying operating system whereas, Coroutines can be thought of as light-weight threads, means the creating of coroutines doesn't allocate new thread, instead they use predefined thread pools and smart scheduling for the purpose of which task to execute next and which tasks later.
+> [⭐](#interview-questions)
+  **Q**: What is a difference between Threads & Coroutines? <br>
+  **Ans**: Threads are expensive, require context switches which are costly, and number of threads that can be launched is limited by the underlying operating system whereas, Coroutines can be thought of as light-weight threads, means the creating of coroutines doesn't allocate new thread, instead they use predefined thread pools and smart scheduling for the purpose of which task to execute next and which tasks later.
 
 ### <a name='Flow'></a>Flow
 [🔝](#table-of-contents)
@@ -401,7 +423,7 @@ MVI (Model-View-Intent) is also a popular architecture in modern Android Develop
         print(it)
       }
       ```
-  - **`(b) Operators: `** The operator helps in transforming the data from one format to another.
+  - **`(b) Operators:`** The operator helps in transforming the data from one format to another.
     - `Intermediate Operator` : Used to modifying the data flows between the producer and consumer -OR- These operators are functions that, when applied to a stream of data, set up a chain of operations that aren't executed until the values are consumed in the future and **are executed lazily**
       ```kotlin
       fun main() = runBlocking { 
