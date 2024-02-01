@@ -316,17 +316,17 @@ MVI (Model-View-Intent) is also a popular architecture in modern Android Develop
 ### <a name='Coroutines'></a>Coroutines
 [🔝](#table-of-contents)
 
-***Coroutines are powerful feature introduced in Kotlin to handle asyncgronous programming in a more concise and efficient manner. In context of Android development, corotuines provide a way to perform asynchronous operations, such as network requests, database queries, without blocking the main thread.***
+***Coroutines are powerful feature introduced in Kotlin to handle asyncgronous programming in a more concise and efficient manner. In context of Android development, coroutines provide a way to perform asynchronous operations, such as network requests, database queries, without blocking the main thread.***
 - Advantages of coroutines:
   - **Main thread safety**: Coroutines allows developers to perform asynchronous tasks without blocking the main thread.
   - **Simplified asynchronous code**: Coroutines provide a more concise and readable way to write asynchronous code compared to traditional callback-based approaches. This leads to code that is easier to understand, maintain, and debug.
   - **Integration with Lifecycles**: Coroutines can be seamlessly integrated with the Android components lifecycle like Activity or fragment, helping to avoid memory leaks and waste of resources,
 - `suspend` : Keyword to mark a function available to coroutines, *suspends* exceution until the result is ready then it resumes where it left off with the result. ***Using suspend doesn’t tell Kotlin to run a function on a background thread.***
 - `Dispatchers` : Context
-  - `Dispathcers.Main` : Lightweight tasks eg - network calls, database queries, won't block the main thread while suspended.
-  - `Dispathcers.IO` : For heavy IO work, eg - long running database queries.
-  - `Dispathcers.Default` : For CPU intensive tasks.
-  - `Dispathcers.Unconfined` : Runs coroutines unconfined on no specific thread, not recommended to use. 
+  - `Dispatchers.Main` : Lightweight tasks eg - network calls, database queries, won't block the main thread while suspended. Common when you need to perform UI-related tasks or update the user interface from coroutines.
+  - `Dispatchers.IO` : For heavy IO work such as reading from or writing to files, making network requests, or interacting with databases.
+  - `Dispatchers.Default` : For CPU intensive tasks. It's suitable for computational work or network requests that don't require interaction with the UI.
+  - `Dispatchers.Unconfined` : Runs coroutines unconfined on no specific thread, not recommended to use. 
 - `CoroutineScopes` : Keeps track of coroutines, even suspended ones, can cancel all of the coroutines started in it.
   - `globalScope` : Top level Coroutine scope that will be associated with the application lifecycle. Since it's alive along the application lifetime, it's a *Singleton* object
   - `viewModelScope` : Coroutine scopre tied to *viewModel*. Extension function of the *viewModel* class, bound to *Dispatchers.Main* and will automatically be cancelled when viewModel is cleared.
@@ -352,16 +352,14 @@ MVI (Model-View-Intent) is also a popular architecture in modern Android Develop
   ```
 - *Room* and *Retrofit* make suspending functions *main-safe*, it's safe to call these suspend functions from *Dispathers.Main*, even though they fetch from network and write to database. Do not use ***Dispatchers.IO***.
 - `Builders` : 
-  - `runBlocking{}` : Runs a new coroutine and *blocks* the current thread until its completion.
-  - `runCatching{}` :
+  - `runBlocking{}` : Is used to create a new coroutine that blocks the current thread until all its child coroutines complete.
   - `launch{}` : ***Launch is a bridge from regular functions into coroutines.*** Will start a new coroutine that is *fire and forget* - that means it won't return the result to the caller.
   Launches a new coroutine without blocking the current thread and returns a reference to the coroutine as a *Job*, which can be used to cancel the corutine.
   - `async{}` : Will start a new coroutine and it allows us to return a result with a suspended function called `await`. Hence, expects that we will eventually call `await` to get a result(or excecption) so it won't throw exceptions by default.
-- `withContext{}` : Calls the specified suspending block with a given coroutine context, suspends until it completes, and returns the result. ***Can be used to switch between dispatchers/contexts of coroutine***
+  - `coroutineScope` : Is used to create a new coroutine scope and wait for all its child coroutines to complete. It's similar to runBlocking but doesn't block the thread it's called on
+  - `withContext{}` : Is used to switch the coroutine's context temporarily. It's useful for changing the thread or coroutine dispatcher within a coroutine. This builder allows you to execute code in a different context without starting a new coroutine.
   ```kotlin
-  withContext(Dispatcher.Main) {
-
-  }
+  withContext(Dispatcher.Main) { }
   ```
 - `Structured Concurrency` : *A parent coroutine scope having children coroutine scopes*. It gurantees that when a suspend function returns, all of its work is done and also when a coroutine errors, its caller or scope is notified.
   ```kotlin
@@ -372,6 +370,7 @@ MVI (Model-View-Intent) is also a popular architecture in modern Android Develop
     }
   }
   ```
+  - `CoroutineScope` : Coroutines launched within a CoroutineScope are automatically cancelled when the associated lifecycle component is destroyed, helping to manage the lifecycle of coroutines.
   - `coroutineScope` : coroutineScope builder will suspend itself until all coroutines started inside of it are complete, hence there's no way to return from `callTwoAPI` until all coroutines are completed.
   ***Cancels whenever any of the children coroutine fails*** meaning if one network request fails, all of the others request would be cancelled immediately.
   - `supervisorScope` : supervisorScope builder won't cancel children when one them fails.

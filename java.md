@@ -193,7 +193,8 @@ Folders inside folders inside folders.
     2. Interface (100%)
 
 ## <a name='Interface'></a>Interface
-Interface is a mechanism to achieve abstraction and multiple inheritance in Java
+Interface is a mechanism to achieve abstraction and multiple inheritance in Java.<br>
+**An interface is a blueprint for a class that defines a set of abstract methods and properties that must be implemented by any class that implements the interface**
 - Contains only abstract methods, variables are final and static, as we can't create object of Interface, hence can't intialize them using constructors.
 - Class can implement multiple interfaces but can only extend one Abstract class.
 
