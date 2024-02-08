@@ -223,8 +223,22 @@ str.size    //5
     - 
 ```kotlin
 val arr = intArrayOf(1,2,3,4,5)
+var arr = IntArray(5) {0}   // {0,0,0,0,0}
 
-arr.length    //4
+arr.size    //4
+```
+
+### Matrix
+```kotlin
+//declare two dimensional array
+var matrix = Array(2) { Array<Int>(2) {0} }
+println(matrix.contentDeepToString())
+: [[0,0],[0,0]]
+
+//declare three dimensional array
+var matrix = Array(3) { Array(3) { Array<Int>(3) {0} }}
+println(matrix.contentDeepToString())
+: [[[0, 0, 0], [0, 0, 0], [0, 0, 0]], [[0, 0, 0], [0, 0, 0], [0, 0, 0]], [[0, 0, 0], [0, 0, 0], [0, 0, 0]]]
 ```
 
 ### <a name='HashSet'></a>HashSet

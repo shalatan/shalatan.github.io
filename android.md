@@ -1,3 +1,4 @@
+Android
 
 ## <a name='Guide'></a>Guide
 - Click 🔝 Icons To Jump To Table of Contents
@@ -64,7 +65,7 @@
 - [⭐](#interview-questions)
   `Context` : It is the context of the current state of application/class. Used to get information regarding the activity and application. Used to access *Resources, Databases, SharedPreferences*
   - `Application Context` : Tied to lifecycle of an application, can be used to create singleton objects.
-  - `Application Context` : Tied to lifecycle of an activity, should be used when passing the context in activity.
+  - `Activity Context` : Tied to lifecycle of an activity, should be used when passing the context in activity.
 - [⭐](#interview-questions)
   `Application Class` : Base class within an Android app that contains all other components such as activities and services. It is instantiated before any other class when the process for your application is created.
 - `Android Manifest` : Describes essential information about the application such as package name, entry points, components, permissions, and metadata.
@@ -83,9 +84,8 @@ App components are like entry points that allow systems and users to interact wi
 
 ### <a name='Intents'></a>Intents
 [🔝](#table-of-contents)
-
-An asynchronous message that activates 3 of the 4 android app components i.e. Activities, Services, Broadcast Receivers.
-- `Explicit Intents` : Requires specified information, which targets an application's package name.
+**Intent is a messaging object that is used to request an action from another app component.**
+- `Explicit Intents` : Explicit Intents are used to start a specific component within the same application or another application by explicitly specifying the target component's class name.
 - `Implicit Intents` : Implicit Intents declares a general action to perform like showing gallery image, opening URL on web browser, you can use implicit intent to request action to the android system. Then android system shows all the appropiate components for that request if found.
 
 ### <a name='LaunchModes'></a>Launch Modes
