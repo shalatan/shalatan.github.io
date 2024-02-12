@@ -2,18 +2,18 @@
 
 <!-- vscode-markdown-toc -->
 * [Introduction](#Introduction)
-	* [Types of Programming Language:](#TypesofProgrammingLanguage:)
+	* [Types of Programming Language](#TypesofProgrammingLanguage)
 	* [Object and Reference Variables](#ObjectandReferenceVariables)
-	* [Garbage Collection:](#GarbageCollection:)
-	* [How Java code executes:](#HowJavacodeexecutes:)
-	* [Architecture of Java:](#ArchitectureofJava:)
+	* [Garbage Collection](#GarbageCollection)
+	* [How Java code executes](#HowJavacodeexecutes)
+	* [Architecture of Java](#ArchitectureofJava)
 * [Topics](#Topics)
-	* [Data types:](#Datatypes:)
+	* [Data types](#Datatypes)
 	* [Access Modifiers](#AccessModifiers)
 	* [Packages](#Packages)
 	* [Object Cloning](#ObjectCloning)
-* [Keywords:](#Keywords:)
-* [Object Oriented Programming:](#ObjectOrientedProgramming:)
+* [Keywords](#Keywords)
+* [Object Oriented Programming](#ObjectOrientedProgramming)
 * [Interface](#Interface)
 
 <!-- vscode-markdown-toc-config
@@ -24,7 +24,7 @@
 
 ## <a name='Introduction'></a>Introduction
 
-### <a name='TypesofProgrammingLanguage:'></a>Types of Programming Language:
+### <a name='TypesofProgrammingLanguage'></a>Types of Programming Language
 
 - `Procedural`
 - `Functional`
@@ -43,17 +43,17 @@
 
 ![Untitled](res/obj_ref.png)
 
-### <a name='GarbageCollection:'></a>Garbage Collection:
+### <a name='GarbageCollection'></a>Garbage Collection
 
 When system removes all the objects from memory which don’t have any reference-variable pointing to them.
 
-### <a name='HowJavacodeexecutes:'></a>How Java code executes:
+### <a name='HowJavacodeexecutes'></a>How Java code executes
 
 ![Untitled](res/java_exec.png)
 
 Platform independent: Java is an independent language, while C/C++ are not cause C/C++ compiler generates .exe file which is machine code whereas, Java compiler converts it into .class (byte code) which is later converted to machine code using JVM (which is platform dependent)
 
-### <a name='ArchitectureofJava:'></a>Architecture of Java:
+### <a name='ArchitectureofJava'></a>Architecture of Java
 
 ![Untitled](res/java_arc.png)
 
@@ -84,7 +84,7 @@ Platform independent: Java is an independent language, while C/C++ are not cause
 
 ## <a name='Topics'></a>Topics
 
-### <a name='Datatypes:'></a>Data types:
+### <a name='Datatypes'></a>Data types
 
 - `Primitive data type`: Data types that are predefined by the language and store simple values like number, char, boolean, and always have a value.
 - `Non-Primitive data type`: Data types created by programmer or Java to store complex values like String, Integer, Array, Interfaces, and can be null

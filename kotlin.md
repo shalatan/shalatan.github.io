@@ -65,7 +65,7 @@
 
   - `var` : variable value can be changed
   - `val` : variable value cannot be changed, sets at runtime
-  - `cont val` : makes val compile time constant
+  - `cont val` : makes val compile time constant, hence must be known at compile time
   - `open` : make the class open for inheritance by other classes as classes are final by default in kotlin.
   - `when` : substitute for the *switch case* of java
     ```kotlin
