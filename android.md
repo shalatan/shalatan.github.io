@@ -35,7 +35,7 @@
 		* [Hilt](#Hilt)
 	* [RecyclerView](#RecyclerView)
 	* [WorkManager](#WorkManager)
-	* [Notification](#Notification)
+	* [Thread](#Thread)
 	* [Compose](#Compose)
 	* [Differences](#Differences)
 	* [Interview Questions](#InterviewQuestions)
@@ -591,11 +591,33 @@ DI framework build on top of *Dagger*, brings benefits like **compile time corre
 *WorkManager aims to simplify the developer experience by providing a first-class API for system-driven background processing. It is intended for background jobs that should run even if the app is no longer in the foreground. Where possible, it uses JobScheduler or Firebase JobDispatcher to do the work; if your app is in the foreground, it will even try to do the work directly in your process.*
 - `Components`
 
-### <a name='Notification'></a>Notification
+### <a name='Thread'></a>Thread
 [🔝](#table-of-contents)
+**It is a lightweight process that an operating system can schedule and run concurrently**<br>
+- `Types of thread`:
+  - `OS Thread`: Based on OS concept, A thread is a basic unit of CPU utilization. It is comprises of Registers, Program Counter, ThreadID and a Stack. They are also known as Kernel Thread, as they are controlled by Kernel.
+  - `User Thread`: Threads that are controlled by users, but in order for the kernel to process the operations in a user thread, each user thread should be passed into the kernel after they are created.
+- User Thread in Java: In java, user thread is defined as ThreadClass, which is an implementation of Runnable.
+- `Why do we need thread?`: Android application runs on a single thread by default, called the Main or UI thread, which is responsible for UI interactions and drawing on screen. However performing long, heavy tasks on this thread might lead to ANR, unresponsivenss, bad user interaction, hence we creatye background thread to offload heavy tasks.
 
-- `NotificationManager` : A system service which helps in displaying the content as notification. It is responsible for sending a notification, updating its content, and cancelling the notification.
-- `NotificationChannel` : Way to group notifications, making it easy for developers and users to control all of the notifications in the channel.
+- `Accessing UI from background/worker thread`: As Android UI toolkit is not thread-safe, we should manipulate UI always from UI/Main thread and not from any background thread. But in case we need to access the UI threads from other threads we can use
+  - Activity.runOnUiThread(Runnable)
+  - View.post(Runnable)
+  - View.postDelayed(Runnable, long)
+
+- `How to create a thread?`:
+  - Extend ***Thread*** class
+  - Implement a ***Runnable*** and pass it into a Thread object.
+- `What are Thread and Runnable?`: Thread is a class that implements Runnable, which is a single method interface that has an abstract function called run()
+
+- `Thread Lifecycle`:
+  - **NEW**: state when thread is created
+  - **RUNNABLE**: state when thread execute RUNNABLE, by calling THREAD#start()
+  - **BLOCKED**
+  - **WAITING**: state when current thread is waiting for result from anothe thread, can be achieved by calling *wait()*, *join()*, *park()*
+  - **TIMED_WAITING**: similar to waiting, but will wait only for certain amount of time, can be achieved by *sleep(time)*, *wait(timeout)*, *join(timeout)*, *parnkNanos()*, *parkUntil()*
+  - **TERMINATED**: state when thread is completed or interrupted
+
 
 ### <a name='Compose'></a>Compose
 [🔝](#table-of-contents)
