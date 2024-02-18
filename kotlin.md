@@ -1,8 +1,7 @@
-## <a name='Kotlin'></a>Kotlin
+# Kotlin
 
 ## <a name='Tableofcontents'></a>Table of contents
 <!-- vscode-markdown-toc -->
-* [Kotlin](#Kotlin)
 * [Table of contents](#Tableofcontents)
 * [Topics](#Topics)
 	* [Advantages Over Java](#AdvantagesOverJava)
@@ -13,8 +12,12 @@
 	* [Constructors](#Constructors)
 	* [Functions](#Functions)
 	* [Scope Functions](#ScopeFunctions)
+* [Questions](#Questions)
 * [DSA](#DSA)
+	* [Tips](#Tips)
+	* [String](#String)
 	* [Arrays](#Arrays)
+	* [Matrix](#Matrix)
 	* [HashSet](#HashSet)
 	* [HashMap](#HashMap)
 	* [Loop](#Loop)
@@ -189,7 +192,7 @@ Functions whose sole purpose is to execute a block of code within the context of
   |`apply`|this   |context|Object Configuration|
   |`also` |it     |context|Addtional Effects|
 
-## Questions
+## <a name='Questions'></a>Questions
 
 - How to concatenate two strings in Kotlin? 
   - Using String Interpolation: 
@@ -206,10 +209,10 @@ Functions whose sole purpose is to execute a block of code within the context of
 
 ## <a name='DSA'></a>DSA
 
-### Tips
+### <a name='Tips'></a>Tips
 - `Find number of digits in number`: (Math.log10(num))
 
-### String
+### <a name='String'></a>String
 ```kotlin
 var str = "KOTLIN"
 
@@ -228,7 +231,7 @@ var arr = IntArray(5) {0}   // {0,0,0,0,0}
 arr.size    //4
 ```
 
-### Matrix
+### <a name='Matrix'></a>Matrix
 ```kotlin
 //declare two dimensional array
 var matrix = Array(2) { Array<Int>(2) {0} }
@@ -297,6 +300,8 @@ hashMap.clear()
 hashMap.containsKey(key)
 hashMap.containsValue(value)
 hashMap.remove(key)
+//increase the count by 1 if present, else insert
+map.put(num,(map.get(num)?:0)+1)
 }
 ```
 ### <a name='Loop'></a>Loop

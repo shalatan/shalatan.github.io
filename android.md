@@ -123,16 +123,17 @@ App components are like entry points that allow systems and users to interact wi
 ### <a name='ArchitectureComponents'></a>Architecture Components
 [🔝](#table-of-contents)
 
-Suite of libraries to solve fundamental Android problems and guide app architecture. It comes under Android Jetpack.
+
+### <a name='AndroidJetpack'></a>Android Jetpack
+[🔝](#table-of-contents)
+> Suites of libraries to reduce boiler plate code, follow best practices.
+
 - `App Architecture` : Google's recommneded app achitecture below allows apps to scale, improve quality, robustness and makes apps easier to test.
-  
+
   `UI Layer` -> `Domain Layer` -> `Data Layer` 
   - `UI Layer` : Render the updated application data on screen. Also known as Presentation layer. Made of UI elements, and State holders, such as *ViewModel*
   - `Domain Layer` : Abstracting complex/simple business logic, converts complex data into suitable types for UI layers. **Optional**
   - `Data Layer` : Contains the *business logic*. Made of *repositories*, that can contain zero to many data sources.
-
-### <a name='AndroidJetpack'></a>Android Jetpack
-[🔝](#table-of-contents)
 
 - `UI Layer Libraries`
   - `ViewBinding` : Generates a binding class for each XML layout file.
@@ -142,10 +143,15 @@ Suite of libraries to solve fundamental Android problems and guide app architect
   - [💉](#livedata)
     `LiveData` : It's a lifecycle-aware data holder, which can be observed by multiple Observers, used to implement Observer Pattern.
   - `Lifecycle` : Jetpack's Lifecycle allows you to build independent components, which observes the lifecycle changes of lifecycle owners like activities or fragments.
+  - [💉](#fragments)
+  `Fragment` : segment your app into multiple, independent screens that are hosted within an Activity.
+  - [💉](#compose)
+  `Compose`
 - `Data Layer Libraries`
   - `DataStore` : Used to store lightweight key-value pairs in local storage, works with Coroutines and Flow to store data asynchonously. Can be used to replace SharedPreferences. 
   - `Room` : Abstraction layer over SQLite Databases simplyfying access of database.
   - [💉](#workmanager)`WorkManager` : Background Processing API, gurantees background work by scheduling works, runs deferrable.
+  - `Paging` : 
 
 ### <a name='DesignPatterns'></a>Design Patterns
 [🔝](#table-of-contents)
