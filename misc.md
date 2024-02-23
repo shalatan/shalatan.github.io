@@ -65,6 +65,10 @@
   - Right Shift (>>): Shift the bits one right
     001101 becomes 001100
     > Halves the number, a >> b = a/(2^b)
+- Questions
+  1. Check if number is prime?
+    If last bit is 0 -> even, 1 -> odd
+    As, 1&1=1, hence n&1 == 1 -> odd else even
   
 
 

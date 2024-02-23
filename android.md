@@ -155,8 +155,47 @@ App components are like entry points that allow systems and users to interact wi
 
 ### <a name='DesignPatterns'></a>Design Patterns
 [🔝](#table-of-contents)
-
 Reusable solutions to solve repeated and common software problems in software engineering.
+- `Singleton Pattern`: Only one instance exists in the application
+  ```kotlin
+  object Singleton{ 
+    fun doSomething(){
+
+    }
+  }
+  ```
+- `Factory Pattern`: Where factory takes care of all the object creational logic. In this pattern, factory class controls which object to instantiate. This pattern comes in handy when dealing with many common objects.
+- `Builder Pattern`: Builder pattern in android is used to construct complex objects with optional parameters. It provides clean and fluent API for creating objects step by step. Ex: `AlertDialog.Builder()`, `Intent.Builder()`, Room, Retrofit
+  ```java
+  class Hamburger private constructor(
+      val cheese: Boolean,
+      val onions: Boolean
+  ) {
+      class Builder {
+          private var cheese: Boolean = true
+          private var onions: Boolean = true
+
+          fun cheese(value: Boolean) = apply { cheese = value }
+          fun onions(value: Boolean) = apply { onions = value }
+
+          fun build() = Hamburger(cheese, onions)
+      }
+  }
+
+  //use as 
+  Hamburger ham = Hamburger.Builder().cheese(true).onions(false).build()
+  ```
+  Can be replaced with data classes in kotlin
+  ```kotlin
+  var ham = Hamburger(cheese = true, onions = false)
+  ```
+- `Facade Pattern`: Facade (surface) pattern is a structural design pattern that provides higher-level interface that make set of other interfaces easier to use. Example Retrofit's
+  ```kotlin
+  interface Movies {
+    @GET("movies")
+    fun getMovies(): List<Movies>
+  }
+  ```
 - `Dependency Injection` : When dependencies are provided to a class instead of creating them itself. Advantages of DI are **reduces boilerplate code, loose coupling between classes, hence easy testing, code reuability, code maintainability.**
   - `Hilt` : Compile time dependency injection tool which works on top of Dagger, reduces the boilerplate code compared to Dagger.
   - `Dagger` : Also compile time dependency injection tool based on *javax.inject* annotation.
@@ -322,7 +361,7 @@ MVI (Model-View-Intent) is also a popular architecture in modern Android Develop
 ### <a name='Coroutines'></a>Coroutines
 [🔝](#table-of-contents)
 
-***Coroutines are powerful feature introduced in Kotlin to handle asyncgronous programming in a more concise and efficient manner. In context of Android development, coroutines provide a way to perform asynchronous operations, such as network requests, database queries, without blocking the main thread.***
+***Coroutines are powerful feature introduced in Kotlin to handle asynchronous programming in a more concise and efficient manner. In context of Android development, coroutines provide a way to perform asynchronous operations, such as network requests, database queries, without blocking the main thread.***
 - Advantages of coroutines:
   - **Main thread safety**: Coroutines allows developers to perform asynchronous tasks without blocking the main thread.
   - **Simplified asynchronous code**: Coroutines provide a more concise and readable way to write asynchronous code compared to traditional callback-based approaches. This leads to code that is easier to understand, maintain, and debug.
