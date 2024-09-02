@@ -38,21 +38,20 @@
   - `KMM`
   - `Concise Code`
   - `Support for Null Safety`: Kotlin provides Safe Call (?.), Elvis (?:) and Not Null Assertion (!!) operators which define what needs to be done in case of a null encounter.
-    - Safe call (?.):  Operator that simplifies things by only doing an action when the specified reference holds non-null value.
-        ```kotlin
-        name?.toLowerCase()
-        OR
-        if(name!=null) name.toLowerCase()
-        else null
-        ```
+    - Safe call (?.):  Safe calls allow you to safely access properties and methods on nullable objects without risking an NPE. If the object is null, the call returns null instead of throwing an exception.
+      ```kotlin
+      name?.toLowerCase()
+      OR
+      if(name!=null) name.toLowerCase()
+      else null
+      ```
     - Elvis Operator(?:): Operator used to return a non-null or default value. It returns the left value if it's not null, otherwise returns the right value.
-        ```kotlin
-        val a = b ?: "defaultValue"
-        OR
-        val a = if (b!=null) b
-                else "defaultValue"
-        ```
-    - Not null assertion Operator(!!): 
+      ```kotlin
+      val a = b ?: "defaultValue"
+      OR
+      val a = if (b!=null) b else "defaultValue"
+      ```
+    - Not null assertion Operator(!!): promising that the value will not be null, but if found null, will cause null pointer exception
 
 ### <a name='Basics'></a>Basics
 [🔝](#table-of-contents)
@@ -73,8 +72,8 @@
   - `when` : substitute for the *switch case* of java
     ```kotlin
     when(a){
-      1..10 -> println("Value Less Than 10")
-      11..100 -> println("Value More Than 10")
+      in 1..10 -> println("Value Less Than 10")
+      in  11..100 -> println("Value More Than 10")
     }
     ```
   - [⭐](#interview-questions)
@@ -96,7 +95,8 @@
 
 ### <a name='Classes'></a>Classes
 [🔝](#table-of-contents)
-
+  - `nested class`: Class inside another class, but by default nested class don't have access to members of the outer class.
+  - `inner class`: makes the members of outer class accessible by the nested class by adding the inner keyword to nested class.
   - [⭐](#interview-questions)
     `data classes` : used to store values, data. Generates equals(), hashCode(), copy(), toString() automatically, which can be overriden.
     ```kotlin
@@ -104,12 +104,24 @@
     ```
   - `enum classes` : used to model types that represent a finite set of distinct values
     ```kotlin
-    enum class State {
-      IDLE, RUNNING, FINISHED
-      }
-    val state = State.RUNNING
+    enum class SchnauzerBreed(val height: Int) {
+        MINIATURE(33),
+        STANDARD(47),
+        GIANT(65);
+
+        val family: String = "Schnauzer"
+        fun isShorterThan(centimeters: Int) = height < centimeters
+    }
+    
+    println(SchnauzerBreed.STANDARD.family)             // Prints "Schnauzer"
+    println(SchnauzerBreed.STANDARD.isShorterThan(40))  // Prints "false"
     ```
+    - Built-in properties offered by enum:
+      - ordinal: position of item in list
+      - name: 
   - `sealed classes` : restricts the use of inheritance, a sealed class can only be subclassed from inside the same package where the sealed class is declared.
+  <br>
+[ref](https://www.youtube.com/watch?v=KvehHqnEXuc&ab_channel=DaveLeeds)
 
 ### <a name='Constructors'></a>Constructors
 [🔝](#table-of-contents)
@@ -134,24 +146,46 @@
 ### <a name='Functions'></a>Functions
 [🔝](#table-of-contents)
 
-What is `Lambda Expression` (LE) ? : Lambda expression is nothing but simplified representation of function, which can be passed as parameter, stored in a variable, even returned as a value.
-
-```kotlin
-val lambda: (Int, Int) -> Unit = { param1: Int, param2: Int -> param1+param2 }
-val sum: (Int, Int) -> Int = {a: Int, b: Int -> a+b}
-```
-
 - `Higher Order Functions` : Functions the either takes function/LE as parameter, or returns a function/LE
 
 ```kotlin
-fun passItFunction(paramFunction: () -> Unit){
-  paramFunction()
+//this is hof because it takes function as parameter
+fun calculateTotal(initialPrice: Double, applyDiscount: (Double) -> Double): Double {
+  val priceAfterDiscount = applyDiscount(initialPrice)
+  val total = priceAfterDiscount * taxMultiplier
+  return total
 }
 
-fun addBothValue(a: Int,b: Int){
-  return a+b  
+//this is hof because it returns a function
+fun discountForCouponCode(couponCode: String): (Double) -> Double =
+  when(couponCode) {
+  "FIVE_BUCKS" -> ::discountFiveDollars
+  "TAKE_TEN" -> ::discountTenPercent
+  else -> ::noDiscount
 }
 ```
+
+- `Lambda` : Lambda expression is nothing but simplified representation of function, which can be passed as parameter, stored in a variable, even returned as a value.
+
+```kotlin
+val applyDiscount: (Double, Double) -> Double = { price: Double, discount: Double -> price - discount }
+// opening braces - paramters - arrow - function body - closing braces
+
+//Lambdas with multiple statements 
+val withFiveDollarsOff = calculateTotal(20.0) { price ->
+    val result = price - 5.0
+    println("Discounted price: $result")
+    result          //result of function, without return keyword
+}
+```
+
+- `Anonymous Function` : Because lambdas have no name, many languages regard lambdas as Anonymous Function but in Kotlin the term anonymous function refers to another way of writing the function literal.
+```kotlin
+val applyDiscount: (Double) -> Double = 
+  fun(price: Double): Double { return price - 5.0 }
+```
+
+
 - [⭐](#interview-questions)
   `Extension Functions` : When you pick up a receiver class, and dynamically inject a member function into the class which acts pretty much same as regulary defined member functions of that class.
 
@@ -217,6 +251,9 @@ Functions whose sole purpose is to execute a block of code within the context of
 var str = "KOTLIN"
 
 str.size    //5
+
+//iterate string
+for(char in str)
 ```
 
 ### <a name='Arrays'></a>Arrays
@@ -226,6 +263,7 @@ str.size    //5
     - 
 ```kotlin
 val arr = intArrayOf(1,2,3,4,5)
+var arr = IntArrya(10)
 var arr = IntArray(5) {0}   // {0,0,0,0,0}
 
 arr.size    //4

@@ -377,7 +377,8 @@ MVI (Model-View-Intent) is also a popular architecture in modern Android Develop
   - `viewModelScope` : Coroutine scopre tied to *viewModel*. Extension function of the *viewModel* class, bound to *Dispatchers.Main* and will automatically be cancelled when viewModel is cleared.
   - `lifecycleScope` : Bound to lifecycle of the Activity/Fragment to avoid memory leak and resource waste.
   > **Q**: What if we want to cancel only some coroutines and retain some other coroutines inside the scope? <br>
-  **Ans**: We can define Job using launch and cancel it whenever we want. Job is actually coroutine itself.
+  **Ans**: We can define Job using launch and cancel it whenever we want. Job is actually coroutine itself.<br>
+
   ```kotlin
   private lateinit var coroutineScope: CoroutineScope
   private lateinit var job1: Job
@@ -406,6 +407,8 @@ MVI (Model-View-Intent) is also a popular architecture in modern Android Develop
   ```kotlin
   withContext(Dispatcher.Main) { }
   ```
+> **Q**. What does `launch` and `async` returns?<br>
+**Ans**: launch returns Job object immediately, while async returns a Deferred object representing future result.
 - `Structured Concurrency` : *A parent coroutine scope having children coroutine scopes*. It gurantees that when a suspend function returns, all of its work is done and also when a coroutine errors, its caller or scope is notified.
   ```kotlin
   suspend fun callTwoAPI(){
@@ -578,7 +581,7 @@ DI framework build on top of *Dagger*, brings benefits like **compile time corre
   - `@HiltAndroidApp` : Kicks off Hilt code generation. For Application class.
   - `@AndroidEntryPoint` : Add DI container to Android class. For Classes
   - `@Inject` :
-    - Construtor Injection : Tells which constructor to use to provide instances and which dependencies it has
+    - Constructor Injection : Tells which constructor to use to provide instances and which dependencies it has
       ```kotlin
       @AndroidEntryPoint
       class SomeAdapter @Inject constructor(private val service: SomeService)
@@ -629,6 +632,8 @@ DI framework build on top of *Dagger*, brings benefits like **compile time corre
   - `Animations & Decorations` : ListView lacks in support of good animations and decorations, but `ItemAnimator` and `ItemDecorator` classes of RecyclerView provides developers huge control over these things.
 - `Internal Working Of RecyclerView`
   - RecyclerView loads view just ahead and behind the visible entries. So, the **Scrapped View** (View which was once visible and now not visible) gets stored in a collection of scrapped views. Now as we keep scrolling, the view from that collection is used. The view which we loaded from the scrapped view is called **Dirty view**. Now. the dirty view gets *recycled* and is relocated as the new item in queue which has to be displayed on the screen.
+> **Q**. How to optimize RecyclerView? <br>
+**Ans:**
 
 ### <a name='WorkManager'></a>WorkManager
 [🔝](#table-of-contents)

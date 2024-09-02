@@ -5,6 +5,7 @@
 	* [Time Complexity](#TimeComplexity)
 	* [Bitwise Operators](#BitwiseOperators)
 * [Misc](#Misc)
+	* [Gradle](#Gradle)
 	* [Git](#Git)
 	* [Heroku](#Heroku)
 
@@ -71,26 +72,19 @@
     As, 1&1=1, hence n&1 == 1 -> odd else even
   
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ## <a name='Misc'></a>Misc
+
+### <a name='Gradle'></a>Gradle
+**Gradle is a build tool that we use for Android development to automate the process of building and publishing apps.**
+<br>
+- When we click on *Run* button, it exceutes multiple built-in tasks like:
+  1. reads app's build configuration file (build.gradle)
+  2. downloads and resolves the app's dependencies
+  3. compiles the apps code, including converting java and kotlin files into bytecode
+  4. packs the compiled code and resources into an APK
+  5. installs the APK file on the device and runs the app
+- `DSL`: Gradle comes with lot of built-in functionalities, but we can write our own logic too using DSL (domain specific language), which is tailored to build automation domain based on Groovy or Kotlin.
+
 
 ### <a name='Git'></a>Git
 
