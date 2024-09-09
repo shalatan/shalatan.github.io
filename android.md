@@ -398,17 +398,14 @@ MVI (Model-View-Intent) is also a popular architecture in modern Android Develop
   ```
 - *Room* and *Retrofit* make suspending functions *main-safe*, it's safe to call these suspend functions from *Dispathers.Main*, even though they fetch from network and write to database. Do not use ***Dispatchers.IO***.
 - `Builders` : 
-  - `runBlocking{}` : Is used to create a new coroutine that blocks the current thread until all its child coroutines complete.
-  - `launch{}` : ***Launch is a bridge from regular functions into coroutines.*** Will start a new coroutine that is *fire and forget* - that means it won't return the result to the caller.
-  Launches a new coroutine without blocking the current thread and returns a reference to the coroutine as a *Job*, which can be used to cancel the corutine.
-  - `async{}` : Will start a new coroutine and it allows us to return a result with a suspended function called `await`. Hence, expects that we will eventually call `await` to get a result(or excecption) so it won't throw exceptions by default.
+  - `runBlocking{}` : Is used to create or launch a new coroutine that blocks the current thread until all its child coroutines complete *aka stop the excution of code written after it*
+  - `launch{}` : Will start a new coroutine without blocking the current thread that is *fire and forget* - that means it won't return the result to the caller. Instead, it returns an object of type **Job**, which can be used to cancel the coroutine and also includes a function named **join()**. Like **await()**, the **join()** function suspends the coroutine until the code in the **launch()** block has completed.
+  - `async{}` : This builder works a lot like launch(), but instead of returning a Job object, it returns an object that is a subtype of Job, named **Deferred**. This object gives us a function named await(), which allows us to get the result from order(). await() is a suspending function, and it will suspend the coroutine until its async() coroutine has completed.
   - `coroutineScope` : Is used to create a new coroutine scope and wait for all its child coroutines to complete. It's similar to runBlocking but doesn't block the thread it's called on
   - `withContext{}` : Is used to switch the coroutine's context temporarily. It's useful for changing the thread or coroutine dispatcher within a coroutine. This builder allows you to execute code in a different context without starting a new coroutine.
   ```kotlin
   withContext(Dispatcher.Main) { }
   ```
-> **Q**. What does `launch` and `async` returns?<br>
-**Ans**: launch returns Job object immediately, while async returns a Deferred object representing future result.
 - `Structured Concurrency` : *A parent coroutine scope having children coroutine scopes*. It gurantees that when a suspend function returns, all of its work is done and also when a coroutine errors, its caller or scope is notified.
   ```kotlin
   suspend fun callTwoAPI(){
@@ -422,6 +419,10 @@ MVI (Model-View-Intent) is also a popular architecture in modern Android Develop
   - `coroutineScope` : coroutineScope builder will suspend itself until all coroutines started inside of it are complete, hence there's no way to return from `callTwoAPI` until all coroutines are completed.
   ***Cancels whenever any of the children coroutine fails*** meaning if one network request fails, all of the others request would be cancelled immediately.
   - `supervisorScope` : supervisorScope builder won't cancel children when one them fails.
+- `Cancellation` : using function **cancel()** we can cancel any coroutine. 
+  - Thanks to structured concurrency, when the root coroutine is canceled, we don’t need to manually cancel each of its children. Instead, each child coroutine is automatically sent a signal to cancel.
+  - But if coroutine code doesn’t cooperate by choosing to check for cancellation, it won’t notice the signal itself. We can check the **isActive** property of the CoroutineScope, or by calling its **ensureActive()** function.
+  - `Cancelling child coroutine` : We can cancel any child coroutine by calling **cancel()**, the cancellation does not affect parent or sibling coroutines.
   
 > [⭐](#interview-questions)
   **Q**: What is a difference between Threads & Coroutines? <br>

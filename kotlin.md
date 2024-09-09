@@ -11,7 +11,7 @@
 	* [Classes](#Classes)
 	* [Constructors](#Constructors)
 	* [Functions](#Functions)
-	* [Scope Functions](#ScopeFunctions)
+	* [Scopes Functions](#ScopeFunctions)
 * [Questions](#Questions)
 * [DSA](#DSA)
 	* [Tips](#Tips)
@@ -216,15 +216,88 @@ fun main(){
 
 ### <a name='ScopeFunctions'></a>Scope Functions
 [🔝](#table-of-contents)[⭐](#interview-questions)
-
-Functions whose sole purpose is to execute a block of code within the context of an object. When called with a lambda expression provided, a temporary scope is formed, inside which we can access the object without its name.
+- `Scope` : Section of code where you can declare or use any particular varibale or function.
+  - `Statement Scope` : You can only use something that was declared in a statement scope after the point where it was declared.
+  ```kotlin
+  fun circumference(): Double {
+        fun diameter() = radius * 2     //right
+        val result = pi * diameter()
+        fun diameter() = radius * 2     //wrong
+        return result
+    }
+  ```
+  - `Declaration Scope` : Unlike statement scopes, things declared within a declaration scope can be used from a point in the code either before or after that declaration.
+  ```kotlin
+  class Circle(val radius: Double) {
+    val circumference = pi * diameter()
+    fun diameter() = radius * 2
+  }
+  ```
+- `Scope Functions` : Functions whose sole purpose is to execute a block of code within the context of an object. When called with a lambda expression provided, a temporary scope is formed, inside which we can access the object without its name.
+  - `with` : introduces a new scope (the lambda) in which the context object is represented as an **implicit receiver** (an implicit receiver can be used with no variable name at all)
+  ```kotlin
+  //before
+  address.street1 = "9801 Maple Ave"
+  address.street2 = "Apartment 255"
+  //after
+  with(address){
+    street1 = "9801 Maple Ave"
+    street2 = "Apartment 255"
+  }
+  ```
+  - `run` : works same a `with` but it's an extension function instead of a normal, top-level function. But as it's a extension function, it can be inserted into a call chain.
+  ```kotlin
+  address.run {
+    street1 = "9801 Maple Ave"
+    street2 = "Apartment 255"
+  
+  val title = "The Robots from Planet X3"
+  val newTitle = title
+    .removePrefix("The ")
+    .run { "'$this'" }
+    .uppercase()
+  }
+  ```
+  - `let` : very similar to `run()`, but instead of representing the context object as an implicit receiver, it’s represented as the parameter of its lambda.
+  ```kotin
+  val newTitle = title
+    .removePrefix("The ")
+    .let { it -> "'$it'" }
+    .uppercase()
+  ```
+  - `also` : As with let(), the also() function represents the context object as the lambda parameter, too. However, unlike let(), which returns the result of the lambda, the also() function returns the context object. This makes it a great choice for inserting into a call chain when you want to do something “on the side” - that is, without changing the value at that point in the chain.
+  ```kotin
+    val newTitle = title
+      .removePrefix("The ")
+      .also { println(it) }
+      .uppercase()
+  ```
+  - `apply` : Like *also()*, the apply() function returns the context object rather than the result of the lambda. However, like run(), the apply() function represents the context object as the implicit receiver.
+    ```kotin
+    val newTitle = title
+      .removePrefix("The ")
+      .apply { println(this) }
+      .uppercase()
+  ```
   |       |Context|Return |Use Case|
   |---    |---    |---    |---        |
-  |`let`  |it     |lambda |Null Safety Calls|
   |`with` |this   |lambda |Grouping Function calls on an object|
   |`run`  |this   |lambda |Object Configuration and computing the result|
-  |`apply`|this   |context|Object Configuration|
+  |`let`  |it     |lambda |Null Safety Calls|
   |`also` |it     |context|Addtional Effects|
+  |`apply`|this   |context|Object Configuration|
+<br>
+
+  [which one to use and when](https://typealias.com/img/start/scopes-and-scope-functions/scope-function-flow-chart.png)
+
+  - Scope functions and Null Check: Other than *with()*, all other scope functions are extension functions, hence we use safe-call operator when calling them, so that they are not called when the receiver is not null.
+  ```kotin
+  if (payment != null) {
+    orderCoffee(payment)
+  }
+  payment?.let { orderCoffee(it) }
+  payment?.let { orderCoffee(it) } ?: println("value null")
+  ```
 
 ## <a name='Questions'></a>Questions
 
