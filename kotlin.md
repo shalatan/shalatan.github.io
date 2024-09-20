@@ -165,13 +165,14 @@ fun discountForCouponCode(couponCode: String): (Double) -> Double =
 }
 ```
 
-- `Lambda` : Lambda expression is nothing but simplified representation of function, which can be passed as parameter, stored in a variable, even returned as a value.
+- `Lambda` : Lambda expression is nothing but simplified representation of function aka function literals, which can be passed as parameter, stored in a variable, even returned as a value.
 
 ```kotlin
 val applyDiscount: (Double, Double) -> Double = { price: Double, discount: Double -> price - discount }
 // opening braces - paramters - arrow - function body - closing braces
 
 //Lambdas with multiple statements 
+//In Kotlin, writing the lambda outside of the parentheses like this is called trailing lambda syntax.
 val withFiveDollarsOff = calculateTotal(20.0) { price ->
     val result = price - 5.0
     println("Discounted price: $result")
@@ -234,6 +235,7 @@ fun main(){
   }
   ```
 - `Scope Functions` : Functions whose sole purpose is to execute a block of code within the context of an object. When called with a lambda expression provided, a temporary scope is formed, inside which we can access the object without its name.
+The point of a scope function is to take an existing object - called a *context object* - and represent it in a particular way inside that new scope.
   - `with` : introduces a new scope (the lambda) in which the context object is represented as an **implicit receiver** (an implicit receiver can be used with no variable name at all)
   ```kotlin
   //before
@@ -245,18 +247,17 @@ fun main(){
     street2 = "Apartment 255"
   }
   ```
-  - `run` : works same a `with` but it's an extension function instead of a normal, top-level function. But as it's a extension function, it can be inserted into a call chain.
+  - `run` : works same a `with` but it's an extension function instead of a normal, top-level function. As it's a extension function, it can be inserted into a call chain. The run() function returns the result of the lambda.
   ```kotlin
   address.run {
     street1 = "9801 Maple Ave"
     street2 = "Apartment 255"
-  
+  }
   val title = "The Robots from Planet X3"
   val newTitle = title
     .removePrefix("The ")
     .run { "'$this'" }
     .uppercase()
-  }
   ```
   - `let` : very similar to `run()`, but instead of representing the context object as an implicit receiver, it’s represented as the parameter of its lambda.
   ```kotin
