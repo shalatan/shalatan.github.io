@@ -102,6 +102,14 @@
     ```kotlin
     data class User(val name, val string)
     ```
+    cons: 
+    - Can't be inherited, but can inherit.
+    - a data class may have properties that are not part of its constructor, they will not be regarded in any of the functions that are generated.
+    ```kotlin
+    data class DollarBill(val amount: Int) {
+        var serialNumber: String? = null
+    }
+    ```
   - `enum classes` : used to model types that represent a finite set of distinct values
     ```kotlin
     enum class SchnauzerBreed(val height: Int) {
@@ -119,9 +127,49 @@
     - Built-in properties offered by enum:
       - ordinal: position of item in list
       - name: 
-  - `sealed classes` : restricts the use of inheritance, a sealed class can only be subclassed from inside the same package where the sealed class is declared.
-  <br>
+  - `abstract classes` : Abstract classes can be extended by other classes. Their functions and properties can be:
+    - `abstract`, in which case they have no body in the abstract class, but subclasses must implement them.
+    - `open`, in which case they have a body in the abstract class, but subclasses may override them.
+    - `Final` (i.e., neither abstract nor open), in which case subclasses cannot override them.
+  - `open classes` : An open class is a class that can be both extended and instantiated directly. Open classes cannot contain abstract members.
+  - `sealed classes` : A sealed class is, by definition, also an abstract class. This means that you can’t directly instantiate it - you can only instantiate one of its subclasses.
+  Hence, if you want exhaustive subtype matching, you’ll need to include the sealed modifier. ***If you need to limit values, then use an enum class. If you need to limit types, then use a sealed type.***
+  <br>OR<br>
+  A sealed class is a class that restricts which other classes can inherit from it. All subclasses must be declared within the same file as the sealed class itself.
+  ```kotlin
+  sealed class Shape {
+    class Circle(val radius: Double) : Shape()
+    class Rectangle(val width: Double, val height: Double) : Shape()
+    object NotAShape : Shape()
+  } 
+  ```
+  - Benefits of sealed class:
+    - `Restrictive Inheritance`: All subclasses of a sealed class are known at compile-time.
+    - `Exhaustive when Expressions`: When using `when` expressions with sealed classes, Kotlin ensures that all possible subclasses are handled, leading to safer and more maintainable code.
 [ref](https://www.youtube.com/watch?v=KvehHqnEXuc&ab_channel=DaveLeeds)
+
+### <a name='Reference Equality'></a>Reference Equality
+[🔝](#table-of-contents)
+- `reference equality`: when two variables refer to same object instance, then they will be considered equal.
+- `value equality`: when objects are considered equal based on their property values rather than their identity
+- `referential equality operator` : Even when you override the equals() function to give a class value equality, you can still check to see whether two variables refer to the same instance.
+```kotlin
+//reference equality
+class DollarBill(val amount: Int)
+val bill1 = DollarBill(5)
+val bill2 = DollarBill(5)
+println(bill1 == bill2) // false
+
+//value equality
+class DollarBill(val amount: Int) {
+    override fun equals(other: Any?) =
+        if (other is DollarBill) amount.equals(other.amount) else false
+}
+println(bill1 == bill2) // true
+
+//referential equality operator
+println(bill1 == bill2) // false
+```
 
 ### <a name='Constructors'></a>Constructors
 [🔝](#table-of-contents)

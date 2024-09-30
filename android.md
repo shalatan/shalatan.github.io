@@ -153,8 +153,9 @@ App components are like entry points that allow systems and users to interact wi
   - [💉](#workmanager)`WorkManager` : Background Processing API, gurantees background work by scheduling works, runs deferrable.
   - `Paging` : 
 
-### <a name='DesignPatterns'></a>Design Patterns
+### <a name='CreationalDesignPatterns'></a>Creational Design Patterns
 [🔝](#table-of-contents)
+
 Reusable solutions to solve repeated and common software problems in software engineering.
 - `Singleton Pattern`: Only one instance exists in the application
   ```kotlin
@@ -210,10 +211,28 @@ Reusable solutions to solve repeated and common software problems in software en
   
 - `Repository Pattern` :
   
-### <a name='Architectures'></a>Architectures
+### <a name='Architectural Pattern'></a>Architectural Pattern
 [🔝](#table-of-contents)
 
+Architectural Patterns are system-wide and deal with the overall structure of the application, such as Clean Architecture. 
+
 Architecture defines boundaries between each layer, defines the responsibilities clearly affecting project's complexity, scalability and robustness, and makes it easier to test.
+
+#### <a name='CleanArchitecture'></a>Clean Architecture
+- Clean architecture is about organizing code into layers to ensure that the core business logic is independent of frameworks, UI, and external data sources.
+- In android it constitutes of three layers:
+  - `Presentation Layer`: This includes the View (Activities, Fragments) and ViewModels.
+  - `Domain Layer`:
+    - `Entities`: Core business objects that are independent of UI, databases, or any frameworks.
+    - `UseCase`: Business logic that operates on entities
+  - `Data Layer`: These represent how the data is presented and consumed. Repositories and mappers live here, converting data from external sources (APIs, databases) into entities.
+- `Flow`: ViewModel i.e. UI Layer interacts with Domain Layer (UseCases) and asks for data.
+
+
+### <a name='Architectural Design Pattern'></a>Architectural Design Pattern
+[🔝](#table-of-contents)
+
+Architectural Design Patterns like MVVM and MVI focus on structuring the presentation layer, handling UI interactions, and managing state.
 
 #### <a name='MVC'></a>MVC
 Stands for Model, View, Controller.
@@ -246,10 +265,10 @@ Consists of View, ViewModel, Model
 - `Model` : Encapsulates the app's domain/data model, which typically includes buiness logic, complex computational works.
 
 #### <a name='MVI'></a>MVI
-
-MVI (Model-View-Intent) is also a popular architecture in modern Android Development since Jetpack Compose has brought declarative programming to android.
-
-#### <a name='CleanArchitecture'></a>Clean Architecture
+MVI is another design pattern but focuses more on a **unidirectional data flow** and treating state as **immutable**. It's a bit more modern and reactive than MVVM and fits well with frameworks like Jetpack Compose
+- `Model` : Represents the current state of the screen or UI. In MVI, this state is immutable and a single source of truth for the entire UI.
+- `View` : This is similar to MVVM, where the View renders UI, but it reflects the current state provided by the Model.
+- `Intent` : User actions or events from the View trigger Intents which are passed to the ViewModel. These Intents are then processed, resulting in a new state. 
 
 ## <a name='Brief'></a>Brief
 
