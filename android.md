@@ -7,45 +7,48 @@
 
 ## <a name='table-of-contents'></a>Table of Contents
 <!-- vscode-markdown-toc -->
-* [Guide](#guide)
-* [Table of Contents](#table-of-contents)
-* [Topics](#topics)
-  * [Android Platform Architecture](#android-platform-architecture)
-  * [Definitons](#definitons)
-  * [Anroid App Components](#anroid-app-components)
-  * [Intents](#intents)
-  * [Launch Modes](#launch-modes)
-  * [Architecture Components](#architecture-components)
-  * [Android Jetpack](#android-jetpack)
-  * [Creational Design Patterns](#creational-design-patterns)
-  * [Architectural Pattern](#architectural-pattern)
-    * [Clean Architecture](#clean-architecture)
-  * [Architectural Design Pattern](#architectural-design-pattern)
-    * [MVC](#mvc)
-    * [MVP](#mvp)
-    * [MVVM](#mvvm)
-    * [MVI](#mvi)
-  * [Design Principles](#design-principles)
-    * [SOLID](#solid)
-    * [DRY](#dry)
-    * [KISS](#kiss)
-    * [DI](#di)
-* [Brief](#brief)
-  * [Services](#services)
-  * [Activities](#activities)
-  * [Fragments](#fragments)
-  * [ViewModel](#viewmodel)
-  * [Coroutines](#coroutines)
-  * [Flow](#flow)
-  * [Dependency Injection](#dependency-injection)
-    * [Hilt](#hilt)
-  * [RecyclerView](#recyclerview)
-  * [WorkManager](#workmanager)
-  * [Thread](#thread)
-  * [Compose](#compose)
-  * [Differences](#differences)
-  * [Interview Questions](#interview-questions)
-  * [References](#references)
+- [Android](#android)
+  - [Guide](#guide)
+  - [Table of Contents](#table-of-contents)
+  - [Topics](#topics)
+    - [Android Platform Architecture](#android-platform-architecture)
+    - [Definitons](#definitons)
+    - [Anroid App Components](#anroid-app-components)
+    - [Intents](#intents)
+    - [Launch Modes](#launch-modes)
+    - [Architecture Components](#architecture-components)
+    - [Android Jetpack](#android-jetpack)
+    - [Creational Design Patterns](#creational-design-patterns)
+    - [Architectural Pattern](#architectural-pattern)
+      - [Clean Architecture](#clean-architecture)
+    - [Architectural Design Pattern](#architectural-design-pattern)
+      - [MVC](#mvc)
+      - [MVP](#mvp)
+      - [MVVM](#mvvm)
+      - [MVI](#mvi)
+    - [Design Principles](#design-principles)
+      - [SOLID](#solid)
+      - [DRY](#dry)
+      - [KISS](#kiss)
+      - [DI](#di)
+  - [Brief](#brief)
+    - [Services](#services)
+    - [Activities](#activities)
+    - [Fragments](#fragments)
+    - [ViewModel](#viewmodel)
+    - [Coroutines](#coroutines)
+    - [Flow](#flow)
+    - [Dependency Injection](#dependency-injection)
+      - [Hilt](#hilt)
+    - [RecyclerView](#recyclerview)
+    - [WorkManager](#workmanager)
+    - [Thread](#thread)
+    - [Compose](#compose)
+  - [Optimization](#optimization)
+    - [Build Speed](#build-speed)
+    - [Differences](#differences)
+    - [Interview Questions](#interview-questions)
+    - [References](#references)
 
 <!-- vscode-markdown-toc-config
 	numbering=false
@@ -765,6 +768,59 @@ DI framework build on top of *Dagger*, brings benefits like **compile time corre
   - `LiveData`: *observeAsState()* starts observing the LiveData and represents its values via State.
   - `RxJava2` : *subscribeAsState()* are extension functions that transform RxJava2's reactive streams into Compose State.
   - `RxJava3` : *subscribeAsState()* same as above.
+
+## <a name='optimization'></a>Optimization
+
+### <a name='build-speed'></a>Build Speed
+- Optimize build configuration
+  - `Using Gradle build cache`: Gradle build cache allows us to reuse build outputs to save time on subsequent builds. It can work across different machines or even remotely, allowing one dev to build and other devs (or CI machines) to leverage their cache.
+    ```
+    //it's not enabled by deafult, can be enbaled by using in gradle.properties
+    org.gradle.caching=true
+    //by defaults cache is stored in home directory, can be changed explicitly by
+    //buildCache {
+      local {
+        isEnabled = true
+        directory = File(rootDir, "build-cache)
+        removeUnusedEntriesAfterDays = 30
+      }
+    }
+    //don't forget to add the folder with cached builds in .gitignore
+    ```
+  - `Parallel project execution`: Even with decoupled modules, gradle will only run one task at a time by default, while most desktop and CI servers have extra CPU cores available, which can enable parallel execution improving build performance. When enabled, the compiling it done on-demand for multiple modules at the same time.
+    ```
+     org.gradle.parallel=true
+    ``` 
+  - `Keep tools up to date`: Android tools like Android Studio, SDK Tools, Gradle Plugin receive build optimizations and new featues with every update.
+  - `Use KSP instead of KAPT`: Kotlin Annotation Processing Tool is significantly slower than the Kotlin Symbol Processor.
+  - `Avoid compiling unncessary resources`: such as additional language localizations and screen-density resources.
+  ```kotlin
+  productFlavours {
+    create("dev") {
+      resourceConfigurations("en", "xxhdpi")
+    }
+  }
+  ```
+  - `Sequenceing repositories`: Gradle searches repositories in the order they're declared, so build performance is imporved if the repositories listed first contains most of the plugins.
+  - `Use static dependency version`: Avoid using dynamic version numbers like (com.android.tools.build:gradle:2.+). Using dynamic version numbers can cause unexpected version updates, difficulty resolving version differences, and slower builds caused by Gradle checking for upated. Hence, use static version numbers instead.
+  - `Create library modules`: [ref](https://developer.android.com/build/optimize-your-build#create_libraries)
+  - `Convert images to WebP`: WebP is an image file format that provides lossy compression (like JPEG) as well as transparency (like PNG). Reducing images file sizes without having to perform build-time compression can speed up your builds. However, you may notice a small increase in device CPU usage while decompressing WebP images.
+  - `Experiment with JVM parallel garbage collector`: Build performance can be improved by configuring the optimzal JVM garbage collector used by Gradle. While JDK 8 is configured to use the parallel GC by default, JDK 9 and higher are configured to use G1 GC. To potentially improve build performance, it's recommended to experiment building with parallel GC.
+    ```
+    org.gradle.jvmargs=-XX:+UseParallelGC
+    org.gradle.jvmargs=-Xmx1536m -XX:+UseParallelGC //if there're other options already set
+    ```
+    - Parallel Garbage Collector: 
+    - G1 Garbage Collector:
+- Profile the build: 
+- Build Analyzer Tool: Each time we build app, the build analyzer creates a report and displays data from the latest report in the Build window.
+  - `Tasks`: Shows breakdown of plugins with tasks determining the build's duration. 
+  - `Warnings`: If the Build Analyzer detects that some tasks could be configured to run more efficiently, it provides a warning. Some warnings have a Generate report link, which shows a dialog with additional information that might help the plugin developer resolve the issue in new version of the plugin.
+    - `Always run tasks`:
+    - `Task setup issues`: 
+    - `Configuration cache`: Allows the build system to record information about the task graph once, and to reuse it in subsequent builds, thus avoiding the need to reconfigure the whole build again.
+    - `Check Jetifier`: This warning is presented if the enableJetifier flag is present and enabled in your project (gradle.properties) file. The Build Analyzer can perform a check to see whether the flag can be safely removed to enable your project to have better build performance and migrate away from the unmaintained Android Support libraries.
+  - `Downloads`: Provides a summary of time spent downloading dependencies and a detailed view of downloads per repository.
 
 ### <a name='differences'></a>Differences
 - `ListView vs RecyclerView`
