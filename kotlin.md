@@ -2,25 +2,27 @@
 
 ## <a name='Tableofcontents'></a>Table of contents
 <!-- vscode-markdown-toc -->
-* [Table of contents](#Tableofcontents)
-* [Topics](#Topics)
-	* [Advantages Over Java](#AdvantagesOverJava)
-	* [Basics](#Basics)
-	* [Keywords](#Keywords)
-	* [Visiblity Modifiers](#VisiblityModifiers)
-	* [Classes](#Classes)
-	* [Constructors](#Constructors)
-	* [Functions](#Functions)
-	* [Scopes Functions](#ScopeFunctions)
-* [Questions](#Questions)
-* [DSA](#DSA)
-	* [Tips](#Tips)
-	* [String](#String)
-	* [Arrays](#Arrays)
-	* [Matrix](#Matrix)
-	* [HashSet](#HashSet)
-	* [HashMap](#HashMap)
-	* [Loop](#Loop)
+- [Kotlin](#kotlin)
+  - [Table of contents](#table-of-contents)
+  - [Topics](#topics)
+    - [Advantages Over Java](#advantages-over-java)
+    - [Basics](#basics)
+    - [Keywords](#keywords)
+    - [Visiblity Modifiers](#visiblity-modifiers)
+    - [Classes](#classes)
+    - [Reference Equality](#reference-equality)
+    - [Constructors](#constructors)
+    - [Functions](#functions)
+    - [Scope Functions](#scope-functions)
+  - [Questions](#questions)
+  - [DSA](#dsa)
+    - [Tips](#tips)
+    - [String](#string)
+    - [Arrays](#arrays)
+    - [Matrix](#matrix)
+    - [HashSet](#hashset)
+    - [HashMap](#hashmap)
+    - [Loop](#loop)
 
 <!-- vscode-markdown-toc-config
 	numbering=false
@@ -191,6 +193,7 @@ println(bill1 == bill2) // false
     }
   }
   ```
+
 ### <a name='Functions'></a>Functions
 [🔝](#table-of-contents)
 

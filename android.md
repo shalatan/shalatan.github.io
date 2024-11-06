@@ -46,6 +46,7 @@
     - [Compose](#compose)
   - [Optimization](#optimization)
     - [Build Speed](#build-speed)
+    - [Performance](#performance)
   - [Interview Questions](#interview-questions)
   - [References](#references)
 
@@ -821,6 +822,16 @@ DI framework build on top of *Dagger*, brings benefits like **compile time corre
     - `Check Jetifier`: This warning is presented if the enableJetifier flag is present and enabled in your project (gradle.properties) file. The Build Analyzer can perform a check to see whether the flag can be safely removed to enable your project to have better build performance and migrate away from the unmaintained Android Support libraries.
   - `Downloads`: Provides a summary of time spent downloading dependencies and a detailed view of downloads per repository.
 [ref](https://developer.android.com/build/optimize-your-build),[ref](https://www.runway.team/blog/advanced-tips-for-improving-android-build-times) [ref]()
+
+### <a name='app-performance'></a>Performance
+- `Inspecting Perfomance`:
+  1. `Passive: using logcat`:
+    - `tag:Choreographer`: info about slow rendering, >30sec is bad
+    - `tag:OpenGLRenderer`: if app skips more frames lasting >700ms, its called frozen frame. If app freezes for 5 seconds, we get ANR.
+    - `tag:ActivityTaskManager Displayed`: displays time-to-initial-display (TTID), means how long it took to draw the first frame every time open an activity.
+  2. System Tracing:
+  3. `Automated`:
+     1. 
 
 ## <a name='interview-questions'></a>Interview Questions
 - `ListView vs RecyclerView`

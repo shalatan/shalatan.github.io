@@ -234,7 +234,7 @@ The key components of JVM that relate to performance are:
 ### <a name='GarbageCollection'></a>Garbage Collection
 Automatic garbage collection is the process of looking at heap memory, identifying which objects are in use and which not, and deleting the unused objects.
 - An in use object, or a referenced object, means that some part of the programs maintains a pointer to that object.
-- An usesed object, or unreferenced object, is no longer referenced by any part of the program. So the memory used by unreferenced objects can be reclaimed.
+- An unused object, or unreferenced object, is no longer referenced by any part of the program. So the memory used by unreferenced objects can be reclaimed.
 - In programming language like C,allocating and deallocating memory is a manual process, while in Java, process of deallocating memory is handled automatically by garbage collector. The basic process can be described as follows:
   - `Step 1: Marking`: First process where GC identifies which pieces of memory are in use and which are not. But this can be very time consuming process to scan and mark all the objects.
   - `Step 2: Normal Deletion`: Removes unreferenced objects. The memory allocator holds references to blocks of free space where new objects can be allocated.
