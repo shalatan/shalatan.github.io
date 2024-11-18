@@ -427,7 +427,7 @@ SOLID is a set of five principles for designing maintainable, flexible, and scal
   - **Integration with Lifecycles**: Coroutines can be seamlessly integrated with the Android components lifecycle like Activity or fragment, helping to avoid memory leaks and waste of resources,
 - `suspend` : Keyword to mark a function available to coroutines, *suspends* exceution until the result is ready then it resumes where it left off with the result. ***Using suspend doesn’t tell Kotlin to run a function on a background thread.***
 - `Dispatchers` : Context
-  - `Dispatchers.Main` : Lightweight tasks eg - network calls, database queries, won't block the main thread while suspended. Common when you need to perform UI-related tasks or update the user interface from coroutines.
+  - `Dispatchers.Main` : Lightweight tasks eg - updating UI, network calls, database queries, won't block the main thread while suspended. Common when you need to perform UI-related tasks or update the user interface from coroutines.
   - `Dispatchers.IO` : For heavy IO work such as reading from or writing to files, making network requests, or interacting with databases.
   - `Dispatchers.Default` : For CPU intensive tasks. It's suitable for computational work or network requests that don't require interaction with the UI.
   - `Dispatchers.Unconfined` : Runs coroutines unconfined on no specific thread, not recommended to use. 
@@ -435,7 +435,8 @@ SOLID is a set of five principles for designing maintainable, flexible, and scal
   - `globalScope` : Top level Coroutine scope that will be associated with the application lifecycle. Since it's alive along the application lifetime, it's a *Singleton* object
   - `viewModelScope` : Coroutine scopre tied to *viewModel*. Extension function of the *viewModel* class, bound to *Dispatchers.Main* and will automatically be cancelled when viewModel is cleared.
   - `lifecycleScope` : Bound to lifecycle of the Activity/Fragment to avoid memory leak and resource waste.
-  > **Q**: What if we want to cancel only some coroutines and retain some other coroutines inside the scope? <br>
+  - `CoroutineScope`: Useful for creating a custom scope within a function, class or service. <br> ```CoroutineScope(Dispatchers.Main).launch { ... }```
+  > **Q**: What if we want to cancel only some coroutines and retain some other coroutines inside the parent scope? <br>
   **Ans**: We can define Job using launch and cancel it whenever we want. Job is actually coroutine itself.<br>
 
   ```kotlin
@@ -459,7 +460,7 @@ SOLID is a set of five principles for designing maintainable, flexible, and scal
 - `Builders` : 
   - `runBlocking{}` : Is used to create or launch a new coroutine that blocks the current thread until all its child coroutines complete *aka stop the excution of code written after it*
   - `launch{}` : Will start a new coroutine without blocking the current thread that is *fire and forget* - that means it won't return the result to the caller. Instead, it returns an object of type **Job**, which can be used to cancel the coroutine and also includes a function named **join()**. Like **await()**, the **join()** function suspends the coroutine until the code in the **launch()** block has completed.
-  - `async{}` : This builder works a lot like launch(), but instead of returning a Job object, it returns an object that is a subtype of Job, named **Deferred**. This object gives us a function named await(), which allows us to get the result from order(). await() is a suspending function, and it will suspend the coroutine until its async() coroutine has completed.
+  - `async{}` : This builder works a lot like launch(), but instead of returning a Job object, it returns an object that is a subtype of Job, named **Deferred**. This object gives us a function named **await()**, which allows us to get the result from order(). await() is a suspending function, and it will suspend the coroutine until its async() coroutine has completed.
   - `coroutineScope` : Is used to create a new coroutine scope and wait for all its child coroutines to complete. It's similar to runBlocking but doesn't block the thread it's called on
   - `withContext{}` : Is used to switch the coroutine's context temporarily. It's useful for changing the thread or coroutine dispatcher within a coroutine. This builder allows you to execute code in a different context without starting a new coroutine.
   ```kotlin
@@ -485,7 +486,9 @@ SOLID is a set of five principles for designing maintainable, flexible, and scal
   
 > [⭐](#interview-questions)
   **Q**: What is a difference between Threads & Coroutines? <br>
-  **Ans**: Threads are expensive, require context switches which are costly, and number of threads that can be launched is limited by the underlying operating system whereas, Coroutines can be thought of as light-weight threads, means the creating of coroutines doesn't allocate new thread, instead they use predefined thread pools and smart scheduling for the purpose of which task to execute next and which tasks later.
+  **Ans**: Threads are expensive, require context switches which are costly, and number of threads that can be launched is limited by the underlying operating system whereas, Coroutines can be thought of as light-weight threads, means the creating of coroutines doesn't allocate new thread, instead they use predefined thread pools and smart scheduling for the purpose of which task to execute next and which tasks later. <br>
+  **Q**: What happens when launches coroutines finishes it's works
+  **Ans**: Once the coroutine finishes, its resources are released, and it will no longer consume memory or power. And coroutine along with any data associated with it, becomes eligible for garbage collection, as there would be no active references to it.
 
 ### <a name='flow'></a>Flow
 [🔝](#table-of-contents)
@@ -841,7 +844,8 @@ DI framework build on top of *Dagger*, brings benefits like **compile time corre
 - `Are object variables thread safe`
 - `Inner working of ViewModel`
 - `Inner working of Extension Functions`
-- `Context and Types of context`
+- `Serializable vs Parcelable`: Both are mechanism to pass data between different components but they function differently in terms of performance and implementation.
+    - `Serializable`: Serializable is standard Java interface used to convert an object into a byte stream, which can be passed between activities.  
 
 ## <a name='references'></a>References
 - [ViewModel](https://medium.com/androiddevelopers/viewmodels-a-simple-example-ed5ac416317e)
