@@ -23,6 +23,8 @@
   - **null**
 - `15th November`:
   - [What budgeting apps, Peloton, and Duolingo have in common](https://uxdesign.cc/what-budgeting-apps-fitness-trackers-and-duolingo-have-in-common-and-why-theyre-so-addictive-577bf6de5c0d)
+    <details>
+    
     - Talks about new gen of apps that uses *Hook Model*, which have four stages to keep you engaged, a psycological trick for habit building.
     - Like: Duolingo, Peloton (workout), Mind (finance)
     - 4 stages of Hook Model:
@@ -30,5 +32,10 @@
       2. *Action*: a simple acievable step that makes it easy for users to engage, often displayed with progress bar which encouranges user to finish the job. This taps into a cognitive bias known as the *Zeigarnik Effect*, which states that humans are more likely to remember unfinished tasks and feel compelled to complete them.
       3. *Reward*: every habit needs a reward, like streaks, badges resulting in giving the user the dopamine boost.
       4. *Investment*: where app really makes itself part of the user, by keeping user around by showing progress over time. Typically includes dashboard, summaries to remind the user that how far they've come.
+
+    </details>
 - `18th November`:
   - [Top Nine Android Developer Interview Questions You Should Know](https://proandroiddev.com/top-9-android-developer-interview-questions-you-should-know-05e8fe2acd2c)
+- `26th November`:
+  - [Do you know what your mobile team is shipping right now?](https://www.runway.team/blog/do-you-know-what-your-mobile-team-is-shipping-right-now)
+    - Use seperate channels for each release
