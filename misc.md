@@ -1,13 +1,14 @@
 # Misc
 
 <!-- vscode-markdown-toc -->
-* [Topics](#Topics)
-	* [Time Complexity](#TimeComplexity)
-	* [Bitwise Operators](#BitwiseOperators)
-* [Misc](#Misc)
-	* [Gradle](#Gradle)
-	* [Git](#Git)
-	* [Heroku](#Heroku)
+- [Misc](#misc)
+  - [Topics](#topics)
+    - [Time Complexity](#time-complexity)
+    - [Bitwise Operators](#bitwise-operators)
+  - [Misc](#misc-1)
+    - [Gradle](#gradle)
+    - [Git](#git)
+    - [Heroku](#heroku)
 
 <!-- vscode-markdown-toc-config
 	numbering=false
@@ -84,7 +85,6 @@
   4. packs the compiled code and resources into an APK
   5. installs the APK file on the device and runs the app
 - `DSL`: Gradle comes with lot of built-in functionalities, but we can write our own logic too using DSL (domain specific language), which is tailored to build automation domain based on Groovy or Kotlin.
-
 
 ### <a name='Git'></a>Git
 
