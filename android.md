@@ -1,51 +1,52 @@
 # <a name='Android'></a>Android
 
-## <a name='guide'></a>Guide
+## <a name='Guide'></a>Guide
 - Click 🔝 Icons To Jump To Table of Contents
 - Topic With ⭐ Icons are questions asked from me in Interviews, Click on it to jump to ***Interview Questions Section***
 - Click 💉 before topics for detailed section of it.
 
-## <a name='table-of-contents'></a>Table of Contents
+## <a name='TableofContents'></a>Table of Contents
 <!-- vscode-markdown-toc -->
-* [Guide](#guide)
-* [Table of Contents](#table-of-contents)
-* [Topics](#topics)
-  * [Android Platform Architecture](#android-platform-architecture)
-  * [Definitons](#definitons)
-  * [Anroid App Components](#anroid-app-components)
-  * [Intents](#intents)
-  * [Launch Modes](#launch-modes)
-  * [Architecture Components](#architecture-components)
-  * [Android Jetpack](#android-jetpack)
-  * [Creational Design Patterns](#creational-design-patterns)
-  * [Architectural Pattern](#architectural-pattern)
-    * [Clean Architecture](#clean-architecture)
-  * [Architectural Design Pattern](#architectural-design-pattern)
-    * [MVC](#mvc)
-    * [MVP](#mvp)
-    * [MVVM](#mvvm)
-    * [MVI](#mvi)
-  * [Design Principles](#design-principles)
-    * [SOLID](#solid)
-    * [DRY](#dry)
-    * [KISS](#kiss)
-    * [DI](#di)
-* [Brief](#brief)
-  * [Services](#services)
-  * [Activities](#activities)
-  * [Fragments](#fragments)
-  * [ViewModel](#viewmodel)
-  * [Coroutines](#coroutines)
-  * [Flow](#flow)
-  * [Dependency Injection](#dependency-injection)
-    * [Hilt](#hilt)
-  * [RecyclerView](#recyclerview)
-  * [WorkManager](#workmanager)
-  * [Thread](#thread)
-  * [Compose](#compose)
-  * [Differences](#differences)
-  * [Interview Questions](#interview-questions)
-  * [References](#references)
+* [Guide](#Guide)
+* [Table of Contents](#TableofContents)
+* [Topics](#Topics)
+	* [Android Platform Architecture](#AndroidPlatformArchitecture)
+	* [Definitons](#Definitons)
+	* [Anroid App Components](#AnroidAppComponents)
+	* [Intents](#Intents)
+	* [Launch Modes](#LaunchModes)
+	* [Architecture Components](#ArchitectureComponents)
+	* [Android Jetpack](#AndroidJetpack)
+	* [Creational Design Patterns](#CreationalDesignPatterns)
+	* [Architectural Pattern](#ArchitecturalPattern)
+		* [Clean Architecture](#CleanArchitecture)
+	* [Architectural Design Pattern](#ArchitecturalDesignPattern)
+		* [MVC](#MVC)
+		* [MVP](#MVP)
+		* [MVVM](#MVVM)
+		* [MVI](#MVI)
+	* [Design Principles](#DesignPrinciples)
+		* [SOLID](#SOLID)
+		* [DRY](#DRY)
+		* [KISS](#KISS)
+		* [DI](#DI)
+* [Brief](#Brief)
+	* [Services](#Services)
+	* [Activities](#Activities)
+	* [Fragments](#Fragments)
+	* [ViewModel](#ViewModel)
+	* [Coroutines](#Coroutines)
+	* [Flow](#Flow)
+	* [Dependency Injection](#DependencyInjection)
+		* [Hilt](#Hilt)
+	* [RecyclerView](#RecyclerView)
+	* [WorkManager](#WorkManager)
+	* [ROOM](#ROOM)
+	* [Thread](#Thread)
+	* [Compose](#Compose)
+	* [Differences](#Differences)
+	* [Interview Questions](#InterviewQuestions)
+	* [References](#References)
 
 <!-- vscode-markdown-toc-config
 	numbering=false
@@ -53,9 +54,9 @@
 	/vscode-markdown-toc-config -->
 <!-- /vscode-markdown-toc -->
 
-## <a name='topics'></a>Topics
+## <a name='Topics'></a>Topics
 
-### <a name='android-platform-architecture'></a>Android Platform Architecture
+### <a name='AndroidPlatformArchitecture'></a>Android Platform Architecture
 [🔝](#table-of-contents)
 
 - `Linux Kernel` : Core of android platform architecture. Manages all the hardware drivers, low-level memory.
@@ -65,7 +66,7 @@
 - `Java API Framework (Application Framework)` : Collection of Android Libraries written in Java and Kotlin. Ex: Android Jetpack
 - `System Apps` : Pre-installed apps such as email, SMS messaging, calendars, contacts
 
-### <a name='definitons'></a>Definitons
+### <a name='Definitons'></a>Definitons
 [🔝](#table-of-contents)
 
 - [⭐](#interview-questions)
@@ -77,7 +78,7 @@
 - `Android Manifest` : Describes essential information about the application such as package name, entry points, components, permissions, and metadata.
   - `Package Name` : Application's univerally unique application ID
 
-### <a name='anroid-app-components'></a>Anroid App Components
+### <a name='AnroidAppComponents'></a>Anroid App Components
 [🔝](#table-of-contents)[⭐](#interview-questions)
 
 App components are like entry points that allow systems and users to interact with your application. Each component have their own function and lifecycle.
@@ -88,13 +89,13 @@ App components are like entry points that allow systems and users to interact wi
 - `Broadcast Receivers` : Registerable listener that listens to broadcast messages from Android system or other applications. Where Broadcasts are used to send messages across apps, outside of the normal user flow, like device starts charging. No lifecycle like Services and Activities.
 - `Content Providers` : Manages shared set of data. Through content providers, apps can query or modify other app's data ***if they have required permissions.***
 
-### <a name='intents'></a>Intents
+### <a name='Intents'></a>Intents
 [🔝](#table-of-contents)
 **Intent is a messaging object that is used to request an action from another app component.**
 - `Explicit Intents` : Explicit Intents are used to start a specific component within the same application or another application by explicitly specifying the target component's class name.
 - `Implicit Intents` : Implicit Intents declares a general action to perform like showing gallery image, opening URL on web browser, you can use implicit intent to request action to the android system. Then android system shows all the appropiate components for that request if found.
 
-### <a name='launch-modes'></a>Launch Modes
+### <a name='LaunchModes'></a>Launch Modes
 [🔝](#table-of-contents)
 
 - `Standard` : Default launch mode, creates new instance every time even if activity instance is already present
@@ -126,11 +127,11 @@ App components are like entry points that allow systems and users to interact wi
   E | A->B->C->D->F
   ```
 
-### <a name='architecture-components'></a>Architecture Components
+### <a name='ArchitectureComponents'></a>Architecture Components
 [🔝](#table-of-contents)
 
 
-### <a name='android-jetpack'></a>Android Jetpack
+### <a name='AndroidJetpack'></a>Android Jetpack
 [🔝](#table-of-contents)
 > Suites of libraries to reduce boiler plate code, follow best practices.
 
@@ -159,7 +160,7 @@ App components are like entry points that allow systems and users to interact wi
   - [💉](#workmanager)`WorkManager` : Background Processing API, gurantees background work by scheduling works, runs deferrable.
   - `Paging` : 
 
-### <a name='creational-design-patterns'></a>Creational Design Patterns
+### <a name='CreationalDesignPatterns'></a>Creational Design Patterns
 [🔝](#table-of-contents)
 
 Reusable solutions to solve repeated and common software problems in software engineering.
@@ -218,14 +219,14 @@ Reusable solutions to solve repeated and common software problems in software en
   
 - `Repository Pattern` :
   
-### <a name='architectural-pattern'></a>Architectural Pattern
+### <a name='ArchitecturalPattern'></a>Architectural Pattern
 [🔝](#table-of-contents)
 
 Architectural Patterns are system-wide and deal with the overall structure of the application, such as Clean Architecture. 
 
 Architecture defines boundaries between each layer, defines the responsibilities clearly affecting project's complexity, scalability and robustness, and makes it easier to test.
 
-#### <a name='clean-architecture'></a>Clean Architecture
+#### <a name='CleanArchitecture'></a>Clean Architecture
 - Clean architecture is about organizing code into layers to ensure that the core business logic is independent of frameworks, UI, and external data sources.
 - In android it constitutes of three layers:
   - `Presentation Layer`: Architectural Design Patterns like MVVM and MVI focus on structuring the presentation layer, handling UI interactions, and managing state.
@@ -243,12 +244,12 @@ Architecture defines boundaries between each layer, defines the responsibilities
   1. Each layer should only depend on abstractions, not on concrete implementations.
   2. The outer layers (UI and Data) can depend on the inner layers (Domain), but the Domain layer should not depend on the UI or Data layers.
 
-### <a name='architectural-design-pattern'></a>Architectural Design Pattern
+### <a name='ArchitecturalDesignPattern'></a>Architectural Design Pattern
 [🔝](#table-of-contents)
 
 Architectural Design Patterns like MVVM and MVI focus on structuring the presentation layer (of Clean Architecture), handling UI interactions, and managing state.
 
-#### <a name='mvc'></a>MVC
+#### <a name='MVC'></a>MVC
 Stands for Model, View, Controller.
 - `Model` : It is the business logic and data state. Used to retieve and manipulate data, communicate with controllers, interact with database and update views.
 - `View` : View determines what the user sees in an application, XML.
@@ -258,7 +259,7 @@ Stands for Model, View, Controller.
 
 [figure](https://miro.medium.com/max/828/1*FZ0Lk8d8oUADJmG98S6nHw.png)
 
-#### <a name='mvp'></a>MVP
+#### <a name='MVP'></a>MVP
 Stands for Model, View, Presenter.
 - `Model` : Layer for storing data, handles domain/business logic and is responsible for communicating with database and netwrok layers.
 - `View` : UI layer i.e. Views/Layouts/Activities/Fragments. Will implement as interface for the Presenter's actions.
@@ -268,7 +269,7 @@ Stands for Model, View, Presenter.
 
 [figure](https://miro.medium.com/max/828/1*t5OmKxbq-jST_JtJhZCVJw.png)
 
-#### <a name='mvvm'></a>MVVM 
+#### <a name='MVVM'></a>MVVM 
 [⭐](#interview-questions)
 
 One of the most popular achitecture designs in modern Android Development since Google officially announced Architecture Components, such as ViewModel, LiveData and Data Binding.
@@ -278,19 +279,19 @@ Consists of View, ViewModel, Model
   `ViewModel` : Independent component that does not have any dependencies on **View**, holds buisness logic or UI states from the **Model** to propogates them into UI elements. **ViewModel** notifies data changes to **View** as domain data or UI states.
 - `Model` : Encapsulates the app's domain/data model, which typically includes buiness logic, complex computational works.
 
-#### <a name='mvi'></a>MVI
+#### <a name='MVI'></a>MVI
 MVI is another design pattern but focuses more on a **unidirectional data flow** and treating state as **immutable**. It's a bit more modern and reactive than MVVM and fits well with frameworks like Jetpack Compose
 - `Model` : Represents the current state of the screen or UI. In MVI, this state is immutable and a single source of truth for the entire UI.
 - `View` : This is similar to MVVM, where the View renders UI, but it reflects the current state provided by the Model.
 - `Intent` : User actions or events from the View trigger Intents which are passed to the ViewModel. These Intents are then processed, resulting in a new state. 
 
 
-### <a name='design-principles'></a>Design Principles
+### <a name='DesignPrinciples'></a>Design Principles
 [🔝](#table-of-contents)
 
 Design principles are a set of guidelines or best practices for writing clean, maintainable, and efficient code. These principles help in organizing and structuring code to make it easy to understand, flexible for future changes, and less prone to errors.
 
-#### <a name='solid'></a>SOLID
+#### <a name='SOLID'></a>SOLID
 SOLID is a set of five principles for designing maintainable, flexible, and scalable object-oriented software. These principles guide software development to ensure that systems are easy to understand, extend, and modify without causing major code breakage.
   - `Single Responsibility Principle` : Each class should focus on doing one thing well. If a class has more than one responsibility, changes to one part of the class can impact the other part, making the system harder to maintain.
   - `Open/Closed Principle` : Software entities (classes, modules, functions) should be open for extension but closed for modification. : *You should be able to add new functionality to a class or module without changing its existing code. This is typically done using abstraction and inheritance or interfaces.*
@@ -298,13 +299,13 @@ SOLID is a set of five principles for designing maintainable, flexible, and scal
   - `Interface Segregation Principle` : No client should be forced to depend on interfaces it does not use : *Instead of having one large interface that covers all use cases, it’s better to create smaller, more specific interfaces. This way, classes only need to implement methods they actually use.*
   - `Dependency Inversion Principle` : High-level modules should not depend on low-level modules. Both should depend on abstractions. This reduces coupling between components and makes the system more flexible and easier to modify.
 
-#### <a name='dry'></a>DRY
-#### <a name='kiss'></a>KISS
-#### <a name='di'></a>DI
+#### <a name='DRY'></a>DRY
+#### <a name='KISS'></a>KISS
+#### <a name='DI'></a>DI
 
-## <a name='brief'></a>Brief
+## <a name='Brief'></a>Brief
 
-### <a name='services'></a>Services
+### <a name='Services'></a>Services
 [🔝](#table-of-contents)
 
 ***A service is an application component that can perform long-running operations in the background. Moreover, main android components can bind to service to interact with it and also can perfrom InterProcess Communication (IPC)***
@@ -316,7 +317,7 @@ SOLID is a set of five principles for designing maintainable, flexible, and scal
   - `Bound` : Type of service that offers a client-server interface that allows components(Activity, content provider and service can bind to the Bound service) to interact with the service, send requests, receive results, and even do so across processes with IPC. Bound service runs only as long as another application component is bound ot it. Multiple Components can bind to service at once, but when all of them unbind, the service is destroyed. Ex: Music Player service.
 - `Services v/s Threads` : Service is simply a component that can run in the background, even when the user is not interacting with the application, whereas, if you must perform work outside of your main thread, but only while the user is interacting with your application, you should create a new thread. For example : Use service to play audio even if application is in background, and use Thread to play some video but only while the activity is running, you might create a thread in `onCreate()`, start running in `onStart()` and stop in `onStop()`
 
-### <a name='activities'></a>Activities
+### <a name='Activities'></a>Activities
 [🔝](#table-of-contents)
 ***Activities is an independent and reusable component that interacts with the user by providing UI-relevant resources.***
 - [Activity Lifecycle Figure](https://developer.android.com/guide/components/activities/activity-lifecycle)<br>
@@ -348,7 +349,7 @@ SOLID is a set of five principles for designing maintainable, flexible, and scal
 
 [ref: The Android Lifecycle cheat sheet](https://medium.com/@JoseAlcerreca/the-android-lifecycle-cheat-sheet-part-i-single-activities-e49fd3d202ab)
 
-### <a name='fragments'></a>Fragments
+### <a name='Fragments'></a>Fragments
 [🔝](#table-of-contents)
 
 ***Reusable part of UI that interacts with users by providing UI elements on top of activities.*** Managed by Fragment Managers.
@@ -368,7 +369,7 @@ SOLID is a set of five principles for designing maintainable, flexible, and scal
 - [⭐](#interview-questions)
   `add vs replace` : **replace** removes the existing fragment and adds a new fragment, means when you press back button the fragment that got replaced will be recreated with its *onCreateView()* being invoked, wheres **add** retains the existing fragments and adds a new fragments means existing fragment will be active, wont be in *paused* state.
 
-### <a name='viewmodel'></a>ViewModel
+### <a name='ViewModel'></a>ViewModel
 [🔝](#table-of-contents)
 
 ***ViewModel is class designed to hold and manage UI-related data in a life-cycle consious way. This allows data to survive configuration changes such a screen rotations.***
@@ -414,7 +415,7 @@ SOLID is a set of five principles for designing maintainable, flexible, and scal
   - If yes, return the already existing object.
   - If no, create a new `ViewModel`, and store the object in HashMap for future usage.
 
-### <a name='coroutines'></a>Coroutines
+### <a name='Coroutines'></a>Coroutines
 [🔝](#table-of-contents)
 
 ***Coroutines are powerful feature introduced in Kotlin to handle asynchronous programming in a more concise and efficient manner. In context of Android development, coroutines provide a way to perform asynchronous operations, such as network requests, database queries, without blocking the main thread.***
@@ -484,7 +485,7 @@ SOLID is a set of five principles for designing maintainable, flexible, and scal
   **Q**: What is a difference between Threads & Coroutines? <br>
   **Ans**: Threads are expensive, require context switches which are costly, and number of threads that can be launched is limited by the underlying operating system whereas, Coroutines can be thought of as light-weight threads, means the creating of coroutines doesn't allocate new thread, instead they use predefined thread pools and smart scheduling for the purpose of which task to execute next and which tasks later.
 
-### <a name='flow'></a>Flow
+### <a name='Flow'></a>Flow
 [🔝](#table-of-contents)
 
 *Flow is an asynchronous data stream that emits values to the collector and gets completed with or without an exception.*
@@ -619,7 +620,7 @@ SOLID is a set of five principles for designing maintainable, flexible, and scal
   
 [ref: Mastering Flow API](https://amitshekhar.me/blog/flow-api-in-kotlin)<br>[ref](https://medium.com/yemeksepeti-teknoloji/introduction-to-kotlin-flows-827f5a71ad7e)<br>[ref](https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-flow/)
 
-### <a name='dependency-injection'></a>Dependency Injection
+### <a name='DependencyInjection'></a>Dependency Injection
 [🔝](#table-of-contents)
 
 - `Dependency` : Object which is to be used by a dependent i.e. class
@@ -627,7 +628,7 @@ SOLID is a set of five principles for designing maintainable, flexible, and scal
 - `Dependency Injection` : Technique where dependencies are provided to a class instead of creating them itself.
 - DI helps in laying the groundwork for good app architecture, greater code reuability, and ease of testing.
   
-#### <a name='hilt'></a>Hilt
+#### <a name='Hilt'></a>Hilt
 
 DI framework build on top of *Dagger*, brings benefits like **compile time correctness, runtime performance, scalability** that Dagger provides, but also Hilt is **integrated with Jetpack libraries and removes most of the boilerplate code** to let us focus on just the important parts.
 - Hilt Automatically generates:
@@ -667,7 +668,7 @@ DI framework build on top of *Dagger*, brings benefits like **compile time corre
   - `@Binds` : Shorthand for binding an interface type
   - `@Singleton/@ActivityScoped` : Scoping object to container. The same instance of a type will be provided by container when using that type as a dependency.
 
-### <a name='recyclerview'></a>RecyclerView
+### <a name='RecyclerView'></a>RecyclerView
 [🔝](#table-of-contents)
 
 - A `ViewGroup` to efficiently display large sets of data. You supply data, and define how each item looks, and RecyclerView library dynamically creates the elements when they're needed.
@@ -692,13 +693,32 @@ DI framework build on top of *Dagger*, brings benefits like **compile time corre
 > **Q**. How to optimize RecyclerView? <br>
 **Ans:**
 
-### <a name='workmanager'></a>WorkManager
+### <a name='WorkManager'></a>WorkManager
 [🔝](#table-of-contents)
 
-*WorkManager aims to simplify the developer experience by providing a first-class API for system-driven background processing. It is intended for background jobs that should run even if the app is no longer in the foreground. Where possible, it uses JobScheduler or Firebase JobDispatcher to do the work; if your app is in the foreground, it will even try to do the work directly in your process.*
+**WorkManager is an Android library that runs deferrable background work when the work’s constraints are satisfied.**
+
 - `Components`
 
-### <a name='thread'></a>Thread
+[ref: Introducing WorkManager. This series of blog posts](https://medium.com/androiddevelopers/introducing-workmanager-2083bcfc4712)
+
+
+### <a name='ROOM'></a>ROOM
+[🔝](#table-of-contents)
+
+Room provides an abstraction layer over SQLite to allow fluent database access while harnessing the full power of SQLite.
+
+- `ROOM vs SQLite` : 
+  1. There is no compile-time verification of raw SQLite queries. But in Room, there is SQL validation at compile time.
+  2. You need to use lots of boilerplate code to convert between SQL queries and Java data objects. But, Room maps our database objects to Java Object without boilerplate code.
+  3. As your schema changes, you need to update the affected SQL queries manually. Room solves this problem.
+  4. Room is built to work with LiveData and RxJava for data observation, while SQLite does not.
+- `Componenets of ROOM DB` : 
+  - `Entity` : Represents a table within the database
+  - `DAO` : DAOs are responsible for defining the methods that access the database.
+  - `Database` : Contains the database holder and serves as the main access point for the underlying connection to your app’s persisted, relational data.
+
+### <a name='Thread'></a>Thread
 [🔝](#table-of-contents)
 **It is a lightweight process that an operating system can schedule and run concurrently**<br>
 - `Types of thread`:
@@ -726,7 +746,7 @@ DI framework build on top of *Dagger*, brings benefits like **compile time corre
   - **TERMINATED**: state when thread is completed or interrupted
 
 
-### <a name='compose'></a>Compose
+### <a name='Compose'></a>Compose
 [🔝](#table-of-contents)
 
 *Jetpack compose is a modern toolkit for building native Android UI. Compose simplifies and accelerates UI development on Android with less code, powerful tools and inuitive Kotlin APIs*
@@ -766,10 +786,10 @@ DI framework build on top of *Dagger*, brings benefits like **compile time corre
   - `RxJava2` : *subscribeAsState()* are extension functions that transform RxJava2's reactive streams into Compose State.
   - `RxJava3` : *subscribeAsState()* same as above.
 
-### <a name='differences'></a>Differences
+### <a name='Differences'></a>Differences
 - `ListView vs RecyclerView`
 
-### <a name='interview-questions'></a>Interview Questions
+### <a name='InterviewQuestions'></a>Interview Questions
 - `ListView vs RecyclerView`
 - `LiveData vs Flow`
 - `lazy vs lateinit`
@@ -779,7 +799,7 @@ DI framework build on top of *Dagger*, brings benefits like **compile time corre
 - `Inner working of Extension Functions`
 - `Context and Types of context`
 
-### <a name='references'></a>References
+### <a name='References'></a>References
 - [ViewModel](https://medium.com/androiddevelopers/viewmodels-a-simple-example-ed5ac416317e)
 - [ViewModel](https://blog.mindorks.com/android-viewmodels-under-the-hood)
 - [ViewModel](https://www.youtube.com/watch?v=LNWpj2k9RUk&t=2988s&ab_channel=RajeshHadiya)
