@@ -176,23 +176,38 @@ println(bill1 == bill2) // false
 ### <a name='Constructors'></a>Constructors
 [🔝](#table-of-contents)
 
-  - `Primary Constructor` : Type of constructor that is initialized in the class header, after the class name with *constructor* keyword. Parameters are optional. If no annotations are provided, it can be skipped and if required initialization code can be placed in seperate initializer block i.e. `init`, because primary constuctor cannot contain any code.
+  - `Primary Constructor`: The primary constructor is defined in the class header, directly after the class name, and is part of the class declaration itself.
+    - Can use var and val
+    - no use of constructor keyword
+    - implicityly called when an instance of class is created 
   ```kotlin
-  class Sample constructor(val a: Int){
-    
+  class User(val name: String, val age: Int){
     init {
 
     }
   }
   ```
-  - `Secondary Constructor` : It allows for the initialization of variables as well as addition of logic to the class.
+  - `Secondary Constructor`: Also knows an auxiliary constructor, is an additional constructor you can define within the class body using the *constructor* keyword. Allows to provide alternate ways to instantiate an object.
+    - can call the primary constructor using ***this()***
+    - each constructor can delegate to primary constructor or another secondary constructor.
   ```kotlin
-  class Sample{
-    constructor(a: Int){
-      println(a)
+  class User(val name: String, val age: Int) {
+   constructor(name: String) : this(name, 22) {
+        println("User created with name: $name, age: $age")
     }
   }
   ```
+  - `Init Block`: The init block is used for initializing properties or executing startup logic right after an object is created. It runs after the primary constructor and before any secondary constructor.
+    - called automatically when an instance of class is created
+    - can have multiple init blocks and they will be executed the same order they are defined in the class.
+    - any property defined in primary constructor can be accessed and used inside the init block.
+  ```
+  class User(val name: String, val age: Int) {
+     init {
+        println("name: $name and age: $age")
+    }
+  }
+  ``` 
 
 ### <a name='Functions'></a>Functions
 [🔝](#table-of-contents)

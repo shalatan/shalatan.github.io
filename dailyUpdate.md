@@ -32,3 +32,9 @@
       4. *Investment*: where app really makes itself part of the user, by keeping user around by showing progress over time. Typically includes dashboard, summaries to remind the user that how far they've come.
 - `18th November`:
   - [Top Nine Android Developer Interview Questions You Should Know](https://proandroiddev.com/top-9-android-developer-interview-questions-you-should-know-05e8fe2acd2c)
+- `19th November`:
+  - [Understanding supervisorScope, SupervisorJob, coroutineScope, and Job in Kotlin: A Deep Dive into Failure Propagation and Structured Concurrency](https://medium.com/@adityamishra2217/understanding-supervisorscope-supervisorjob-coroutinescope-and-job-in-kotlin-a-deep-dive-into-bcd0b80f8c6f)
+- `20th November`:
+  - [Kotlin Under the Hood: Exploring Constructors and Init Blocks](https://proandroiddev.com/kotlin-under-the-hood-exploring-constructors-and-init-blocks-869fc1f85a8e)
+  - [3 Must-Have Tips for improving code readability](https://medium.com/@michalankiersztajn/3-must-have-tips-for-improving-code-readability-f7ec584e041c)
+  - 
