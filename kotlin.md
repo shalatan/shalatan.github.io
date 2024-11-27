@@ -422,6 +422,24 @@ println(matrix.contentDeepToString())
 : [[[0, 0, 0], [0, 0, 0], [0, 0, 0]], [[0, 0, 0], [0, 0, 0], [0, 0, 0]], [[0, 0, 0], [0, 0, 0], [0, 0, 0]]]
 ```
 
+### <a name='List'></a>List
+```kotlin
+  val list = listOf(1,2,3,4,5)
+  val list = mutableListOf<Int>() //create empty mutable list
+  val list = mutableListOf(1,2,3,4,5,6)
+  val list = List(n) {0} //[0,0,0,0,0]
+  val list: MutableList<Int> = MutableList(n) {0} //[0,0,0,0,0]
+  
+  list.sort() //sorts the current list
+  list.sortDescending()
+
+  val sorted = list.sorted()  //returns sorted list
+  val descSorted = list.sortedByDescending()
+
+  val even = list.filter {it%2==0} //list with filtered items
+  val sqaure = list.map {it*it} //transform list and return new list
+```
+
 ### <a name='HashSet'></a>HashSet
 ```kotlin
 var hashSet = hashSetOf<Int>()
