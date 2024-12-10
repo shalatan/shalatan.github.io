@@ -1,6 +1,7 @@
 <!-- vscode-markdown-toc -->
 - [Protocols](#protocols)
 - [Brief](#brief)
+  - [SSL](#ssl)
   - [XMPP](#xmpp)
 
 <!-- vscode-markdown-toc-config
@@ -19,7 +20,12 @@ Types of protocols:
     -   [💉](#XMPP)XMPP
     -   MQTT
     -   AMQP
-- `Networking Protocols`
+- `Networking Protocols`: Networking Protocols are the rules and standards that govern data communication between devices in a network, ensuring accurant transmission.
+  - `HTTP`: HyperText Transfer Protocol, where all the information is sent in clearText.
+  - `HTTPS`: HyperText Transfer Protocol Secure, a secured verison of HTTP. HTTPS encrypts the data that is retrieved by using encryption algorithm to scramble the data being transferred. HTTPS secure the data using one of two protocols:
+    - `SSL`: Secure Sockets Layer is a protocol used to ensure data security on the internet by use of public-key encryption.
+  - `FTP`:
+  - `TCP/IP`: 
 - `Routine Protocols`
 - `Security Protocols`
 - `Data Link Layer Protocols`
@@ -27,6 +33,21 @@ Types of protocols:
 - `IoT Protocols`
 
 ## <a name='Brief'></a>Brief
+
+### <a name='SSL'></a>SSL
+SSL or Secure Sockets Layer, is an encryption-based Internet security protocol, developed by Netscape in 1995 for the purpose of ensuring privacy, authentication and data intergrity in Internet communications. SSL is predecssor of modern `TLS` encryption used today.<br>
+A website that implements SSL/TLS has *HTTPS* in it's url instead of *HTTP*.
+- `Process involved in SSL/TLS encyption`:
+  - *Encrypts data* that is transmitted across web.
+  - *Initiates an authentication process* called Handshake between two communicating devices.
+  - Digitally signs in order to provide *data inegrity*, verifying that data is not tampered before reaching.
+- SSL has not been updated since SSL 3.0 in 1996 and is now deprecated. TLS is the up-to-date encryption protocol that is being used nowadays but people still tag it as SSL only.
+- `SSL Certificate`: SSL can only be implemented by websites that have an SSL certificate. It's like a card that proves someone is who they say they are. It's stored and displayed on the Web by a website's or application's server. One of the most important piecies of info in an SSL certificate is website's public key, which makes the encryption and authentication possible. User's device uses the public key to estblish secure encryption keys with web server. And web server stores a private key, that decrypts data encrpted with the public key.
+- `Types of SSL certificates`:
+  - Single-domain: Applies to only one domain.
+  - Wildcard: Applies to only one domain but also includes subdomains. Like www.cloudfare.com, blog.cloudfare.com.
+  - Multi-domain: Can apply to mulitple unrelated domains.
+- TLS uses `public key cryptography`, in which there are two keys, a public key shared with client via server''s SSL certificate and a private key. When client opens a connectionwith server the two devices uses the both keys to agree on a new key called `session key`, to encrypt further communcations between them. All HTTP requests and responses are then encrypted with these session keys.
 
 ### <a name='XMPP'></a>XMPP
 XMPP stands for Extensible Messaging and Presence Protocol, a communcation protocol used for instant messaging, presence information, and online collcaboration.XMPP messages are encoded in XML. 

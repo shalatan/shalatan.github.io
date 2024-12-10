@@ -47,6 +47,9 @@
   - [Optimization](#optimization)
     - [Build Speed](#build-speed)
     - [Performance](#performance)
+  - [Tools and Libraries](#tools-and-libraries)
+    - [Sentry](#sentry)
+    - [Perfetto](#perfetto)
   - [Interview Questions](#interview-questions)
   - [References](#references)
 
@@ -410,12 +413,12 @@ SOLID is a set of five principles for designing maintainable, flexible, and scal
   }
   ```
   At the lowest, the object creation of `ViewModel` is handled by `ViewModelStore`, which contains `HashMap<String, ViewModel>` 
-  
   where, Key Format : `val canonicalName = modelClass.canonicalName`.
-  
+
   Hence `ViewModelStore` checks if key for `ViewModel` exists in the HashMap.
   - If yes, return the already existing object.
   - If no, create a new `ViewModel`, and store the object in HashMap for future usage.
+- Q: How viewModel knows then to retain it when it's a screen rotation 
 
 ### <a name='coroutines'></a>Coroutines
 [🔝](#table-of-contents)
@@ -836,6 +839,15 @@ DI framework build on top of *Dagger*, brings benefits like **compile time corre
   3. `Automated`:
      1. 
 
+## <a name='tools-libraries'></a>Tools and Libraries
+
+### <a name='sentry'></a>Sentry
+To keep tracks of crashes
+
+### <a name='perfetto'></a>Perfetto
+Perfetto is a system profiling and app tracing tool by Google. It helps analyse the app by collecting system and app-level performance traces.
+
+
 ## <a name='interview-questions'></a>Interview Questions
 - `ListView vs RecyclerView`
 - `LiveData vs Flow`
@@ -845,7 +857,8 @@ DI framework build on top of *Dagger*, brings benefits like **compile time corre
 - `Inner working of ViewModel`
 - `Inner working of Extension Functions`
 - `Serializable vs Parcelable`: Both are mechanism to pass data between different components but they function differently in terms of performance and implementation.
-    - `Serializable`: Serializable is standard Java interface used to convert an object into a byte stream, which can be passed between activities.  
+    - `Serializable`: Serializable is standard Java interface used to convert an object into a byte stream, which can be passed between activities. It works through Java reflection, meaning the system dynamically inspects the class and its fields at runtime to serialize the object. Hence, it is slower process than Parcelable as refection is a slow process. It also generates alot of temporary objects during serialization, increasing the memory overload.
+    - `Parcelable`: It is a Android-specific  interface designed specially for high-performance inter-process communication within Android Components. It's faster because it's optimized for Android and doesn't rely on reflection and also minimizes gc by avoiding creating many temporary objects. Preferred when peformance is important.
 
 ## <a name='references'></a>References
 - [ViewModel](https://medium.com/androiddevelopers/viewmodels-a-simple-example-ed5ac416317e)
