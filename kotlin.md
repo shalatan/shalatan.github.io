@@ -20,6 +20,7 @@
     - [String](#string)
     - [Arrays](#arrays)
     - [Matrix](#matrix)
+    - [List](#list)
     - [HashSet](#hashset)
     - [HashMap](#hashmap)
     - [Loop](#loop)
@@ -399,22 +400,18 @@ for(char in str)
 ### <a name='Arrays'></a>Arrays
 - `Array<Int>` is an Integer[], means it will be boxed with Integer.parseInt()
 - `IntArray` is an int[], in it no boxing will occur, becuase it translates to Java primitive array.
-    - val arr = IntArray(10)
-    - 
-```kotlin
-val arr = intArrayOf(1,2,3,4,5)
-var arr = IntArrya(10)
-var arr = IntArray(5) {0}   // {0,0,0,0,0}
-
-arr.size    //4
-```
+  ```kotlin
+  val arr = intArrayOf(1,2,3,4,5)
+  var arr = IntArray(10)
+  var arr = IntArray(5) {0}   // {0,0,0,0,0}
+  arr.size    //4
+  ```
 
 ### <a name='Matrix'></a>Matrix
 ```kotlin
 //declare two dimensional array
 var matrix = Array(2) { Array<Int>(2) {0} }
-println(matrix.contentDeepToString())
-: [[0,0],[0,0]]
+println(matrix.contentDeepToString()) //[[0,0],[0,0]]
 
 //declare three dimensional array
 var matrix = Array(3) { Array(3) { Array<Int>(3) {0} }}
