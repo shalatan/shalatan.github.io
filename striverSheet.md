@@ -28,7 +28,7 @@
     4. TC: O(2*M*N), SC: O(N)+O(M)
         <details>
         <summary>Code</summary>
-
+        <div markdown="1">
         ```kotlin
         fun setZeroes(matrix: Array<IntArray>): Unit {
             val m = matrix.size
@@ -52,7 +52,7 @@
             }
         }
         ```
-        </details>
+        </div></details>
   - Optimal:
     1. Use 1st row and column as place holder for i,j
     2. Use col0 to hold 0 in j
@@ -97,5 +97,12 @@
             }
         ```
         </details>
-
+- [Next Permutation](https://leetcode.com/problems/next-permutation/description/)
+  - Brute Force:
+    1. Generate all the sorted permutations
+    2. Linear Search the current
+    3. Return next or first if last
+    4. TC: O(N!*N), N! = N factorial
+  - Optimal:
+    1.  
 ## <a name='Day2'></a>Day 2
