@@ -7,7 +7,7 @@
 	autoSave=true
 	/vscode-markdown-toc-config -->
 <!-- /vscode-markdown-toc -->
-## <a name='Day1'></a>Day 1
+### <a name='Day1'></a>Day 1
 - [Set Matrix Zero](https://leetcode.com/problems/set-matrix-zeroes/)
   - Brute Force:
     1. Iterate matrix and when found 0, mark all the elements of same row and col as -1. 
@@ -145,7 +145,7 @@
         }
         ```
         </div></details>
-- [Kadanse' Algorithm](https://leetcode.com/problems/maximum-subarray/description/)
+- [Kadane's' Algorithm](https://leetcode.com/problems/maximum-subarray/description/)
   1. Brute Force:
       1. Use 2 loops to get start and end index of subarray.
       2. Use 1 loop to sum of that sub array from start to end
@@ -173,7 +173,95 @@
         }
         ```
         </div></details>
--[]()
--[]()
+- [Sort Colors](https://leetcode.com/problems/sort-colors/description/)
+    1. Brute Force:
+       1. Sort the array
+       2. TC: O(N*logN)
+    2. Better:
+       1. Count the occurence of 0,1,2 and put it again
+       2. TC: O(N)+O(N)
+    3. Optimal: Three Pointer & Dutch National Flag Algorithm
+       1. TC: O(N)
+        <details>
+        <summary>Code</summary>
+        <div markdown="1">
 
-## <a name='Day2'></a>Day 2
+        ```kotlin
+        //three pointer
+        fun sortColors(nums: IntArray): Unit {
+            var one = -1
+            var two = -1
+            var zero = -1
+            for(num in nums){
+                when(num){
+                    2 -> {
+                        nums[++two] = 2
+                    }
+                    1 ->{
+                        nums[++two] = 2
+                        nums[++one] = 1
+                    }
+                    0 ->{
+                        nums[++two] = 2
+                        nums[++one] = 1
+                        nums[++zero] = 0
+                    }
+                }
+            }
+        }
+        //dutch national flag algorithm
+        fun sortColors(nums: IntArray): Unit {
+            var low = 0
+            var mid = 0
+            var high = nums.size-1
+            while(mid<=high){
+                when(nums[mid]){
+                    0 ->{
+                        swap(nums,low,mid)
+                        low++
+                        mid++
+                    }
+                    1 ->{
+                        mid++
+                    }
+                    2 ->{
+                        swap(nums,mid,high)
+                        high--
+                    }
+                }
+            }
+        }
+        ```
+        </div></details>
+- [Stock Buy And Sell](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/)
+  1. Brute Force:
+     1. Take two loops and find the max profit
+     2. TC: O(N*N)
+  2. Optimal:
+     1. TC: O(N)
+        <details>
+        <summary>Code</summary>
+        <div markdown="1">
+
+        ```kotlin
+        fun maxProfit(prices: IntArray): Int {
+            var minLeft = Int.MAX_VALUE
+            var profit = 0
+            for(price in prices){
+                minLeft = minOf(minLeft,price)
+                val profitIfSoldToday = price-minLeft
+                profit = maxOf(profit, profitIfSoldToday)
+            }
+            return profit
+        }
+        ```
+        </div></details>
+
+### <a name='Day2'></a>Day 2
+        <details>
+        <summary>Code</summary>
+        <div markdown="1">
+
+        ```kotlin
+        ```
+        </div></details>

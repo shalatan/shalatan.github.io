@@ -385,7 +385,13 @@ The point of a scope function is to take an existing object - called a *context 
 ## <a name='DSA'></a>DSA
 
 ### <a name='Tips'></a>Tips
-- `Find number of digits in number`: (Math.log10(num))
+```kotlin
+var n = (Math.log10(num)) //find number of digits in number
+nums[j] = nums[i].also { nums[i] = nums[j] } //swap two numbers in array
+var max = maxOf(a,b) //get max value
+var min = minOf(a,b) //get min value
+```
+- `Find number of digits in number`: 
 
 ### <a name='String'></a>String
 ```kotlin
@@ -400,12 +406,12 @@ for(char in str)
 ### <a name='Arrays'></a>Arrays
 - `Array<Int>` is an Integer[], means it will be boxed with Integer.parseInt()
 - `IntArray` is an int[], in it no boxing will occur, becuase it translates to Java primitive array.
-  ```kotlin
-  val arr = intArrayOf(1,2,3,4,5)
-  var arr = IntArray(10)
-  var arr = IntArray(5) {0}   // {0,0,0,0,0}
-  arr.size    //4
-  ```
+```kotlin
+val arr = intArrayOf(1,2,3,4,5)
+var arr = IntArray(10)
+var arr = IntArray(5) {0}   // {0,0,0,0,0}
+arr.size    //4
+```
 
 ### <a name='Matrix'></a>Matrix
 ```kotlin
