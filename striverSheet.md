@@ -2,14 +2,6 @@
 - [Day 1](#day-1)
 - [Day 2](#day-2)
 
-<details>
-<summary>Code</summary>
-
-```kotlin
-
-```
-</details>
-
 <!-- vscode-markdown-toc-config
 	numbering=false
 	autoSave=true
@@ -60,7 +52,7 @@
     4. Update 1st row using [0,0] and 1st col using col0
         <details>
         <summary>Code</summary>
-
+        <div markdown="1">
         ```kotlin
         fun setZeroes(matrix: Array<IntArray>): Unit {
                 val m = matrix.size
@@ -96,7 +88,7 @@
                 }
             }
         ```
-        </details>
+        </div></details>
 - [Next Permutation](https://leetcode.com/problems/next-permutation/description/)
   - Brute Force:
     1. Generate all the sorted permutations
@@ -104,5 +96,84 @@
     3. Return next or first if last
     4. TC: O(N!*N), N! = N factorial
   - Optimal:
-    1.  
+    1. Ex: `2,1,5,3,0,0`
+    2. Longest prefix match as possible/breakpoint: `a[i] < a[i+1]: 1,5`
+    3. find >i, but the smallest one: `3`, so that you stay close
+    4. Try to place remaining in sorted order
+        <details>
+        <summary>Code</summary>
+        <div markdown="1">
+
+        ```kotlin
+        fun nextPermutation(nums: IntArray): Unit {
+            var bp = -1
+            val n = nums.size
+            //1 find the breaking point
+            for(i in (n-2) downTo 0){
+                if(nums[i]<nums[i+1]){
+                    bp = i
+                    break
+                }
+            }
+            //2 find smallest bigger number
+            if(bp>=0){
+                for(i in (n-1) downTo bp){
+                    if(nums[i]>nums[bp]){
+                        swap(nums,i,bp)
+                        break
+                    }
+                }
+            }
+            //3 revserse the left numbers
+            reverse(nums,bp+1)
+        }
+
+        fun reverse(nums: IntArray,start: Int){
+            var i = start
+            var j = nums.size-1
+            while(i<j){
+                swap(nums,i,j)
+                i++
+                j--
+            }
+        }
+
+        fun swap(nums: IntArray,i: Int, j:Int){
+            val temp = nums[i]
+            nums[i] = nums[j]
+            nums[j] = temp
+        }
+        ```
+        </div></details>
+- [Kadanse' Algorithm](https://leetcode.com/problems/maximum-subarray/description/)
+  1. Brute Force:
+      1. Use 2 loops to get start and end index of subarray.
+      2. Use 1 loop to sum of that sub array from start to end
+      3. TC: O(N^3) 
+   2. Better:
+      1. We can remove the third loop by adding the new item into previous sum of subarray, `sum+=arr[j]`, and get `maxOf(sum,max)`
+      2. TC: O(N^2)
+   3. Optimal: Kadane's algorithm
+      1. The intuition of the algorithm is not to consider the subarray as a part of the answer if its sum is less than 0.
+      2. TC: O(N)
+        <details>
+        <summary>Code</summary>
+        <div markdown="1">
+
+        ```kotlin    
+        fun maxSubArray(nums: IntArray): Int {
+            var max = Int.MIN_VALUE
+            var sum = 0
+            for(i in 0 until nums.size){
+                sum+=nums[i]
+                max = maxOf(sum,max)
+                if(sum<0) sum = 0
+            }
+            return max
+        }
+        ```
+        </div></details>
+-[]()
+-[]()
+
 ## <a name='Day2'></a>Day 2
