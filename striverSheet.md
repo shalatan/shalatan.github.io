@@ -258,6 +258,142 @@
         </div></details>
 
 ### <a name='Day2'></a>Day 2
+- [Rotate Image by 90 degree](https://leetcode.com/problems/rotate-image/description/)
+  1. Brute Force: 
+     1. Create a new matrix and put items
+     2. TC: O(N*N), SC: O(N*N)
+  2. Optimal:
+     1. Transpose matrix
+     2. Reverse the matrix
+     3. TC: O(N*N), SC: O(1)
+        <details>
+        <summary>Code</summary>
+        <div markdown="1">
+
+        ```kotlin
+        fun rotate(mat: Array<IntArray>): Unit {
+            val m = mat.size
+            for(i in 0 until m){
+                for(j in i until m){
+                    val temp = mat[i][j]
+                    mat[i][j] = mat[j][i]
+                    mat[j][i] = temp
+                }
+            }
+            for(i in 0 until m){
+                for(j in 0 until m/2){
+                    val temp = mat[i][j]
+                    mat[i][j] = mat[i][m-1-j]
+                    mat[i][m-1-j] = temp
+                }
+            }
+        }
+        ```
+        </div></details>
+- [Merge Overlapping Sub-intervals](https://leetcode.com/problems/merge-intervals/description/)
+  1. Brute Force:
+     1. Sort if not sorted
+     2. Use one loop to iterate all items and another loop to check (i+1,n-1) if they can be merged
+     3.  TC: O(N*N)
+  2. Optimal:
+     1. Sort if not sorted
+     2. Insert first item in result, and iterate checking if last[1]>new[0].
+     3. If true update last[1] with maxOf(last[1],new[1])
+     4. Else insert in list
+     5. TC: O(N*logN)+O(N)
+        <details>
+        <summary>Code</summary>
+        <div markdown="1">
+
+        ```kotlin
+        fun merge(intervals: Array<IntArray>): Array<IntArray> {
+            var ans = mutableListOf<IntArray>()
+            intervals.sortBy{ it[0] }
+            for(interval in intervals){
+                if(ans.isEmpty()){
+                    ans.add(interval)
+                }
+                val endOfLast = ans.last()[1]
+                if(endOfLast>=interval[0]){
+                    ans.last()[1] = maxOf(endOfLast,interval[1])
+                } else {
+                    ans.add(interval)
+                }
+            }
+            return ans.toTypedArray()
+        }
+        ```
+        </div></details>
+- [Merge Sorted Array](https://leetcode.com/problems/merge-sorted-array/description/)
+  1. Optimal:
+     1.  
+        <details>
+        <summary>Code</summary>
+        <div markdown="1">
+
+        ```kotlin
+        fun merge(nums1: IntArray, mo: Int, nums2: IntArray, no: Int): Unit {
+            var m = mo-1
+            var n = no-1
+            var last = nums1.size-1
+            while(m>=0&&n>=0){
+                if(nums1[m]>nums2[n]){
+                    nums1[last] = nums1[m]
+                    m--
+                }else{
+                    nums1[last] = nums2[n]
+                    n--
+                }
+                last--
+            }
+            for(i in 0..n)
+                nums1[i] = nums2[i]
+        }    
+        ```
+        </div></details>
+- [Find the duplicate in an array of N+1 integers](https://leetcode.com/problems/find-the-duplicate-number/description/)
+  1. Brute Force:
+     1. Sort the array and iterate to find same consequetive number
+     2. TC: O(N*logN)+O(N)
+  2. Better:
+     1. Using hashset and checking if it already exists.
+     2.  TC: O(N), SC: O(N)  
+  3. Optimal:
+     1. Cannot modify the array: `Floyd's Tortoise and Hare Algorithm: Linked List Cycle Detection`
+        1. Use slow and fast pointers and find the cycle
+        2. Set fast to nums[0]
+        3. move both same till same again
+        4. TC: O(N)
+            <details>
+            <summary>Code</summary>
+            <div markdown="1">
+
+            ```kotlin
+            fun findDuplicate(nums: IntArray): Int {
+                var slow = nums[0]
+                var fast = nums[0]
+                do{
+                    slow = nums[slow]
+                    fast = nums[nums[fast]]
+                }while(slow!=fast)
+                fast = nums[0]
+                while(slow!=fast){
+                    slow = nums[slow]
+                    fast = nums[fast]
+                }
+                return slow
+            }
+            ```
+            </div></details>
+     2. Can modify the array: `Cycle Sort`
+- []()
+
+
+
+
+
+
+
         <details>
         <summary>Code</summary>
         <div markdown="1">
