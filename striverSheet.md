@@ -1,6 +1,9 @@
 <!-- vscode-markdown-toc -->
 - [Day 1](#day-1)
 - [Day 2](#day-2)
+- [Day 3](#day-3)
+- [Day 4](#day-4)
+- [Day 5](#day-5)
 
 <!-- vscode-markdown-toc-config
 	numbering=false
@@ -387,6 +390,142 @@
             </div></details>
      2. Can modify the array: `Cycle Sort`
 - []()
+
+### <a name='Day3'></a>Day 3
+- [Search in a sorted 2D matrix](https://leetcode.com/problems/search-a-2d-matrix/description/)
+  1. Brute Force:
+     1. Iterate matrix using two loops and find
+     2. TC: O(M*N)
+  2. Better: `Two Pointers`
+     1. Use two pointers, `i at 0,m-1`, `j at (col.size-1,0)` 
+     2. If mat[i][j]>target, j--, else i++
+     3. TC: O(M+N)
+        <details>
+        <summary>Code</summary>
+        <div markdown="1">
+
+        ```kotlin
+        fun searchMatrix(matrix: Array<IntArray>, target: Int): Boolean {
+            val m = matrix.size
+            val n = matrix[0].size
+            var i = 0
+            var j = n-1
+            while(i<m && j>=0){
+                val cur = matrix[i][j]
+                if(cur==target) return true
+                if(cur>target) j--
+                else i++
+            }
+            return false
+        }
+        ```
+        </div></details>
+  3. Optimal: `Treat matrix as flattend array and use binary search`
+     1. Put start at 0, and end at m*n-1
+     2. Calculate mid, and find the `curItem = matrix[mid/n][mid%n]`
+     3. TC: O(log(M*N))
+        <details>
+        <summary>Code</summary>
+        <div markdown="1">
+
+        ```kotlin
+        fun searchMatrix(matrix: Array<IntArray>, target: Int): Boolean {
+            val m = matrix.size
+            val n = matrix[0].size
+            var start = 0
+            var end = m*n-1
+            while(start<=end){
+                val mid = start+(end-start)/2
+                val cur =  matrix[mid/n][mid%n]
+                when {
+                    cur==target -> return true
+                    cur>target -> end = mid-1
+                    cur<target -> start = mid+1
+                }
+            }
+            return false
+        }
+        ```
+        </div></details>
+- [Majority Element n/2](https://leetcode.com/problems/majority-element/)
+  1. Brute Force:
+     1. Use two loops and find frequency for each element, return when it crosses n/2
+     2. TC: O(N*N)
+  2. Better:
+     1. Use HashMap to store the frequency and keep checking while increasing the count. Stop once it's count reaches n/2
+     2. TC: O(N), SC: O(N)
+  3. Optimal: `Moore's Voting Algorithm`
+     1. Use count, element variables
+     2. TC: O(N) 
+        <details>
+        <summary>Code</summary>
+        <div markdown="1">
+
+        ```kotlin
+        fun majorityElement(nums: IntArray): Int {
+            var count = 0
+            var ele = nums[0]
+            for(num in nums){
+                if(count==0){ ele = num }
+                if(num == ele) count++
+                else count--
+            }
+            return ele
+        }
+        ```
+        </div></details>
+- [Majority Element n/3](https://leetcode.com/problems/majority-element-ii/)
+  1. Same as n/2
+  2. Same as n/2
+  3. Optimal: `Extended Boyer Moore’s Voting Algorithm` 
+     1. Use c1,e1 & c2,e2 to store the variables as there could be atmost 2 elements that can reach n/3 times
+     2. TC: O(N)
+        <details>
+        <summary>Code</summary>
+        <div markdown="1">
+
+        ```kotlin
+        fun majorityElement(nums: IntArray): List<Int> {
+            var c1 = 0 
+            var e1 = Int.MIN_VALUE
+            var c2 = 0
+            var e2 = Int.MIN_VALUE
+            for(num in nums){
+                when {
+                    c1==0 && e2!=num ->{
+                        c1++
+                        e1=num
+                    }
+                    c2==0 && e1!=num ->{
+                        e2=num
+                        c2++
+                    }
+                    e1==num -> c1++
+                    e2==num -> c2++
+                    else -> {
+                        c1--
+                        c2--
+                    }
+                }
+            }
+            c1 = 0
+            c2 = 0
+            for(num in nums){
+                if(num==e1) c1++
+                if(num==e2) c2++
+            }
+            var breakpoint = (nums.size/3+1)
+            val ans = mutableListOf<Int>()
+            if(c1>=breakpoint) ans.add(e1)
+            if(c2>=breakpoint) ans.add(e2)
+            return ans.toList()
+        }
+        ```
+        </div></details>
+
+### <a name='Day4'></a>Day 4
+
+### <a name='Day5'></a>Day 5
 
 
 
