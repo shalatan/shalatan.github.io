@@ -4,6 +4,7 @@
 - [Day 3](#day-3)
 - [Day 4](#day-4)
 - [Day 5](#day-5)
+- [Day 5](#day-5-1)
 
 <!-- vscode-markdown-toc-config
 	numbering=false
@@ -389,7 +390,6 @@
             ```
             </div></details>
      2. Can modify the array: `Cycle Sort`
-- []()
 
 ### <a name='Day3'></a>Day 3
 - [Search in a sorted 2D matrix](https://leetcode.com/problems/search-a-2d-matrix/description/)
@@ -525,11 +525,194 @@
 
 ### <a name='Day4'></a>Day 4
 
+
 ### <a name='Day5'></a>Day 5
+1. [Reverse Linked List](https://leetcode.com/problems/reverse-linked-list/description/)
+   1. Brute Force:
+      1. Use another data structure like Stack
+      2. Iterate the linked list to store and then iterate to update
+      3. TC: O(2N), SC: O(N) 
+   2. Optimal
+      1. TC: O(N)
+        <details>
+        <summary>Code</summary>
+        <div markdown="1">
+
+        ```kotlin
+        //iterative
+        fun reverse(head: ListNode?): ListNode?{
+            var cur = head
+            var prev: ListNode? = null
+            while(cur!=null){
+                var next = cur.next
+                cur.next = prev
+                prev = cur
+                cur = next
+            }
+            return prev
+        }
+
+        //recursive
+        fun reverseList(head: ListNode?): ListNode?{
+            if(head==null||head.next==null){
+                return head
+            }
+            var cur = head
+            var newHead = reverseList(head.next)
+            var next = cur.next
+            next.next = cur
+            cur.next = null
+            
+            return newHead
+        }
+        ```
+        </div></details> 
+2. [Middle Of Linked List](https://leetcode.com/problems/middle-of-the-linked-list/description/)
+   1. Brute Force:
+      1. Find the length of the list
+      2. Find `mid = length/2+1`, and iterate till mid
+      3. TC: O(N+N/2)
+   2. Optimal:
+      1. Use slow and fast pointers.
+      2. Move slow 1 step and fast 2 step, when fast reaches end, slow will be at mid.
+        <details>
+        <summary>Code</summary>
+        <div markdown="1">
+
+        ```kotlin
+        fun middleNode(head: ListNode?): ListNode? {
+            if(head == null || head.next == null){
+                return head
+            }
+            var slow = head
+            var fast = head
+            while(fast?.next!=null){
+                slow = slow?.next
+                fast = fast?.next?.next
+            }
+            return slow
+        }
+        ```
+        </div></details>
+3. [Merge Two sorted List](https://leetcode.com/problems/merge-two-sorted-lists/description/)
+   1. Brute Force:
+      1. Store all items in array and sort
+      2. Create a new linked list using that array
+      3. TC: O(N1+N2)+O(N*logN)+O(N)
+   2. Optimal
+      1. TC: O(N1+N2)
+        <details>
+        <summary>Code</summary>
+        <div markdown="1">
+
+        ```kotlin
+        fun mergeTwoLists(list1: ListNode?, list2: ListNode?): ListNode? {
+            val dummy = ListNode(-1)
+            var res = dummy
+            var cur1 = list1
+            var cur2 = list2
+            while(cur1!=null && cur2!=null){
+                if(cur1.`val` > cur2.`val`){
+                    res.next = cur2
+                    cur2 = cur2?.next
+                }else{
+                    res.next = cur1
+                    cur1 = cur1?.next    
+                }
+                res = res.next
+            }
+            if(cur1!=null) res.next = cur1
+            if(cur2!=null) res.next = cur2
+            return dummy.next
+        }
+        ```
+        </div></details>
+4. [Delete nth node from end](https://leetcode.com/problems/remove-nth-node-from-end-of-list/description/)
+   1. Brute Force:
+      1. Find length of the list
+      2. Remove (l-n-1)th item
+      3. TC: O(L)+O(L-N)
+   2. Optimal
+      1. Use slow and fast pointers
+      2. Move fast one step `0 until n`
+      3. If fast becomes, it's head to be deleted: `return head.next`
+      4. Move slow and fast together till `fast.next` becomes null
+      5. set `slow.next = slow.next.next`
+        <details>
+        <summary>Code</summary>
+        <div markdown="1">
+
+        ```kotlin
+        fun removeNthFromEnd(head: ListNode?, n: Int): ListNode? {
+            var slow = head
+            var fast = head
+            for(i in 0 until n){
+                fast = fast?.next
+            }
+            if(fast==null) //if fast become null, nth node from end is head
+                return head?.next
+
+            while(fast?.next!=null){ 
+                fast = fast?.next
+                slow = slow?.next
+            }
+
+            slow?.next = slow?.next?.next
+            return head
+        }
+
+        ```
+        </div></details>
+5. [Add Two Numbers](https://leetcode.com/problems/add-two-numbers/)
+   1. Optimal
+      1. TC: O(maxOf(M,N)), SC: O(maxOf(M,N))
+        <details>
+        <summary>Code</summary>
+        <div markdown="1">
+
+        ```kotlin
+        fun addTwoNumbers(l1: ListNode?, l2: ListNode?): ListNode? {
+            var first = l1
+            var sec = l2
+            var dummy = ListNode(-1)
+            var ans = dummy
+            var isReminder = false
+            while(first!=null || sec!=null || isReminder){
+                var sum = (first?.`val` ?: 0) + (sec?.`val` ?: 0)
+                sum += if(isReminder) 1 else 0
+                if(sum>9){
+                    isReminder = true
+                    sum = sum%10
+                }else{
+                    isReminder = false
+                    sum = sum
+                }
+                ans.next = ListNode(sum)
+                ans = ans.next
+                first = first?.next
+                sec = sec?.next
+            }
+            return dummy.next
+        }
+        ```
+        </div></details>
+6. [Delete node in linked list](https://leetcode.com/problems/delete-node-in-a-linked-list/description/)
+   1. Optimal
+      1. TC: O(1)
+        <details>
+        <summary>Code</summary>
+        <div markdown="1">
+
+        ```kotlin
+        fun deleteNode(node: ListNode?) {
+            node?.next?.`val` = node?.`val`
+            node?.next = node?.next?.next
+        }
+        ```
+        </div></details>
 
 
-
-
+### <a name='Day5'></a>Day 5
 
 
 
