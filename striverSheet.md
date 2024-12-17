@@ -4,7 +4,7 @@
 - [Day 3](#day-3)
 - [Day 4](#day-4)
 - [Day 5](#day-5)
-- [Day 5](#day-5-1)
+- [Day 6](#day-6)
 
 <!-- vscode-markdown-toc-config
 	numbering=false
@@ -524,7 +524,187 @@
         </div></details>
 
 ### <a name='Day4'></a>Day 4
+1. [2-sum Problem](https://leetcode.com/problems/two-sum/)
+   1. Brute Force:
+      1. Use two loops and find the pair with target sum.
+      2. TC: O(N*N)
+   2. Better:
+      1. Sort the array and use start and end pointers. 
+      2. TC: O(N*logN)
+   3. Optimal:
+      1. Use hashset store the values and find if difference exists
+      2. TC: O(N), SC: O(N)
+        <details>
+        <summary>Code</summary>
+        <div markdown="1">
 
+        ```kotlin
+        fun twoSum(nums: IntArray, target: Int): IntArray {
+            var map = mutableMapOf<Int,Int>()
+            for(i in nums.indices){
+                val num = nums[i]
+                val dif = target-num
+                if(map.contains(dif)){
+                    return intArrayOf(map.get(dif)!!,i)
+                }
+                map[num] = i
+            }
+            return intArrayOf(-1,-1)
+        }
+        ```
+        </div></details>
+2. [4-sum Problem](https://leetcode.com/problems/4sum/)
+   1. Brute Force:
+      1. Use 4 loops and find all the quads
+      2. TC: O(N^4)
+   2. Better:
+      1. Use 3 loops and set to eliminate 1 loop
+      2. TC: O(N^3*log(M)),n-> size of array, m-> number of elements in set
+   3. Optimal:
+      1. Use two loops and two pointers i.e. start and end
+      2. TC: O(N^3)
+        <details>
+        <summary>Code</summary>
+        <div markdown="1">
+
+        ```kotlin
+        fun fourSum(nums: IntArray, target: Int): List<List<Int>> {
+            val res:MutableList<List<Int>> = mutableListOf()
+            nums.sort()
+            var n = nums.size
+            for(i in 0 until n-3){
+                if(i>0 && nums[i]==nums[i-1]) continue
+                for(j in i+1 until n-2){
+                    if(j>i+1 && nums[j]==nums[j-1]) continue
+                    var start = j+1
+                    var end = n-1
+                    var outerSum = nums[i].toLong()+nums[j].toLong()
+                    while(start<end){
+                        var sum = outerSum + nums[start].toLong() + nums[end].toLong()
+                        when{
+                            sum == target.toLong() -> {
+                                val ans = listOf(nums[i],nums[j],nums[start],nums[end])
+                                res.add(ans)
+                                start++
+                                end--
+                                while(start<end && nums[start]==nums[start-1]) start++
+                                while(start<end && nums[end]==nums[end+1]) end--
+                            }
+                            sum < target.toLong() -> {
+                                start++
+                            }
+                            sum > target.toLong() -> {
+                                end--
+                            }
+                        }
+                    }
+                }
+            }
+            return res
+        }
+        ```
+        </div></details>
+3. [Longest Consecutive Sequence](https://leetcode.com/problems/longest-consecutive-sequence/)
+   1. Brute Force:
+      1. Use two loops and keep finding the next number storing the count
+      2. TC: O(N^2)
+   2. Better:
+      1. Sort the array and easily find the consecutive sequence
+      2. TC: O(N*logN)+O(N)
+   3. Optimal:
+      1. Using Set data structure
+      2. TC: O(N)+O(2*N), SC: O(N)
+        <details>
+        <summary>Code</summary>
+        <div markdown="1">
+
+        ```kotlin
+        fun longestConsecutive(nums: IntArray): Int {
+            val set = hashSetOf<Int>()
+            var max = 0
+            set.addAll(nums.toList())
+            for(num in set){
+                if(!set.contains(num-1)){   
+                    //if it exists, it will be covered in its turn with more count
+                    var count = 1
+                    var cur = num
+                    while(set.contains(cur+1)){
+                        cur+=1
+                        count+=1
+                    }
+                    maxOf(count,max)
+                }
+            }
+            return max
+        }
+        ```
+        </div></details>
+4. [Largest Subarray With K Sum](https://leetcode.com/problems/subarray-sum-equals-k/)
+   1. Brute Force:
+      1. Use two loops and find sum of all the possible subarrays
+      2. TC: O(N)
+   2. Optimize: `Prefix Sum`
+      1. Use sum to store the sum of all the elements till the current element
+      2. Store the sum and its count in HashMap as key and value respectively
+      3. Also find if map already contains `sum-k` element, if true add the index to the count
+        <details>
+        <summary>Code</summary>
+        <div markdown="1">
+
+        ```kotlin
+        fun subarraySum(nums: IntArray, k: Int): Int {
+            var map = HashMap<Int,Int>()
+            map.put(0,1)
+            var count = 0
+            var sum = 0
+            for(num in nums){
+                sum += num
+                if(map.contains(sum-k)){
+                    count += map.get(sum-k)!!
+                }
+                map.put(sum,(map.get(sum)?:0)+1)
+            }
+            return count
+        }
+        ```
+        </div></details>
+5. [Longest Substring Without Repeat](https://leetcode.com/problems/longest-substring-without-repeating-characters/description/)
+   1. Brute Force:
+      1. Use two loops, first loop to iterate the string first char
+      2. Second loop to iterate rest till found same and storing the max
+      3. TC: O(N*N)
+   2. Optimal:
+      1. Use two pointers, `left=0` and `right=0` to create a subarray and `HashSet` to store the chars
+      2. Check if set contains the `right`, if true, remove s[left] from set and move left one step
+      3. Else add `right` item in set and move right one step.
+      4. Update the max with `maxOf(max,set.size)`
+        <details>
+        <summary>Code</summary>
+        <div markdown="1">
+
+        ```kotlin
+        fun lengthOfLongestSubstring(s: String): Int {
+            var max = 0
+            var set = HashSet<Char>()
+            if(s.length==0||s.length==1) return s.length
+            var start = 0
+            var end = 0
+            while(end<s.length){
+                var cur = s[end]
+                if(set.contains(cur)){
+                    set.remove(s[start])
+                    start++
+                }else{
+                    set.add(cur)
+                    end++
+                    max = maxOf(max, set.size)
+                }
+            }
+            return max
+        }
+
+        ```
+        </div></details>
 
 ### <a name='Day5'></a>Day 5
 1. [Reverse Linked List](https://leetcode.com/problems/reverse-linked-list/description/)
@@ -712,10 +892,228 @@
         </div></details>
 
 
-### <a name='Day5'></a>Day 5
+### <a name='Day6'></a>Day 6
+1. [Find Interaction Point of Y LinkedList](https://leetcode.com/problems/intersection-of-two-linked-lists/description/)
+   1. Brute Force:
+      1. Just like two loops, put one loop on head and iterate the other who linked list to find if it exists.
+      2. Repeat this step for all nodes till found same.
+      3. TC: O(M*N)
+   2. Better: `Reduce the length`
+      1. Find the length of both the linked lists.
+      2. Move the bigger list by the difference of their lengths.
+      3. Start moving both points same step till found same.
+      4. TC: O(2*maxOf(M,N))+O(abs(M,n))+O(minOf(M,N))
+        <details>
+        <summary>Code</summary>
+        <div markdown="1">
+
+        ```kotlin
+        fun getIntersectionNode(headA:ListNode?, headB:ListNode?):ListNode? {
+            var count1 = 0
+            var cur1 = headA
+            while(cur1!=null){  //find l1
+                cur1 = cur1?.next
+                count1++
+            }
+            var count2 = 0
+            var cur2 = headB
+            while(cur2!=null){  //finf l2
+                cur2 = cur2?.next
+                count2++
+            }
+            if(cur1!=cur2) return null
+            cur1 = headA
+            cur2 = headB
+            if(count1>count2){
+                var dif = count1-count2
+                for(i in 0 until dif){
+                    cur1 = cur1?.next
+                }
+            }else{
+                var dif = count2-count1
+                for(i in 0 until dif){
+                    cur2 = cur2?.next
+                }
+            }
+            while(cur1!=cur2){
+                cur1 = cur1?.next
+                cur2 = cur2?.next
+            }
+            return cur1
+        }
+        ```
+        </div></details>
+   3. Optimal:
+      1. Put cur1 and cur2 on respective headers
+      2. Once one becomes null, move them to next list headers and they will collide at interaction
+      3. TC: O(2*maxOf(M,N))
+2. [Detect A Cycle In Linked List](https://leetcode.com/problems/linked-list-cycle/description/)
+   1. Brute Force:
+      1. Store the nodes in hashmap and keep searching if node already exists
+      2. TC: O(N*2*log(N)), SC: O(N)
+   2. Optimal: `Tortoise and Hare Algorithm`
+      1. Move slow and fast pointers till they collide
+      2. TC: O(N)
+        <details>
+        <summary>Code</summary>
+        <div markdown="1">
+
+        ```kotlin
+        fun hasCycle(head: ListNode?): Boolean {
+            if(head==null || head.next == null) return false
+            var slow = head
+            var fast = head
+            while(fast!=null && fast?.next!=null){
+                slow = slow?.next
+                fast = fast?.next?.next
+                if(slow==fast)
+                    return true
+            }
+            return false
+        }
+        ```
+        </div></details>
+3. [Reverse Nodes in K Group](https://leetcode.com/problems/reverse-nodes-in-k-group/)
+   1. Optimal:
+      1. Check if atleast k nodes remaining
+      2. Find the tail of the K group
+      3. Store the nextHead and break the chain
+      4. Reverse the smaller group and find tail of the reversed group
+      5. If first group, update newHead with currentGroupHead, else attach the curTail to currentGroupHead
+        <details>
+        <summary>Code</summary>
+        <div markdown="1">
+
+        ```kotlin
+        fun reverseKGroup(head: ListNode?, k: Int): ListNode? {
+            var cur = head
+            var curTail: ListNode? = null
+            var newHead: ListNode? = null
+            while(cur!=null){
+                //check if atleast k nodes remaining
+                var count = 0
+                var temp = cur
+                while(temp != null && count<k){
+                    count++
+                    temp = temp?.next
+                }
+                if(count<k){
+                    curTail?.next = cur
+                    break
+                }
+                
+                //find the tail of group
+                var curHead = cur
+                for(i in 0 until k-1){
+                    cur = cur?.next
+                }
+
+                //store the nextHead and break the chain
+                var nextHead = cur?.next
+                cur?.next = null
+
+                //reverse thes smaller list
+                val newGroupHead = reverse(curHead)
+
+                //find tail of revsersed group
+                var newGroupTail = newGroupHead
+                while(newGroupTail?.next!=null){
+                    newGroupTail = newGroupTail?.next
+                }
+
+                //if first group, update newHead i.e. answer
+                if(newHead == null){
+                    newHead = newGroupHead
+                }else{
+                    //for next groups we need to link curTail
+                    curTail?.next = newGroupHead
+                }
+
+                curTail = curHead
+                curTail?.next = null
+
+                cur=nextHead
+            }
+            return newHead?:head
+        }
+        ```
+        </div></details>
+4. [Palindrome Linked List](https://leetcode.com/problems/palindrome-linked-list/)
+   1. Brute Force:
+      1. Use Stack data structure and push all items in stack
+      2. Start checking again from top of stack while iterating start to end in linked list
+      3. TC: O(2*N), SC: O(N)
+   2. Optimal:
+      1. Find the mid and node before mid
+      2. Break the connection from before mid to mid
+      3. Reverse the linked list from mid
+      4. Compare both lists together
+      5. TC: O(N/2+N/2+N/2+N/2) = O(2*N)
+        <details>
+        <summary>Code</summary>
+        <div markdown="1">
+
+        ```kotlin
+        fun isPalindrome(head: ListNode?): Boolean {
+            if(head==null) return false
+            if(head?.next == null) return true
+            var slow = head
+            var fast = head
+            var prev: ListNode? = null
+            while(fast?.next!=null){
+                prev = slow
+                slow = slow?.next
+                fast = fast?.next?.next
+            }
+            prev?.next = null
+            var halfHead = reverse(slow)
+            var cur1 = head
+            var cur2 = halfHead
+            while(cur1!=null && cur2!=null){
+                if(cur1?.`val` != cur2?.`val`){
+                    return false
+                }
+                cur1 = cur1?.next
+                cur2 = cur2?.next
+            }
+            return true
+        }
+        ```
+        </div></details>
+5. [Linked List Cycle II](https://leetcode.com/problems/linked-list-cycle-ii/)
+   1. Brute Force:
+      1. Store the items in hashmap and exit as soon as we find the item in map
+      2. TC: O(N), SC: O(N)
+   2. Optimal: `Tortoise and Hare Algorithm`
+      1. Use slow and fast pointers
+        <details>
+        <summary>Code</summary>
+        <div markdown="1">
+
+        ```kotlin
+        fun detectCycle(head: ListNode?): ListNode? {
+            if(head==null || head?.next==null) return null
+            if(head?.next==head) return head
+            var slow = head
+            var fast = head
+            while(fast!=null&&fast?.next!=null){
+                slow = slow?.next
+                fast = fast?.next?.next
+                if(slow == fast) 
+                    break
+            }
+            slow = head
+            while(slow!=fast){
+                slow = slow?.next
+                fast = fast?.next
+            }
+            return slow
+        }
+        ```
+        </div></details>
 
 
-
+- []()
         <details>
         <summary>Code</summary>
         <div markdown="1">
