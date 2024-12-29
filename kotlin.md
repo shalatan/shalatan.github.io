@@ -24,6 +24,7 @@
     - [HashSet](#hashset)
     - [HashMap](#hashmap)
     - [Loop](#loop)
+    - [BinaryTree](#binarytree)
 
 <!-- vscode-markdown-toc-config
 	numbering=false
@@ -523,3 +524,31 @@ map.put(num,(map.get(num)?:0)+1)
 - for(i in text.indices)
     : 0,1,2,3,4
 ```
+
+### <a name='Binary Tree'></a>BinaryTree
+1. Where is it used
+   1. File System
+   2. Databases
+   3. Algo/Networking
+   4. Maths
+   5. Decision Tree: ML
+   6. Compression of files
+   7. Future Data Structures: Head, Graphs
+2. Types
+   1. Complete Binary Tree:
+      1. All level full
+      2. Last level full from left to right
+   2. Full/Strict Binary Tree
+      1. Each node has either 0 child or 2 child
+   3. Perfect Binary Tree:
+      1. All levels are full
+   4. Height Balanced Tree:
+      1. Avg Height O(logN)
+   5. Skewed Binary Tree:
+      1. Every node has only 1 child
+   6. Ordered Binary Tree:
+      1. Every node has some property or condition
+      2. Like Binary Search Tree
+3. Algorithms:
+   1. BFS: (When the result lies near the root, need level order calculation)
+      1. Level Order Traversal

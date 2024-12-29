@@ -1,16 +1,42 @@
 <!-- vscode-markdown-toc -->
+- [Important Notes](#important-notes)
 - [Day 1](#day-1)
 - [Day 2](#day-2)
 - [Day 3](#day-3)
 - [Day 4](#day-4)
 - [Day 5](#day-5)
 - [Day 6](#day-6)
+- [Day 7](#day-7)
+- [Day 8](#day-8)
+- [Day 9](#day-9)
+- [Day 10](#day-10)
+- [Day 11](#day-11)
+- [Day 12](#day-12)
+- [Day 13](#day-13)
+- [Day 14](#day-14)
+- [Day 15](#day-15)
+- [Day 16](#day-16)
+- [Day 17](#day-17)
+- [Day 18](#day-18)
+- [Day 19](#day-19)
 
 <!-- vscode-markdown-toc-config
 	numbering=false
 	autoSave=true
 	/vscode-markdown-toc-config -->
 <!-- /vscode-markdown-toc -->
+### <a name='ImportantNotes'></a>Important Notes
+1. Algorithms
+   1. Greedy:
+      1. Optimization probelms which either demand minimum result or maximum result.
+      2. Feasible Solution: Solutions which satisfying the given contraint, can be multiple feasible solution for a problem.
+      3. Optimization Solution: Solution which is already feasible but gives the minimum/maximum result.
+      4. Minimization Problem: Problem demands result should be minimum.
+      5. Maximization Problem: Problem demands result should be maximum.
+      5. Optimization Problem: Problem demands result to be minimized or maximized.
+      6. 
+
+
 ### <a name='Day1'></a>Day 1
 - [Set Matrix Zero](https://leetcode.com/problems/set-matrix-zeroes/)
   - Brute Force:
@@ -1112,12 +1138,466 @@
         ```
         </div></details>
 
-
-- []()
+### <a name='Day7'></a>Day 7
+1. [Rotate Linked List K Times](https://leetcode.com/problems/rotate-list/description/)
+   1. Brute Force:
+      1. For each K, move the last element from the list to first.
+      2. TC: O(N*K)
+   2. Optimal:
+      1. Find length of list, and then `reminder=k%length`
+      2. Convert list to cycle by `tail.next=head`
+      3. Find the breakpoint using reminder
+      4. Mark `newHead=cur.next` and break the connection `cur.next=null`
         <details>
         <summary>Code</summary>
         <div markdown="1">
 
         ```kotlin
+        fun rotateRight(head: ListNode?, k: Int): ListNode? {
+            if(head==null||head?.next==null||k==0) return head
+            var count = 1
+            var cur = head
+            while(cur?.next!=null){ //find length of list
+                cur = cur?.next
+                count++
+            }
+            cur?.next = head        //convert list to cycle
+            var reminder = k%count
+            var lastIndex = count-reminder
+            for(i in 0 until lastIndex){
+                cur = cur?.next     //find the breakpoint
+            }
+            var newHead = cur?.next
+            cur?.next = null
+            return newHead
+        }
+        ```
+        </div></details>          
+2. []()
+3. [3 Sum](https://leetcode.com/problems/3sum/description/)
+   1. Brute Force:
+      1. Use 3 loops and find the triplets.
+      2. Can be sorted later on with the result to remove the duplicates.
+      3. TC: O(N^3)
+   2. Better:
+      1. Sort and Use 2 loops and HashSet to find the triplets
+      2. TC: O(N^2*log(no. of unique triplets)), SC: O(2*(no of unique triplets))+O(N)
+   3. Optimal:
+      1. Sort and use 1 loop and 2 pointers start and end.
+      2. TC: O(N*logN)+O(N^2)
+        <details>
+        <summary>Code</summary>
+        <div markdown="1">
+
+        ```kotlin
+        fun threeSum(nums: IntArray): List<List<Int>> {
+            var ans: MutableList<List<Int>> = mutableListOf()
+            nums.sort()
+            var n = nums.size
+            for(i in 0 until n){
+                val num = nums[i]
+                if(i > 0 && nums[i]==nums[i-1]) continue
+                var start = i+1
+                var end = n-1
+                while(start<end){
+                    var sum = nums[start] + nums[end] + num
+                    when {
+                        sum == 0 -> {
+                            ans.add(listOf(num,nums[start],nums[end]))
+                            start++
+                            end--
+
+                            while(start<end && nums[start]==nums[start-1]) start++
+                            while(start<end && nums[end]==nums[end+1]) end--
+                        }
+                        sum > 0 -> {
+                            end--
+                        }
+                        sum < 0 -> {
+                            start++
+                        }
+                    }
+                }
+            }
+            return ans
+        }
         ```
         </div></details>
+4. [Trapping Rainwater](https://leetcode.com/problems/trapping-rain-water/)
+   1. Brute Force:
+      1. Take 1 loop to iterate all the items 
+      2. Use start and end pointers to find the max heights on left and right of each index and find the dif.
+      3. TC: O(N*N)
+   2. Better:
+      1. Take two arrays prefix and suffix to store the maxLeft and maxRight for all the elements
+      2. Then use `minOf(prefix[i],suffix[i])-height[i]` to find the answer
+      3. TC: O(3*N)
+        <details>
+        <summary>Code</summary>
+        <div markdown="1">
+
+        ```java
+        static int trap(int[] arr) {
+            int n = arr.length;
+            int prefix[] = new int[n];
+            int suffix[] = new int[n];
+            prefix[0] = arr[0];
+            for (int i = 1; i < n; i++) {
+                prefix[i] = Math.max(prefix[i - 1], arr[i]);
+            }
+            suffix[n - 1] = arr[n - 1];
+            for (int i = n - 2; i >= 0; i--) {
+                suffix[i] = Math.max(suffix[i + 1], arr[i]);
+            }
+            int waterTrapped = 0;
+            for (int i = 0; i < n; i++) {
+                waterTrapped += Math.min(prefix[i], suffix[i]) - arr[i];
+            }
+            return waterTrapped;
+        }
+        ```
+        </div></details>
+   3. Optimal: `Two Pointer Approach`
+      1. Take two pointers left and right and point to 0 and n-1
+      2. Take two vairables maxLeft and maxRight to 0 and 0
+        <details>
+        <summary>Code</summary>
+        <div markdown="1">
+
+        ```kotlin
+        fun trap(height: IntArray): Int {
+            var ans = 0
+            var left = 0
+            var right = height.size-1
+            var maxLeft = 0
+            var maxRight = 0
+            while(left<=right){
+                if(height[left]<=height[right]){
+                    if(height[left]>maxLeft){
+                        maxLeft = height[left]
+                    }else{
+                        ans+=maxLeft-height[left]
+                    }
+                    left++
+                }else{
+                    if(height[right]>maxRight){
+                        maxRight = height[right]
+                    }else{
+                        ans+=maxRight-height[right]
+                    }
+                    right--
+                }
+            }
+            return ans
+        }
+        ```
+        </div></details>
+5. []()
+6. []()
+
+### <a name='Day8'></a>Day 8
+
+
+### <a name='Day9'></a>Day 9
+- [Combination Sum 1-2-3](https://leetcode.com/problems/combination-sum/description/)    
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
+
+    ```kotlin
+    //combination sum 1: items can be used multiple times
+    fun combinationSum(candidates: IntArray, target: Int): List<List<Int>> {
+        var res: MutableList<List<Int>> = mutableListOf()
+    
+        fun comb(start: Int, ans: MutableList<Int>,target:Int){
+            if(target==0){
+                res.add(ans.toList())
+                return
+            }
+            if(target<0) return
+            for(i in start until candidates.size){
+                ans.add(candidates[i])
+                comb(i,ans,target-candidates[i])
+                ans.removeLast()
+            }
+        }
+        comb(0,mutableListOf(),target)
+        return res
+    }
+    //combination sum 2: each item can be used once  
+    fun combinationSum2(candidates: IntArray, target: Int): List<List<Int>> {
+        var res: MutableList<List<Int>> = mutableListOf()
+        candidates.sort()
+        fun comb(start: Int, ans: MutableList<Int>,target:Int){
+            if(target==0){
+                res.add(ans.toList())
+                return
+            }
+            if(target<0) return
+            for(i in start until candidates.size){
+                if(i > start && candidates[i]==candidates[i-1]) continue
+                ans.add(candidates[i])
+                comb(i+1,ans,target-candidates[i])
+                ans.removeLast()
+            }
+        }
+        comb(0,mutableListOf(),target)
+        return res
+    }
+    //combination sum 3: find combination of size k using 1..9 
+    fun combinationSum3(k: Int, target: Int): List<List<Int>> {
+        var res: MutableList<List<Int>> = mutableListOf()
+        var candidates = mutableListOf(1,2,3,4,5,6,7,8,9)
+
+        fun comb(start: Int, ans: MutableList<Int>,target:Int){
+            if(target==0){
+                if(ans.size==k){
+                    res.add(ans.toList())
+                    return
+                }
+            }
+            if(target<0) return
+            for(i in start until candidates.size){
+                if(i > start && candidates[i]==candidates[i-1]) continue
+                ans.add(candidates[i])
+                comb(i+1,ans,target-candidates[i])
+                ans.removeLast()
+            }
+        }
+        comb(0,mutableListOf(),target)
+        return res
+    }
+    ```
+    </div></details>
+
+### <a name='Day10'></a>Day 10
+- []()
+
+### <a name='Day11'></a>Day 11
+- []()
+
+### <a name='Day12'></a>Day 12
+- []()
+
+### <a name='Day13'></a>Day 13
+- []()
+
+### <a name='Day14'></a>Day 14
+- []()
+
+### <a name='Day15'></a>Day 15
+- []()
+
+### <a name='Day16'></a>Day 16
+- []()
+
+### <a name='Day17'></a>Day 17
+- [InOrder, PreOrder, PostOrder Traversal]()
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
+
+    ```kotlin
+    //inOrder
+    fun inorder(root:TreeNode?){
+        if(root!==null){
+            inorder(root.left)
+            res.add(root.`val`)
+            inorder(root.right)
+        }
+    }
+    //preOrder
+    fun preOrder(root:TreeNode?){
+        if(root!==null){
+            res.add(root.`val`)
+            preOrder(root.left)
+            preOrder(root.right)
+        }
+    }
+    //postOrder
+    fun postOrder(root:TreeNode?){
+        if(root!==null){
+            postOrder(root.left)
+            postOrder(root.right)
+            res.add(root.`val`)
+        }
+    }
+    ```
+    </div></details>
+- [Binary Tree Left/Right Side View](https://leetcode.com/problems/binary-tree-right-side-view/description/)
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
+
+    ```kotlin
+    fun rightSideView(root: TreeNode?): List<Int> {
+        val result = mutableListOf<Int>()
+
+        fun rightView(root: TreeNode?,currDepth: Int){
+            if(root==null){
+                return
+            }
+            if(currDepth == result.size){
+                result.add(root.`val`)
+            }
+            rightView(root.left, currDepth+1)
+            rightView(root.right, currDepth+1)
+        }
+        rightView(root,0)       
+        return result
+    }
+    ```
+    </div></details>
+- [Maximum Width of Binary Tree](https://leetcode.com/problems/maximum-width-of-binary-tree/description/)
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
+
+    ```kotlin
+    fun widthOfBinaryTree(root: TreeNode?): Int {
+        val q: ArrayDeque<Pair<TreeNode, Int>> = ArrayDeque()
+        var max = 0
+        if(root==null) return 0
+        q.addLast(Pair(root,0))
+        while(q.isNotEmpty()){
+            val size = q.size
+            val firstIndex = q.first().second
+            var lastIndex = firstIndex
+            for(i in 0 until size){
+                val (node, index) = q.removeFirst()
+                lastIndex = index
+                node.left?.let { q.addLast(Pair(it, 2*index)) }
+                node.right?.let { q.addLast(Pair(it, 2*index+1)) }
+            }
+            val curWidth = lastIndex-firstIndex+1
+            max = maxOf(curWidth, max)
+        }
+        return max
+    }
+    ```
+    </div></details>
+other
+- [Maximum Level Sum of a Binary Tree](https://leetcode.com/problems/maximum-level-sum-of-a-binary-tree/)
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
+
+    ```kotlin
+    fun maxLevelSum(root: TreeNode?): Int {
+        val q = ArrayDeque<TreeNode>()
+        var maxSum = Int.MIN_VALUE
+        var maxIndex = 1
+        var curIndex = 1
+        if(root==null) return 0
+        q.addLast(root)
+        while(q.isNotEmpty()){
+            val size = q.size
+            var curLevelSum = 0
+            for(i in 0 until size){
+                val cur = q.removeFirst()
+                curLevelSum += cur.`val`
+                cur.left?.let { q.addLast(it) }
+                cur.right?.let { q.addLast(it) }
+            }
+            if(curLevelSum>maxSum){
+                maxSum = curLevelSum
+                maxIndex = curIndex
+            }
+            curIndex++
+        }
+        return maxIndex
+    }
+    ```
+    </div></details>
+
+### <a name='Day18'></a>Day 18
+- [Level Order Traversal](https://leetcode.com/problems/binary-tree-level-order-traversal/description/)
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
+
+    ```kotlin
+    fun levelOrder(root: TreeNode?): List<List<Int>> {
+        var ans = mutableListOf<List<Int>>()
+        val q = ArrayDeque<TreeNode>()
+        if(root==null) return ans
+        q.addLast(root)
+        while(q.isNotEmpty()){
+            val size = q.size
+            val curList = mutableListOf<Int>()
+            for(i in 0 until size){
+                val cur = q.removeFirst()
+                curList.add(cur.`val`)
+                cur.left?.let { q.addLast(it) }
+                cur.right?.let { q.addLast(it) }
+            }
+            ans.add(curList)
+        }
+        return ans
+    }
+    ```
+    </div></details>
+- [Height/Maximum Depth of Binary Tree](https://leetcode.com/problems/maximum-depth-of-binary-tree/description/)
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
+
+    ```kotlin
+    fun maxDepth(root: TreeNode?): Int {
+        if(root==null) return 0
+        return maxOf(maxDepth(root.left),maxDepth(root.right))+1
+    }
+    ```
+    </div></details>
+- [Diameter of Binary Tree](https://leetcode.com/problems/diameter-of-binary-tree/)
+
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
+    
+    ```kotlin
+    fun diameterOfBinaryTree(root: TreeNode?): Int {
+        var max = 0
+        fun maxDepth(root:TreeNode?): Int {
+            if(root==null) return 0
+            val left = maxDepth(root.left)
+            val right = maxDepth(root.right)
+            max = maxOf(max,left+right)
+            return maxOf(left,right)+1
+        }
+        maxDepth(root)
+        return max
+    }
+    ```
+    </div></details>
+- []()
+- []()
+- [Check if two trees are identical](https://leetcode.com/problems/same-tree/)
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
+
+    ```kotlin
+        fun isSameTree(p: TreeNode?, q: TreeNode?): Boolean {
+        if(p==null && q==null)
+            return true
+        if(p==null || q==null)
+            return false
+        if(p?.`val` != q?.`val`)
+            return false
+        return isSameTree(p.left,q.left) && isSameTree(p.right,q.right)
+    }
+    ```
+    </div></details>
+- []()
+
+### <a name='Day19'></a>Day 19
+- []()
+
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
+
+    ```kotlin
+    ```
+    </div></details>
