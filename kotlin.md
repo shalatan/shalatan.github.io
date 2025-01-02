@@ -23,6 +23,7 @@
     - [List](#list)
     - [HashSet](#hashset)
     - [HashMap](#hashmap)
+    - [Queue](#queue)
     - [Loop](#loop)
     - [BinaryTree](#binarytree)
 
@@ -504,6 +505,48 @@ hashMap.remove(key)
 map.put(num,(map.get(num)?:0)+1)
 }
 ```
+
+### <a name='Queue'></a>Queue
+```kotlin
+// Empty ArrayDeque
+val deque = ArrayDeque<Int>()
+val dequeWithElements = ArrayDeque(listOf(1, 2, 3))
+
+val isEmpty = deque.isEmpty()
+val size = deque.size
+val containsElement = deque.contains(10)
+val list = deque.toList()
+
+//add
+deque.add(10)
+deque.addFirst(5)
+deque.addLast(20)
+
+//remove
+val removedFirst = deque.removeFirst()
+val removedLast = deque.removeLast()
+//remove specific element (returns true if removed)
+val isRemoved = deque.remove(10)
+
+//clear
+deque.clear()
+
+//acess
+val first = deque.firstOrNull() //peek without removing
+val last = deque.lastOrNull() //peek without removing
+
+// Access using indices
+val elementAtIndex = deque.elementAt(0)
+
+//iteration
+for (element in deque) {
+    println(element)
+}
+for (element in deque.asReversed()) {
+    println(element)
+}
+```
+
 ### <a name='Loop'></a>Loop
 ```kotlin
 - val nums = {1,2,3,4,5}

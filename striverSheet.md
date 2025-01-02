@@ -18,7 +18,10 @@
 - [Day 16](#day-16)
 - [Day 17](#day-17)
 - [Day 18](#day-18)
+- [Day 18](#day-18-1)
 - [Day 19](#day-19)
+- [Day 20](#day-20)
+- [Day 19](#day-19-1)
 
 <!-- vscode-markdown-toc-config
 	numbering=false
@@ -1106,7 +1109,7 @@
         }
         ```
         </div></details>
-5. [Linked List Cycle II](https://leetcode.com/problems/linked-list-cycle-ii/)
+5. [Linked List Cycle II/STarting Point of Cycle](https://leetcode.com/problems/linked-list-cycle-ii/)
    1. Brute Force:
       1. Store the items in hashmap and exit as soon as we find the item in map
       2. TC: O(N), SC: O(N)
@@ -1292,14 +1295,60 @@
         }
         ```
         </div></details>
-5. []()
-6. []()
+5. [Remove Duplicare From Sorted Array](https://leetcode.com/problems/remove-duplicates-from-sorted-array/)
+   1. Brute Force:
+      1. Use HashSet to store distinct elements
+   2. Optimal: `Use Two Pointers`
+      1. Use i to iterate array and newIndex pointer which moves with removed duplicates.
+      2. TC: O(N)
+        <details>
+        <summary>Code</summary>
+        <div markdown="1">
+
+        ```kotlin
+        fun removeDuplicates(nums: IntArray): Int {
+            var newIndex = 1
+            for(num in nums){
+                if(num != nums[newIndex-1]){
+                    nums[newIndex++]=num
+                }
+            }
+            return newIndex
+        }
+        ```
+        </div></details>
+6. [Max Consequtive Ones](https://leetcode.com/problems/max-consecutive-ones/)
+   1. Optimal:
+      1. Maintain count, increase if 1 or set 0 if found 0.
+      2. update max on each iterations
+      3. TC: O(N)
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
+
+    ```kotlin
+    fun findMaxConsecutiveOnes(nums: IntArray): Int {
+        var max = 0
+        var count = 0
+        var n = nums.size
+        for(i in 0 until n){
+            var num = nums[i]
+            when(num){
+                1 -> count++
+                else -> count=0
+            }
+            max = maxOf(max,count)
+        }
+        return max
+    }
+    ```
+    </div></details>
 
 ### <a name='Day8'></a>Day 8
 
 
 ### <a name='Day9'></a>Day 9
-- [Combination Sum 1-2-3](https://leetcode.com/problems/combination-sum/description/)    
+1. [Combination Sum 1-2-3](https://leetcode.com/problems/combination-sum/description/)
     <details>
     <summary>Code</summary>
     <div markdown="1">
@@ -1369,6 +1418,48 @@
     }
     ```
     </div></details>
+2. [Subset 1-2](https://leetcode.com/problems/subsets/description/)
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
+
+    ```kotlin
+    //1. Given an integer array nums of unique elements, return all possible subsets(the power set).
+    var ans: MutableList<List<Int>> = mutableListOf()
+    var temp: MutableList<Int> = mutableListOf()
+
+    fun subsets(nums: IntArray): List<List<Int>> {
+        backTrack(nums,0)
+        return ans
+    }
+
+    fun backTrack(nums:IntArray,start:Int){
+        ans.add(temp.toList())
+        for(i in start until nums.size){
+            temp.add(nums[i])
+            backTrack(nums,i+1)
+            temp.removeAt(temp.size-1)
+        }
+    }
+    //2. Given an integer array nums that may contain duplicates, return all possible subsets (the power set).
+    fun subsetsWithDup(nums: IntArray): List<List<Int>> {
+        nums.sort()
+        var ans: MutableList<List<Int>> = mutableListOf()
+        var temp: MutableList<Int> = mutableListOf()
+        fun backTrack(nums:IntArray,start:Int){
+            ans.add(temp.toList())
+            for(i in start until nums.size){
+                if(i>start && nums[i]==nums[i-1]) continue
+                temp.add(nums[i])
+                backTrack(nums,i+1)
+                temp.removeAt(temp.size-1)
+            }
+        }
+        backTrack(nums,0)
+        return ans
+    }
+    ```
+    </div></details>   
 
 ### <a name='Day10'></a>Day 10
 - []()
@@ -1378,7 +1469,15 @@
 
 ### <a name='Day12'></a>Day 12
 - []()
+  
 
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
+
+    ```kotlin
+    ```
+    </div></details>
 ### <a name='Day13'></a>Day 13
 - []()
 
@@ -1392,7 +1491,7 @@
 - []()
 
 ### <a name='Day17'></a>Day 17
-- [InOrder, PreOrder, PostOrder Traversal]()
+1. [InOrder, PreOrder, PostOrder Traversal]()
     <details>
     <summary>Code</summary>
     <div markdown="1">
@@ -1424,7 +1523,9 @@
     }
     ```
     </div></details>
-- [Binary Tree Left/Right Side View](https://leetcode.com/problems/binary-tree-right-side-view/description/)
+2. [Binary Tree Left/Right Side View](https://leetcode.com/problems/binary-tree-right-side-view/description/)
+   1. BFS: Store the first and last node at each Level
+   2. DFS: 
     <details>
     <summary>Code</summary>
     <div markdown="1">
@@ -1448,7 +1549,7 @@
     }
     ```
     </div></details>
-- [Maximum Width of Binary Tree](https://leetcode.com/problems/maximum-width-of-binary-tree/description/)
+3. [Maximum Width of Binary Tree](https://leetcode.com/problems/maximum-width-of-binary-tree/description/)
     <details>
     <summary>Code</summary>
     <div markdown="1">
@@ -1476,8 +1577,7 @@
     }
     ```
     </div></details>
-other
-- [Maximum Level Sum of a Binary Tree](https://leetcode.com/problems/maximum-level-sum-of-a-binary-tree/)
+4. [Maximum Level Sum of a Binary Tree](https://leetcode.com/problems/maximum-level-sum-of-a-binary-tree/)
     <details>
     <summary>Code</summary>
     <div markdown="1">
@@ -1511,7 +1611,7 @@ other
     </div></details>
 
 ### <a name='Day18'></a>Day 18
-- [Level Order Traversal](https://leetcode.com/problems/binary-tree-level-order-traversal/description/)
+1. [Level Order Traversal](https://leetcode.com/problems/binary-tree-level-order-traversal/description/)
     <details>
     <summary>Code</summary>
     <div markdown="1">
@@ -1537,7 +1637,7 @@ other
     }
     ```
     </div></details>
-- [Height/Maximum Depth of Binary Tree](https://leetcode.com/problems/maximum-depth-of-binary-tree/description/)
+2. [Height/Maximum Depth of Binary Tree](https://leetcode.com/problems/maximum-depth-of-binary-tree/description/)
     <details>
     <summary>Code</summary>
     <div markdown="1">
@@ -1549,7 +1649,7 @@ other
     }
     ```
     </div></details>
-- [Diameter of Binary Tree](https://leetcode.com/problems/diameter-of-binary-tree/)
+3. [Diameter of Binary Tree](https://leetcode.com/problems/diameter-of-binary-tree/)
 
     <details>
     <summary>Code</summary>
@@ -1570,9 +1670,44 @@ other
     }
     ```
     </div></details>
-- []()
-- []()
-- [Check if two trees are identical](https://leetcode.com/problems/same-tree/)
+4. []()
+5. [Zig Zag Traversal of Binary Tree](https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/)
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
+
+    ```kotlin
+    fun zigzagLevelOrder(root: TreeNode?): List<List<Int>> {
+        val ans = mutableListOf<List<Int>>()
+        if(root==null) return ans
+        val q = ArrayDeque<TreeNode>()
+        q.addLast(root)
+        var isLtoR = true
+        while(q.isNotEmpty()){
+            val size = q.size
+            val curList = mutableListOf<Int>()
+            
+            for(i in 0 until size){
+                if(isLtoR){   
+                    val cur = q.removeFirst()
+                    curList.add(cur.`val`)
+                    cur.left?.let { q.addLast(it) }
+                    cur.right?.let { q.addLast(it) }
+                }else{
+                    val cur = q.removeLast()
+                    curList.add(cur.`val`)
+                    cur.right?.let { q.addFirst(it) }
+                    cur.left?.let { q.addFirst(it) }
+                }
+            }
+            isLtoR = !isLtoR
+            ans.add(curList)
+        }
+        return ans
+    }
+    ```
+    </div></details>
+6. [Check if two trees are identical](https://leetcode.com/problems/same-tree/)
     <details>
     <summary>Code</summary>
     <div markdown="1">
@@ -1589,11 +1724,269 @@ other
     }
     ```
     </div></details>
-- []()
+7. [Lowest Common Ancestor](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/description/)
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
+
+    ```kotlin
+    fun lowestCommonAncestor(root: TreeNode?, p: TreeNode?, q: TreeNode?): TreeNode? {
+        if(root==null) return null
+        if(root==q || root==p) return root
+        val left = lowestCommonAncestor(root.left,p,q)
+        val right = lowestCommonAncestor(root.right,p,q)
+        if(left==null) return right
+        if(right==null) return left
+        return root
+    }
+    ```
+    </div></details>
+8. [Level Order Traversal II](https://leetcode.com/problems/binary-tree-level-order-traversal-ii/)
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
+
+    ```kotlin
+    fun levelOrderBottom(root: TreeNode?): List<List<Int>> {
+        var ans = mutableListOf<List<Int>>()
+        val q = ArrayDeque<TreeNode>()
+        if(root==null) return ans
+        q.addLast(root)
+        while(q.isNotEmpty()){
+            val size = q.size
+            val curList = mutableListOf<Int>()
+            for(i in 0 until size){
+                val cur = q.removeFirst()
+                curList.add(cur.`val`)
+                cur.left?.let { q.addLast(it) }
+                cur.right?.let { q.addLast(it) }
+            }
+            ans.add(0,curList)
+        }
+        return ans
+    }
+    ```
+    </div></details>
+
+### <a name='Day18'></a>Day 18
+1. []()
+2. *[Average Of Levels in Binary Tree](https://leetcode.com/problems/average-of-levels-in-binary-tree/submissions/)
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
+
+    ```kotlin
+        fun averageOfLevels(root: TreeNode?): DoubleArray {
+        val q = ArrayDeque<TreeNode>()
+        val ans = mutableListOf<Double>()
+        if(root==null) return ans.toDoubleArray()
+        q.addLast(root)
+        while(q.isNotEmpty()){
+            val size = q.size
+            var curLevelSum = 0.0
+            for(i in 0 until size){
+                val cur = q.removeFirst()
+                curLevelSum += cur.`val`
+                cur.left?.let { q.addLast(it) }
+                cur.right?.let { q.addLast(it) }
+            }
+            ans.add(curLevelSum.toDouble()/size.toDouble())
+        }
+        return ans.toDoubleArray()
+    }
+    ```
+    </div></details>
+3. []()
+4. []()
+5. []()
 
 ### <a name='Day19'></a>Day 19
-- []()
+1. *[Invert Binary Tree](https://leetcode.com/problems/invert-binary-tree/submissions/1492755785/)
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
 
+    ```kotlin
+    fun invertTree(root: TreeNode?): TreeNode? {
+        if(root==null) {
+            return null
+        }
+        val left = invertTree(root.left)
+        val right = invertTree(root.right)
+        root.left = right
+        root.right = left
+        return root
+    }
+    ```
+    </div></details>
+2. [Flatten Binary Tree](https://leetcode.com/problems/flatten-binary-tree-to-linked-list/)
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
+
+    ```kotlin
+    fun flatten(root: TreeNode?): Unit {
+        var cur = root
+        while(cur!=null){
+            if(cur.left!=null){
+                var prev = cur.left
+                while(prev.right!=null){
+                    prev = prev.right
+                }
+                prev.right = cur.right
+                cur.right = cur.left
+                cur.left = null
+            }
+            cur = cur.right
+        }
+    }
+    ```
+    </div></details>
+3. [Construct Binary Tree From PreOrder & InOrder](https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/)
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
+
+    ```kotlin    
+    fun buildTree(preorder: IntArray, inorder: IntArray): TreeNode? {
+        if(preorder.size==0) return null
+
+        val r = preorder[0]
+        val i = inorder.indexOf(r)
+
+        val root = TreeNode(r)
+        root.left = buildTree(preorder.copyOfRange(1,i+1), inorder.copyOfRange(0,i))
+        root.right = buildTree(preorder.copyOfRange(i+1,preorder.size), inorder.copyOfRange(i+1,inorder.size))
+        return root
+    }
+    ```
+    </div></details>
+4. [Construct Binary Tree from Inorder and Postorder](https://leetcode.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal/)
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
+
+    ```kotlin    
+    fun buildTree(inorder: IntArray, postorder: IntArray): TreeNode? {
+        if(postorder.isEmpty()) return null
+
+        val r = postorder.last()
+        val i = inorder.indexOf(r)
+
+        val root = TreeNode(r)
+        root.left = buildTree(inorder.copyOfRange(0,i), postorder.copyOfRange(0,i))
+        root.right = buildTree(inorder.copyOfRange(i+1,inorder.size), postorder.copyOfRange(i,postorder.size-1))
+        return root
+    }
+    ```
+    </div></details>
+5. [Symmetric Tree](https://leetcode.com/problems/symmetric-tree/)\
+       <details>
+    <summary>Code</summary>
+    <div markdown="1">
+
+    ```kotlin
+    fun isSymmetric(root: TreeNode?): Boolean {
+        fun isMirror(left: TreeNode?, right: TreeNode?): Boolean {
+            if(left==null && right==null) return true
+            if(left==null || right==null) return false
+            return (left.`val` == right.`val`) && isMirror(left?.left, right?.right) && isMirror(left?,right, right?.left)
+        }
+        return isMirror(root,root)
+    }
+    ```
+    </div></details>
+6. []()
+7. []()
+8. []()
+
+
+### <a name='Day20'></a>Day 20
+1. [Populating Next Right Pointes To Each Node](https://leetcode.com/problems/populating-next-right-pointers-in-each-node/description/)
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
+
+    ```kotlin
+    fun connect(root: Node?): Node? {
+        if(root==null) return root
+        var leftMost = root
+        while(leftMost?.left!=null){
+            var cur = leftMost
+            while(cur!=null){
+                cur?.left?.next = cur?.right
+                if(cur.next!=null){
+                    cur?.right?.next = cur?.next?.left
+                }
+                cur = cur?.next
+            }
+            leftMost = leftMost?.left
+        }
+        return root
+    }
+    ```
+    </div></details>
+2. [Search in BST](https://leetcode.com/problems/search-in-a-binary-search-tree/)
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
+
+    ```kotlin
+    fun searchBST(root: TreeNode?, `val`: Int): TreeNode? {
+        if(root==null) return null
+        if(root.`val` == `val`){
+            return root
+        }
+        return if(root.`val`>`val`){
+             searchBST(root?.left,`val`)
+        }else{
+             searchBST(root?.right,`val`)
+        }
+    }
+    ```
+    </div></details>
+3. []()
+4. [Validate BST](https://leetcode.com/problems/validate-binary-search-tree/)
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
+
+    ```kotlin
+    fun isValidBST(root: TreeNode?): Boolean {
+        fun validateInner(root: TreeNode?, min:Long, max: Long): Boolean {
+            if(root==null) return true
+            if(root.`val` >= max || root.`val` <= min) return false
+            return validateInner(root.left,min,root.`val`.toLong()) 
+                && validateInner(root.right, root.`val`.toLong(),max)
+        }
+        return validateInner(root, Long.MIN_VALUE, Long.MAX_VALUE)
+    }
+    ```
+    </div></details>
+5. [Lowest Common Ancestor](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/description/)
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
+
+    ```kotlin
+    fun lowestCommonAncestor(root: TreeNode?, p: TreeNode?, q: TreeNode?): TreeNode? {
+        if(root==null) return null
+        if(root==q || root==p) return root
+        val left = lowestCommonAncestor(root.left,p,q)
+        val right = lowestCommonAncestor(root.right,p,q)
+        if(left==null) return right
+        if(right==null) return left
+        return root
+    }
+    ```
+    </div></details>
+6. []()
+
+
+### <a name='Day19'></a>Day 19
+
+
+    
     <details>
     <summary>Code</summary>
     <div markdown="1">
