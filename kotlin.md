@@ -24,6 +24,7 @@
     - [HashSet](#hashset)
     - [HashMap](#hashmap)
     - [Queue](#queue)
+    - [Priority Queue](#priority-queue)
     - [Loop](#loop)
     - [BinaryTree](#binarytree)
 
@@ -479,6 +480,9 @@ hashSet.size
 ### <a name='HashMap'></a>HashMap
 ```kotlin
 var hashMap: HashMap<String,Int>= HashMap<String,Int>()
+for(num in nums) {
+  frequencyMap[num] = frequencyMap.getOrDefault(num, 0) + 1
+}
 
 // printing hashmap
 print(hashMap)
@@ -491,8 +495,9 @@ hashMap.replace("IronMan",99) // for updating
 // getting from hashmap
 hashMap.get(key)
 
-// traverssing hashmap keys
-for(key in hashmap.keys){
+// traversing hashmap keys
+for(key in hashmap.keys){}
+for ((num, freq) in frequencyMap) {}
 
 // misc
 hashMap.size
@@ -501,9 +506,6 @@ hashMap.clear()
 hashMap.containsKey(key)
 hashMap.containsValue(value)
 hashMap.remove(key)
-//increase the count by 1 if present, else insert
-map.put(num,(map.get(num)?:0)+1)
-}
 ```
 
 ### <a name='Queue'></a>Queue
@@ -544,6 +546,51 @@ for (element in deque) {
 }
 for (element in deque.asReversed()) {
     println(element)
+}
+```
+
+### <a name='PriortiyQueue'></a>Priority Queue
+```
+import java.util.PriorityQueue
+
+// Initialization
+val pq = PriorityQueue<Int>()
+val pqWithElements = PriorityQueue(listOf(5, 10, 1, 3))
+val maxHeap = PriorityQueue<Int>(compareByDescending { it }) //max-heap using custom comparator
+val minHeap = PriorityQueue<Pair<Int,Int>>(compareBy {it.second})
+
+// Check if empty
+val isEmpty = pq.isEmpty()
+val size = pq.size
+val list = pq.toList()
+
+// Check if an element exists
+val containsElement = pq.contains(10)
+
+// Add elements
+pq.add(10)
+pq.offer(5) // Alternative to add()
+
+// Remove elements
+val removedElement = pq.poll() // Retrieves and removes the highest priority element
+val peekedElement = pq.peek() // Retrieves but does not remove the highest priority element
+
+// Clear the PriorityQueue
+pq.clear()
+
+// Iterate over elements (unordered because PriorityQueue doesn't maintain insertion order)
+for (element in pq) {
+    println(element)
+}
+
+// Example with custom comparator (Max-Heap)
+val maxHeapWithElements = PriorityQueue<Int>(compareByDescending { it }).apply {
+    add(10)
+    add(1)
+    add(20)
+}
+while (maxHeapWithElements.isNotEmpty()) {
+    println(maxHeapWithElements.poll()) // Elements will be removed in descending order
 }
 ```
 

@@ -1,17 +1,17 @@
 <!-- vscode-markdown-toc -->
 - [Important Notes](#important-notes)
-- [Day 1](#day-1)
-- [Day 2](#day-2)
-- [Day 3](#day-3)
-- [Day 4](#day-4)
-- [Day 5](#day-5)
-- [Day 6](#day-6)
-- [Day 7](#day-7)
+- [Day 1: Array I](#day-1-array-i)
+- [Day 2: Array II](#day-2-array-ii)
+- [Day 3: Array III](#day-3-array-iii)
+- [Day 4: Array IV](#day-4-array-iv)
+- [Day 5: Linked List](#day-5-linked-list)
+- [Day 6: Linked List II](#day-6-linked-list-ii)
+- [Day 7: Linked List \& Arrays](#day-7-linked-list--arrays)
 - [Day 8](#day-8)
 - [Day 9](#day-9)
 - [Day 10](#day-10)
 - [Day 11](#day-11)
-- [Day 12](#day-12)
+- [Day 12: Heaps](#day-12-heaps)
 - [Day 13](#day-13)
 - [Day 14](#day-14)
 - [Day 15](#day-15)
@@ -21,7 +21,8 @@
 - [Day 18](#day-18-1)
 - [Day 19](#day-19)
 - [Day 20](#day-20)
-- [Day 19](#day-19-1)
+- [Day 21](#day-21)
+- [Day 22](#day-22)
 
 <!-- vscode-markdown-toc-config
 	numbering=false
@@ -37,10 +38,12 @@
       4. Minimization Problem: Problem demands result should be minimum.
       5. Maximization Problem: Problem demands result should be maximum.
       5. Optimization Problem: Problem demands result to be minimized or maximized.
-      6. 
+2. Data Structures
+   1. Heap:
+      1. 
 
 
-### <a name='Day1'></a>Day 1
+### <a name='Day1'></a>Day 1: Array I
 - [Set Matrix Zero](https://leetcode.com/problems/set-matrix-zeroes/)
   - Brute Force:
     1. Iterate matrix and when found 0, mark all the elements of same row and col as -1. 
@@ -290,7 +293,7 @@
         ```
         </div></details>
 
-### <a name='Day2'></a>Day 2
+### <a name='Day2'></a>Day 2: Array II
 - [Rotate Image by 90 degree](https://leetcode.com/problems/rotate-image/description/)
   1. Brute Force: 
      1. Create a new matrix and put items
@@ -420,7 +423,7 @@
             </div></details>
      2. Can modify the array: `Cycle Sort`
 
-### <a name='Day3'></a>Day 3
+### <a name='Day3'></a>Day 3: Array III
 - [Search in a sorted 2D matrix](https://leetcode.com/problems/search-a-2d-matrix/description/)
   1. Brute Force:
      1. Iterate matrix using two loops and find
@@ -552,7 +555,7 @@
         ```
         </div></details>
 
-### <a name='Day4'></a>Day 4
+### <a name='Day4'></a>Day 4: Array IV
 1. [2-sum Problem](https://leetcode.com/problems/two-sum/)
    1. Brute Force:
       1. Use two loops and find the pair with target sum.
@@ -735,7 +738,7 @@
         ```
         </div></details>
 
-### <a name='Day5'></a>Day 5
+### <a name='Day5'></a>Day 5: Linked List
 1. [Reverse Linked List](https://leetcode.com/problems/reverse-linked-list/description/)
    1. Brute Force:
       1. Use another data structure like Stack
@@ -921,7 +924,7 @@
         </div></details>
 
 
-### <a name='Day6'></a>Day 6
+### <a name='Day6'></a>Day 6: Linked List II
 1. [Find Interaction Point of Y LinkedList](https://leetcode.com/problems/intersection-of-two-linked-lists/description/)
    1. Brute Force:
       1. Just like two loops, put one loop on head and iterate the other who linked list to find if it exists.
@@ -1141,7 +1144,7 @@
         ```
         </div></details>
 
-### <a name='Day7'></a>Day 7
+### <a name='Day7'></a>Day 7: Linked List & Arrays
 1. [Rotate Linked List K Times](https://leetcode.com/problems/rotate-list/description/)
    1. Brute Force:
       1. For each K, move the last element from the list to first.
@@ -1467,9 +1470,124 @@
 ### <a name='Day11'></a>Day 11
 - []()
 
-### <a name='Day12'></a>Day 12
-- []()
-  
+### <a name='Day12'></a>Day 12: Heaps
+1. []()
+2. [Kth Largest Element](https://leetcode.com/problems/kth-largest-element-in-an-array/)
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
+
+    ```kotlin
+    fun findKthLargest(nums: IntArray, k: Int): Int {
+        val minHeap = PriorityQueue<Int>()
+        for(num in nums){
+            minHeap.add(num)
+            if(minHeap.size>k) minHeap.poll()
+        }
+        return minHeap.peek()
+    }
+    ```
+    </div></details>
+3. [Top K Frequent Elements](https://leetcode.com/problems/top-k-frequent-elements/description/)
+   1. Better: `Heap`
+      1. Store frquency in HashMap
+      2. Move map to PriorityQueue: `val minHeap = PriorityQueue<Pair<Int,Int>>(compareBy {it.second})`
+      3. TC: O(N*logk), SC: O(N+k)
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
+
+    ```kotlin
+    fun topKFrequent(nums: IntArray, k: Int): IntArray {
+        var freqMap = hashMapOf<Int,Int>()
+        for(num in nums){
+            freqMap[num] = freqMap.getOrDefault(num, 0)+1
+        }
+        val minHeap = PriorityQueue<Pair<Int,Int>>(compareBy {it.second})
+        for(item in freqMap){
+            minHeap.add(Pair(item.key,item.value))
+            if(minHeap.size>k){
+                minHeap.poll()
+            }
+        }
+        return minHeap.map{ it.first }.toIntArray()
+    }
+    ```
+    </div></details>
+   2. Optimal: `Quickselect (Hoare's selection algorithm)`
+4. [Find Median from Data Stream](https://leetcode.com/problems/find-median-from-data-stream/)
+   1. Optimal:
+      1. Use Two Priority Queues
+      2. MaxHeap for first half of items
+      3. MinHeap for second half of items
+      4. TC: O(logN), O(1)
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
+
+    ```kotlin
+    val maxHeap = PriorityQueue<Int>(compareByDescending {it})
+    val minHeap = PriorityQueue<Int>()
+    var isEven = true
+
+    fun addNum(num: Int) {
+        if(isEven){
+            minHeap.add(num)
+            maxHeap.add(minHeap.poll())
+        }else{
+            maxHeap.add(num)
+            minHeap.add(maxHeap.poll())
+        }
+        isEven = !isEven
+    }
+
+    fun findMedian(): Double {
+        return if(isEven){
+            (maxHeap.peek()+minHeap.peek())/2.0
+        } else {
+            maxHeap.peek().toDouble()
+        }
+    }
+    ```
+    </div></details>
+5. **[Sliding Window Maximum](https://leetcode.com/problems/sliding-window-maximum/description/)
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
+
+    ```kotlin
+    fun maxSlidingWindow(nums: IntArray, k: Int): IntArray {
+        if (nums.isEmpty() || k <= 0) return intArrayOf()
+
+        val result = mutableListOf<Int>()
+        val deque = ArrayDeque<Int>()
+
+        for (i in nums.indices) {
+            // Remove indices that are out of the current window
+            if (deque.isNotEmpty() && deque.first() < i - k + 1) {
+                deque.removeFirst()
+            }
+
+            // Remove elements from the deque that are smaller than the current element
+            while (deque.isNotEmpty() && nums[deque.last()] < nums[i]) {
+                deque.removeLast()
+            }
+
+            // Add the current element's index to the deque
+            deque.addLast(i)
+
+            // Add the maximum for the current window to the result
+            if (i >= k - 1) {
+                result.add(nums[deque.first()])
+            }
+        }
+
+        return result.toIntArray()
+    }
+    ```
+    </div></details>
+6. []()
+
 
     <details>
     <summary>Code</summary>
@@ -1896,7 +2014,26 @@
     }
     ```
     </div></details>
-6. []()
+6. [Maximum Path Sum](https://leetcode.com/problems/binary-tree-maximum-path-sum/description/)
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
+
+    ```kotlin
+    fun maxPathSum(root: TreeNode?): Int {
+        var maxSum = Int.MIN_VALUE
+        fun pathSum(root: TreeNode?): Int {
+            if(root==null) return 0
+            val left = maxOf(0,pathSum(root.left))
+            val right = maxOf(0,pathSum(root.right))
+            maxSum = maxOf(maxSum, left+right+root.`val`)
+            return root.`val`+maxOf(left,right)
+        }
+        pathSum(root)
+        return maxSum
+    }
+    ```
+    </div></details>
 7. []()
 8. []()
 
@@ -1983,8 +2120,51 @@
 6. []()
 
 
-### <a name='Day19'></a>Day 19
+### <a name='Day21'></a>Day 21
+1. []()
+2. []()
+3. []()
+4. [Two Sum: Binary Search Tree](https://leetcode.com/problems/two-sum-iv-input-is-a-bst/description/)
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
 
+    ```kotlin
+    fun findTarget(root: TreeNode?, k: Int): Boolean {
+        val set = hashSetOf<Int>()
+        fun search(root: TreeNode?, k: Int): Boolean {
+            if(root==null) return false
+            if(set.contains(k-root. `val`)){
+                return true
+            }
+            set.add(root.`val`)
+            return search(root.left,k) || search(root.right,k)
+        }
+        return search(root,k)
+    }
+    ```
+    </div></details>
+5. []()
+6. []()
+7. [Sum Root To Lead Number](https://leetcode.com/problems/sum-root-to-leaf-numbers/)
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
+
+    ```kotlin
+    fun sumNumbers(root: TreeNode?): Int {
+        fun dfs(root: TreeNode?, s: Int): Int{
+            if(root==null) return 0
+            var sum = s*10+root.`val`
+            if(root.left==null && root.right==null) return sum
+            return dfs(root.left,sum)+dfs(root.right,sum)
+        }
+        return dfs(root,0)
+    }
+    ```
+    </div></details>
+
+### <a name='Day22'></a>Day 22
 
     
     <details>
@@ -1992,5 +2172,6 @@
     <div markdown="1">
 
     ```kotlin
+
     ```
     </div></details>
