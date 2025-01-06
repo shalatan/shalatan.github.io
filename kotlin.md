@@ -23,7 +23,8 @@
     - [List](#list)
     - [HashSet](#hashset)
     - [HashMap](#hashmap)
-    - [Queue](#queue)
+    - [Queue \& Stack](#queue--stack)
+    - [Array Deque](#array-deque)
     - [Priority Queue](#priority-queue)
     - [Loop](#loop)
     - [BinaryTree](#binarytree)
@@ -507,8 +508,20 @@ hashMap.containsKey(key)
 hashMap.containsValue(value)
 hashMap.remove(key)
 ```
+### <a name='Queue&Stack'></a>Queue & Stack
+```kotlin
+//initialize
+val queue: Queue<Int> = LinkedList()
+val stack = Stack<Int>()
 
-### <a name='Queue'></a>Queue
+//add
+x.push()
+//remove
+x.pop()
+x.peek()
+```
+
+### <a name='ArrayDeque'></a>Array Deque
 ```kotlin
 // Empty ArrayDeque
 val deque = ArrayDeque<Int>()

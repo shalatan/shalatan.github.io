@@ -7,12 +7,12 @@
 - [Day 5: Linked List](#day-5-linked-list)
 - [Day 6: Linked List II](#day-6-linked-list-ii)
 - [Day 7: Linked List \& Arrays](#day-7-linked-list--arrays)
-- [Day 8](#day-8)
-- [Day 9](#day-9)
-- [Day 10](#day-10)
+- [Day 8: Greey Algorithm](#day-8-greey-algorithm)
+- [Day 9: Recursion](#day-9-recursion)
+- [Day 10: Recursion \& Backtracking](#day-10-recursion--backtracking)
 - [Day 11](#day-11)
 - [Day 12: Heaps](#day-12-heaps)
-- [Day 13](#day-13)
+- [Day 13: Stack and Queues](#day-13-stack-and-queues)
 - [Day 14](#day-14)
 - [Day 15](#day-15)
 - [Day 16](#day-16)
@@ -1347,10 +1347,10 @@
     ```
     </div></details>
 
-### <a name='Day8'></a>Day 8
+### <a name='Day8'></a>Day 8: Greey Algorithm
 
 
-### <a name='Day9'></a>Day 9
+### <a name='Day9'></a>Day 9: Recursion
 1. [Combination Sum 1-2-3](https://leetcode.com/problems/combination-sum/description/)
     <details>
     <summary>Code</summary>
@@ -1464,7 +1464,7 @@
     ```
     </div></details>   
 
-### <a name='Day10'></a>Day 10
+### <a name='Day10'></a>Day 10: Recursion & Backtracking
 - []()
 
 ### <a name='Day11'></a>Day 11
@@ -1596,8 +1596,101 @@
     ```kotlin
     ```
     </div></details>
-### <a name='Day13'></a>Day 13
-- []()
+### <a name='Day13'></a>Day 13: Stack and Queues
+1. [Implement Stack Using Array]()
+   1. Push: `nums[++index]=x`
+   2. Pop: `nums[index--]`
+2. [Implement Queue Using Array]()
+   1. Use Array in Ciruclar way and use Front and Rear to find the corresponding indexes.
+3. [Implement Stack Using Queues](https://leetcode.com/problems/implement-stack-using-queues/)
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
+
+    ```kotlin
+    private var q1: Queue<Int> = LinkedList()
+    private var q2: Queue<Int> = LinkedList()
+
+    fun push(x: Int) {
+        q2.offer(x)
+        while(q1.isNotEmpty()){
+            q2.offer(q1.poll())
+        }
+        q1 = q2.also { q2 = q1 }
+    }
+
+    fun pop(): Int {
+        return q1.poll()    
+    }
+
+    fun top(): Int {
+        return q1.peek()
+    }
+
+    fun empty(): Boolean {
+        return q1.isEmpty()
+    }
+    ```
+    </div></details>
+4. [Implement Queue Using Stack](https://leetcode.com/problems/implement-queue-using-stacks/)
+   1. Create two stack, pushStack, popStack
+   2. push(): insert in pushStack
+   3. pop(): remove from popStack, if it's empty, move all items from pushStack to popStack first.
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
+
+    ```kotlin
+    val pushStack = Stack<Int>()
+    val popStack = Stack<Int>()
+    
+    fun push(x: Int) {
+        pushStack.push(x)
+    }
+
+    fun pop(): Int {
+        peek()
+        return popStack.pop()
+    }
+
+    fun peek(): Int {
+        if (popStack.isEmpty()) {
+            while (pushStack.isNotEmpty()) {
+                popStack.add(pushStack.pop())
+            }
+        }
+        return popStack.peek()
+    }
+
+    fun empty(): Boolean {
+        return popStack.isEmpty() && pushStack.isEmpty()
+    }
+    ```
+    </div></details>
+5. [Valid Parentheses](https://leetcode.com/problems/valid-parentheses/)
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
+
+    ```kotlin
+    fun isValid(s: String): Boolean {
+        val stack = Stack<Char>()
+        for(char in s){
+            when(char){
+                '(' -> stack.push(')')
+                '[' -> stack.push(']')
+                '{' -> stack.push('}')
+                else -> {
+                    if(stack.isEmpty() || stack.pop() != char) return false
+                }
+            }
+        }
+        return stack.isEmpty()
+    }
+    ```
+    </div></details>
+6. []()
+7. []()
 
 ### <a name='Day14'></a>Day 14
 - []()
@@ -2146,7 +2239,7 @@
     </div></details>
 5. []()
 6. []()
-7. [Sum Root To Lead Number](https://leetcode.com/problems/sum-root-to-leaf-numbers/)
+7. [Sum Root To Leaf Number](https://leetcode.com/problems/sum-root-to-leaf-numbers/)
     <details>
     <summary>Code</summary>
     <div markdown="1">
