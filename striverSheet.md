@@ -6,10 +6,10 @@
 - [Day 4: Array IV](#day-4-array-iv)
 - [Day 5: Linked List](#day-5-linked-list)
 - [Day 6: Linked List II](#day-6-linked-list-ii)
-- [Day 7: Linked List \& Arrays](#day-7-linked-list--arrays)
+- [Day 7: Linked List, Arrays](#day-7-linked-list-arrays)
 - [Day 8: Greey Algorithm](#day-8-greey-algorithm)
 - [Day 9: Recursion](#day-9-recursion)
-- [Day 10: Recursion \& Backtracking](#day-10-recursion--backtracking)
+- [Day 10: Recursion, Backtracking](#day-10-recursion-backtracking)
 - [Day 11](#day-11)
 - [Day 12: Heaps](#day-12-heaps)
 - [Day 13: Stack and Queues](#day-13-stack-and-queues)
@@ -1144,7 +1144,7 @@
         ```
         </div></details>
 
-### <a name='Day7'></a>Day 7: Linked List & Arrays
+### <a name='Day7'></a>Day 7: Linked List, Arrays
 1. [Rotate Linked List K Times](https://leetcode.com/problems/rotate-list/description/)
    1. Brute Force:
       1. For each K, move the last element from the list to first.
@@ -1464,7 +1464,7 @@
     ```
     </div></details>   
 
-### <a name='Day10'></a>Day 10: Recursion & Backtracking
+### <a name='Day10'></a>Day 10: Recursion, Backtracking
 - []()
 
 ### <a name='Day11'></a>Day 11
@@ -1588,14 +1588,6 @@
     </div></details>
 6. []()
 
-
-    <details>
-    <summary>Code</summary>
-    <div markdown="1">
-
-    ```kotlin
-    ```
-    </div></details>
 ### <a name='Day13'></a>Day 13: Stack and Queues
 1. [Implement Stack Using Array]()
    1. Push: `nums[++index]=x`
@@ -1693,8 +1685,128 @@
 7. []()
 
 ### <a name='Day14'></a>Day 14
-- []()
+1. [Next Smaller Element]()
+2. [LRU cache (IMPORTANT)](https://leetcode.com/problems/lru-cache/description/)
+   1. Create 4 functions for doubly-linked list
+      1. removeTail, removeNode, moveToHead, addToHead
+        <details>
+        <summary>Code</summary>
+        <div markdown="1">
 
+        ```kotlin
+        data class LruNode(var key: Int, var value: Int) {
+            var prev: LruNode? = null
+            var next: LruNode? = null
+        }
+
+        private var cap = -1
+        private val cache = mutableMapOf<Int, LruNode>()
+        private val head = LruNode(0, 0)
+        private val tail = LruNode(0, 0)
+
+        init {
+            head.next = tail
+            tail.prev = head
+            cap = capacity
+        }
+
+        fun get(key: Int): Int {
+            val node = cache[key] ?: return -1
+            moveToHead(node)
+            return node.value
+        }
+
+        fun put(key: Int, value: Int) {
+            if(cache.containsKey(key)){
+                val node = cache[key]!!
+                node?.value = value
+                moveToHead(node)
+            }else{
+                if(cache.size==cap){
+                    val tail = removeTail()
+                    cache.remove(tail.key)
+                }
+                val newNode = LruNode(key,value)
+                cache[key] = newNode
+                addToHead(newNode)
+            }
+        }
+
+        private fun removeTail(): LruNode{
+            val toRemove = tail.prev!!
+            removeNode(toRemove)
+            return toRemove
+        }
+
+        private fun removeNode(node: LruNode){
+            node.next?.prev = node.prev
+            node.prev?.next = node.next
+        }
+
+        private fun moveToHead(node: LruNode){
+            removeNode(node)
+            addToHead(node)
+        }
+
+        private fun addToHead(node: LruNode){
+            node.next = head.next
+            head.next?.prev = node
+            node.prev = head
+            head.next = node
+        }
+        ```
+        </div></details>
+3. [LFU cache]()
+4. [Largest rectangle in a histogram]()
+5. [Sliding Window maximum](https://leetcode.com/problems/sliding-window-maximum/description/)
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
+
+    ```kotlin
+    fun maxSlidingWindow(nums: IntArray, k: Int): IntArray {
+        if (nums.isEmpty() || k <= 0) return intArrayOf()
+
+        val result = mutableListOf<Int>()
+        val deque = ArrayDeque<Int>()
+
+        for (i in nums.indices) {
+            // If the first element in deque is outside current window, remove it
+            if (deque.isNotEmpty() && deque.first() < i - k + 1) {
+                deque.removeFirst()
+            }
+
+            // Remove all elements smaller than current element
+            while (deque.isNotEmpty() && nums[deque.last()] < nums[i]) {
+                deque.removeLast()
+            }
+
+            // Add current index to deque
+            deque.addLast(i)
+
+            // First element in deque is always maximum of current window
+            if (i >= k - 1) {
+                result.add(nums[deque.first()])
+            }
+        }
+
+        return result.toIntArray()
+    }
+    ```
+    </div></details>
+6. [Implement Min Stack]()
+7. [Rotten Orange (Using BFS)]()
+8. [Stock span problem]()
+9. [Find the maximum of minimums of every window size]()
+10. [The Celebrity Problem]()
+
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
+
+    ```kotlin
+    ```
+    </div></details>
 ### <a name='Day15'></a>Day 15
 - []()
 
