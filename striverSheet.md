@@ -13,16 +13,15 @@
 - [Day 11](#day-11)
 - [Day 12: Heaps](#day-12-heaps)
 - [Day 13: Stack and Queues](#day-13-stack-and-queues)
-- [Day 14](#day-14)
-- [Day 15](#day-15)
-- [Day 16](#day-16)
-- [Day 17](#day-17)
-- [Day 18](#day-18)
-- [Day 18](#day-18-1)
-- [Day 19](#day-19)
-- [Day 20](#day-20)
-- [Day 21](#day-21)
-- [Day 22](#day-22)
+- [Day 14: Stack and Queues II](#day-14-stack-and-queues-ii)
+- [Day 15: String](#day-15-string)
+- [Day 16: String II](#day-16-string-ii)
+- [Day 17: Binary Tree](#day-17-binary-tree)
+- [Day 18: Binary Tree II](#day-18-binary-tree-ii)
+- [Day 19: Binary Tree III](#day-19-binary-tree-iii)
+- [Day 20: Binary Search Tree](#day-20-binary-search-tree)
+- [Day 21: Binary Search Tree II](#day-21-binary-search-tree-ii)
+- [Day 22: Binary Tree (Miscellaneous)](#day-22-binary-tree-miscellaneous)
 
 <!-- vscode-markdown-toc-config
 	numbering=false
@@ -294,7 +293,7 @@
         </div></details>
 
 ### <a name='Day2'></a>Day 2: Array II
-- [Rotate Image by 90 degree](https://leetcode.com/problems/rotate-image/description/)
+1. [Rotate Image by 90 degree](https://leetcode.com/problems/rotate-image/description/)
   1. Brute Force: 
      1. Create a new matrix and put items
      2. TC: O(N*N), SC: O(N*N)
@@ -326,7 +325,7 @@
         }
         ```
         </div></details>
-- [Merge Overlapping Sub-intervals](https://leetcode.com/problems/merge-intervals/description/)
+2. [Merge Overlapping Sub-intervals](https://leetcode.com/problems/merge-intervals/description/)
   1. Brute Force:
      1. Sort if not sorted
      2. Use one loop to iterate all items and another loop to check (i+1,n-1) if they can be merged
@@ -360,7 +359,7 @@
         }
         ```
         </div></details>
-- [Merge Sorted Array](https://leetcode.com/problems/merge-sorted-array/description/)
+3. [Merge Sorted Array](https://leetcode.com/problems/merge-sorted-array/description/)
   1. Optimal:
      1.  
         <details>
@@ -387,7 +386,7 @@
         }    
         ```
         </div></details>
-- [Find the duplicate in an array of N+1 integers](https://leetcode.com/problems/find-the-duplicate-number/description/)
+4. [Find the duplicate in an array of N+1 integers](https://leetcode.com/problems/find-the-duplicate-number/description/)
   1. Brute Force:
      1. Sort the array and iterate to find same consequetive number
      2. TC: O(N*logN)+O(N)
@@ -422,9 +421,53 @@
             ```
             </div></details>
      2. Can modify the array: `Cycle Sort`
+5. *[Contains Duplicate](https://leetcode.com/problems/contains-duplicate/solutions/)
+   1. Brute Force: `Use Two loops`
+      1. TC: O(N^2)
+   2. Better: `Sort()`
+      1. TC: O(N*logN)
+   3. Optimal: `HashSet or HashMap`
+      1. TC: O(N), SC: O(N)
+6. [Search in Rotated Sorted Array](https://leetcode.com/problems/search-in-rotated-sorted-array/description/)
+   1. Use binary search and keep moving start and end based on sorted part conditions
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
+
+    ```kotlin
+    fun search(nums: IntArray, x: Int): Int {
+        var n = nums.size
+        var start = 0
+        var end = n-1
+        while(start<=end){
+            val mid = (start+end)/2
+            if(nums[mid]==x) return mid
+            if(nums[start]<=nums[mid]){
+                //left half is sorted
+                if(nums[start]<=x && x<nums[mid]){
+                    //element is sorted part
+                    end = mid-1
+                }else{
+                    start = mid+1
+                }
+            }else{
+                //right half is sorted
+                if(nums[mid]<x && x<=nums[end]){
+                    //element is sorted part
+                    start = mid+1
+                }else{
+                    end = mid-1
+                }
+            }
+        }
+        return -1
+    }
+    ```
+    </div></details>
+7. []()
 
 ### <a name='Day3'></a>Day 3: Array III
-- [Search in a sorted 2D matrix](https://leetcode.com/problems/search-a-2d-matrix/description/)
+1. [Search in a sorted 2D matrix](https://leetcode.com/problems/search-a-2d-matrix/description/)
   1. Brute Force:
      1. Iterate matrix using two loops and find
      2. TC: O(M*N)
@@ -479,7 +522,7 @@
         }
         ```
         </div></details>
-- [Majority Element n/2](https://leetcode.com/problems/majority-element/)
+2. [Majority Element n/2](https://leetcode.com/problems/majority-element/)
   1. Brute Force:
      1. Use two loops and find frequency for each element, return when it crosses n/2
      2. TC: O(N*N)
@@ -506,7 +549,7 @@
         }
         ```
         </div></details>
-- [Majority Element n/3](https://leetcode.com/problems/majority-element-ii/)
+3. [Majority Element n/3](https://leetcode.com/problems/majority-element-ii/)
   1. Same as n/2
   2. Same as n/2
   3. Optimal: `Extended Boyer Moore’s Voting Algorithm` 
@@ -554,7 +597,73 @@
         }
         ```
         </div></details>
+4. [Product of Array Except Self](https://leetcode.com/problems/product-of-array-except-self/description/)
+   1. Optimal:
+      1. Create Prefix Array, & Postfix Array
+      2. Merge them to create Output Array
+      3. TC: O(3*N), SC: O(2*N) (excluding output array)
+   2. Optmial More:
+      1. Create output array, store Prefix product first and then update with PostFix
+      2. TC: O(2*N), SC: O(1)
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
 
+    ```kotlin
+    fun productExceptSelf(nums: IntArray): IntArray {
+        var n = nums.size
+        var output = IntArray(n)
+        var prefix = 1
+        for(i in 0 until n){
+            output[i] = prefix
+            prefix *= nums[i]
+        }
+        var postfix = 1
+        for(i in n-1 downTo 0){
+            output[i] *= postfix
+            postfix *= nums[i]
+        }
+        return output
+    }
+    ```
+    </div></details>
+5. [Container With Most Water](https://leetcode.com/problems/container-with-most-water/description/)
+   1. Use Two pointers, start and end and fetch height of left and right
+   2. store max in `ans=maxOf(ans, (end-start)*minOf(left,right))`
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
+
+    ```kotlin
+    fun maxArea(height: IntArray): Int {
+        var start = 0
+        var end = height.size-1
+        var ans = 0
+        var maxRight = 0
+        var maxLeft = 0
+        while(start<end){
+            var left = height[start]
+            var right = height[end]
+            ans = maxOf(ans, (end-start)*minOf(left,right))
+            if(left>right){
+                end--
+            }else{
+                start++
+            }
+        }
+        return ans
+    }
+    ```
+6. []()
+
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
+
+    ```kotlin
+
+    ```
+    </div></details>
 ### <a name='Day4'></a>Day 4: Array IV
 1. [2-sum Problem](https://leetcode.com/problems/two-sum/)
    1. Brute Force:
@@ -737,6 +846,39 @@
 
         ```
         </div></details>
+6. [Spiral Matrix](https://leetcode.com/problems/spiral-matrix/)
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
+
+    ```kotlin
+    fun spiralOrder(matrix: Array<IntArray>): List<Int> {
+        var col = matrix[0].size
+        var row = matrix.size
+        var top = 0
+        var left = 0
+        var bottom = row-1
+        var right = col-1
+        var ans = mutableListOf<Int>()
+        while(top<=bottom && left<=right){
+            for(i in left..right)   ans.add(matrix[top][i])
+            top++
+            for(i in top..bottom)   ans.add(matrix[i][right])
+            right--
+            if(top<=bottom) {
+                for(i in right downTo left)   ans.add(matrix[bottom][i])
+                bottom--
+            }
+            if(left<=right) {
+                for(i in bottom downTo top)   ans.add(matrix[i][left])
+                left++
+            }
+        }
+        return ans
+    }
+    ```
+    </div></details>
+7. []()
 
 ### <a name='Day5'></a>Day 5: Linked List
 1. [Reverse Linked List](https://leetcode.com/problems/reverse-linked-list/description/)
@@ -1143,6 +1285,45 @@
         }
         ```
         </div></details>
+6. [Reorder List](https://leetcode.com/problems/reorder-list/description/)
+   1. Find mid
+   2. Split the list
+   3. Reverser second half
+   4. Merge both lists
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
+
+    ```kotlin
+    fun reorderList(head: ListNode?): Unit {
+        if(head==null || head?.next == null) return
+        //find mid
+        var slow = head
+        var fast = head
+        while(fast?.next!=null){
+            slow = slow?.next
+            fast = fast?.next?.next
+        }
+        //split
+        val firstHalfEnd = slow
+        var secondHalfStart = slow?.next
+        firstHalfEnd?.next = null
+        //reverse second half
+        secondHalfStart = reverse(secondHalfStart)
+        //merge both
+        var p1 = head
+        var p2 = secondHalfStart
+        while (p2 != null) {
+            val next1 = p1?.next
+            val next2 = p2?.next
+            p1?.next = p2
+            p2?.next = next1
+            p1 = next1
+            p2 = next2
+        }
+    }
+    ```
+    </div></details>
 
 ### <a name='Day7'></a>Day 7: Linked List, Arrays
 1. [Rotate Linked List K Times](https://leetcode.com/problems/rotate-list/description/)
@@ -1684,7 +1865,7 @@
 6. []()
 7. []()
 
-### <a name='Day14'></a>Day 14
+### <a name='Day14'></a>Day 14: Stack and Queues II
 1. [Next Smaller Element]()
 2. [LRU cache (IMPORTANT)](https://leetcode.com/problems/lru-cache/description/)
    1. Create 4 functions for doubly-linked list
@@ -1800,20 +1981,125 @@
 9. [Find the maximum of minimums of every window size]()
 10. [The Celebrity Problem]()
 
+### <a name='Day15'></a>Day 15: String
+1. [Reverse Words in a String](https://leetcode.com/problems/reverse-words-in-a-string/description/)
     <details>
     <summary>Code</summary>
     <div markdown="1">
 
     ```kotlin
+    fun reverseWords(s: String): String {
+        var stack = Stack<String>()
+        var i = 0
+        while(i<s.length){
+            var ans = " "
+            if(s[i]==' '){
+                i++
+            }else{
+                while(i<s.length && s[i]!=' '){
+                    ans+=s[i]
+                    i++
+                }
+                stack.push(ans)
+            }
+        }
+        var res = ""
+        while(stack.isNotEmpty()){
+            res+=stack.pop()
+        }
+        return res.trim()
+    }
     ```
     </div></details>
-### <a name='Day15'></a>Day 15
-- []()
+2. [Longest Palindromic Substring](https://leetcode.com/problems/longest-palindromic-substring/description/)
+   1. For each i index of string, expand left and right
+   2. for odd: left,right
+   3. for evem: left, right+1
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
 
-### <a name='Day16'></a>Day 16
-- []()
+    ```kotlin
+    fun longestPalindrome(s: String): String {
+        var n = s.length
+        var max = 0
+        var start = 0
+        var end = 0
 
-### <a name='Day17'></a>Day 17
+        fun expand(left: Int, right: Int){
+            var l = left
+            var r = right
+            while(l>=0 && r<n && s[l]==s[r]){
+                if(r-l+1 > max){
+                    max = r-l+1
+                    start = l
+                    end = r
+                }
+                l--
+                r++
+            }
+        }
+
+        for(i in s.indices){
+            expand(i,i)
+            expand(i,i+1)
+        }
+        return s.substring(start,end+1)
+    }
+    ```
+    </div></details>
+3. []()
+4. []()
+5. [Longest Common Prefix](https://leetcode.com/problems/longest-common-prefix/description/)
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
+
+    ```kotlin
+    fun longestCommonPrefix(strs: Array<String>): String {
+        strs.sort()
+        var first = strs[0]
+        var last = strs[strs.size-1]
+        var i = 0
+        while(i<first.length && i < last.length && first[i]==last[i]){
+            i++
+        }
+        return first.substring(0,i)
+    }
+    ```
+    </div></details>
+6. []()
+
+### <a name='Day16'></a>Day 16: String II
+1. []()
+2. [Minimum Add to Make Parentheses Valid](https://leetcode.com/problems/minimum-add-to-make-parentheses-valid/description/)
+   1. Use openCount and closeCounts
+   2. If "(", increase openCount, else check if openCount>0 and then either decrease openCount or increase closeCount
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
+
+    ```kotlin
+    fun minAddToMakeValid(s: String): Int {
+        var oc = 0
+        var cc = 0
+        for(char in s){
+            if(char=='(')
+                oc++
+            else {
+                if(oc>0){
+                    oc--    //balance previous open
+                }else{
+                    cc++    //count unbalanced oc
+                }
+            }
+        }
+        return oc+cc
+    }
+    ```
+    </div></details>
+
+### <a name='Day17'></a>Day 17: Binary Tree
 1. [InOrder, PreOrder, PostOrder Traversal]()
     <details>
     <summary>Code</summary>
@@ -1900,7 +2186,7 @@
     }
     ```
     </div></details>
-4. [Maximum Level Sum of a Binary Tree](https://leetcode.com/problems/maximum-level-sum-of-a-binary-tree/)
+4. *[Maximum Level Sum of a Binary Tree](https://leetcode.com/problems/maximum-level-sum-of-a-binary-tree/)
     <details>
     <summary>Code</summary>
     <div markdown="1">
@@ -1933,7 +2219,7 @@
     ```
     </div></details>
 
-### <a name='Day18'></a>Day 18
+### <a name='Day18'></a>Day 18: Binary Tree II
 1. [Level Order Traversal](https://leetcode.com/problems/binary-tree-level-order-traversal/description/)
     <details>
     <summary>Code</summary>
@@ -2091,39 +2377,9 @@
     ```
     </div></details>
 
-### <a name='Day18'></a>Day 18
-1. []()
-2. *[Average Of Levels in Binary Tree](https://leetcode.com/problems/average-of-levels-in-binary-tree/submissions/)
-    <details>
-    <summary>Code</summary>
-    <div markdown="1">
 
-    ```kotlin
-        fun averageOfLevels(root: TreeNode?): DoubleArray {
-        val q = ArrayDeque<TreeNode>()
-        val ans = mutableListOf<Double>()
-        if(root==null) return ans.toDoubleArray()
-        q.addLast(root)
-        while(q.isNotEmpty()){
-            val size = q.size
-            var curLevelSum = 0.0
-            for(i in 0 until size){
-                val cur = q.removeFirst()
-                curLevelSum += cur.`val`
-                cur.left?.let { q.addLast(it) }
-                cur.right?.let { q.addLast(it) }
-            }
-            ans.add(curLevelSum.toDouble()/size.toDouble())
-        }
-        return ans.toDoubleArray()
-    }
-    ```
-    </div></details>
-3. []()
-4. []()
-5. []()
 
-### <a name='Day19'></a>Day 19
+### <a name='Day19'></a>Day 19: Binary Tree III
 1. *[Invert Binary Tree](https://leetcode.com/problems/invert-binary-tree/submissions/1492755785/)
     <details>
     <summary>Code</summary>
@@ -2240,10 +2496,36 @@
     ```
     </div></details>
 7. []()
-8. []()
+8. *[Average Of Levels in Binary Tree](https://leetcode.com/problems/average-of-levels-in-binary-tree/submissions/)
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
+
+    ```kotlin
+        fun averageOfLevels(root: TreeNode?): DoubleArray {
+        val q = ArrayDeque<TreeNode>()
+        val ans = mutableListOf<Double>()
+        if(root==null) return ans.toDoubleArray()
+        q.addLast(root)
+        while(q.isNotEmpty()){
+            val size = q.size
+            var curLevelSum = 0.0
+            for(i in 0 until size){
+                val cur = q.removeFirst()
+                curLevelSum += cur.`val`
+                cur.left?.let { q.addLast(it) }
+                cur.right?.let { q.addLast(it) }
+            }
+            ans.add(curLevelSum.toDouble()/size.toDouble())
+        }
+        return ans.toDoubleArray()
+    }
+    ```
+    </div></details>
+9. []()
 
 
-### <a name='Day20'></a>Day 20
+### <a name='Day20'></a>Day 20: Binary Search Tree
 1. [Populating Next Right Pointes To Each Node](https://leetcode.com/problems/populating-next-right-pointers-in-each-node/description/)
     <details>
     <summary>Code</summary>
@@ -2325,7 +2607,7 @@
 6. []()
 
 
-### <a name='Day21'></a>Day 21
+### <a name='Day21'></a>Day 21: Binary Search Tree II
 1. []()
 2. []()
 3. []()
@@ -2351,7 +2633,7 @@
     </div></details>
 5. []()
 6. []()
-7. [Sum Root To Leaf Number](https://leetcode.com/problems/sum-root-to-leaf-numbers/)
+7. *[Sum Root To Leaf Number](https://leetcode.com/problems/sum-root-to-leaf-numbers/)
     <details>
     <summary>Code</summary>
     <div markdown="1">
@@ -2369,7 +2651,7 @@
     ```
     </div></details>
 
-### <a name='Day22'></a>Day 22
+### <a name='Day22'></a>Day 22: Binary Tree (Miscellaneous)
 
     
     <details>
