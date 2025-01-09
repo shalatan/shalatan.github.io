@@ -294,13 +294,13 @@
 
 ### <a name='Day2'></a>Day 2: Array II
 1. [Rotate Image by 90 degree](https://leetcode.com/problems/rotate-image/description/)
-  1. Brute Force: 
-     1. Create a new matrix and put items
-     2. TC: O(N*N), SC: O(N*N)
-  2. Optimal:
-     1. Transpose matrix
-     2. Reverse the matrix
-     3. TC: O(N*N), SC: O(1)
+   1. Brute Force: 
+      1. Create a new matrix and put items
+      2. TC: O(N*N), SC: O(N*N)
+   2. Optimal:
+      1. Transpose matrix
+      2. Reverse the matrix
+      3. TC: O(N*N), SC: O(1)
         <details>
         <summary>Code</summary>
         <div markdown="1">
@@ -325,17 +325,17 @@
         }
         ```
         </div></details>
-2. [Merge Overlapping Sub-intervals](https://leetcode.com/problems/merge-intervals/description/)
-  1. Brute Force:
-     1. Sort if not sorted
-     2. Use one loop to iterate all items and another loop to check (i+1,n-1) if they can be merged
-     3.  TC: O(N*N)
-  2. Optimal:
-     1. Sort if not sorted
-     2. Insert first item in result, and iterate checking if last[1]>new[0].
-     3. If true update last[1] with maxOf(last[1],new[1])
-     4. Else insert in list
-     5. TC: O(N*logN)+O(N)
+2. [Merge Intervals](https://leetcode.com/problems/merge-intervals/description/)
+   1. Brute Force:
+      1. Sort if not sorted
+      2. Use one loop to iterate all items and another loop to check (i+1,n-1) if they can be merged
+      3.  TC: O(N*N)
+   2. Optimal:
+      1. Sort if not sorted
+      2. Insert first item in result, and iterate checking if last[1]>new[0].
+      3. If true update last[1] with maxOf(last[1],new[1])
+      4. Else insert in list
+      5. TC: O(N*logN)+O(N)
         <details>
         <summary>Code</summary>
         <div markdown="1">
@@ -347,12 +347,12 @@
             for(interval in intervals){
                 if(ans.isEmpty()){
                     ans.add(interval)
+                    continue
                 }
-                val endOfLast = ans.last()[1]
-                if(endOfLast>=interval[0]){
-                    ans.last()[1] = maxOf(endOfLast,interval[1])
-                } else {
+                if(ans.last()[1]<interval[0]){
                     ans.add(interval)
+                } else {
+                    ans.last()[1] = maxOf(ans.last()[1],interval[1])
                 }
             }
             return ans.toTypedArray()
@@ -360,8 +360,7 @@
         ```
         </div></details>
 3. [Merge Sorted Array](https://leetcode.com/problems/merge-sorted-array/description/)
-  1. Optimal:
-     1.  
+   1. Optimal: 
         <details>
         <summary>Code</summary>
         <div markdown="1">
@@ -387,18 +386,18 @@
         ```
         </div></details>
 4. [Find the duplicate in an array of N+1 integers](https://leetcode.com/problems/find-the-duplicate-number/description/)
-  1. Brute Force:
-     1. Sort the array and iterate to find same consequetive number
-     2. TC: O(N*logN)+O(N)
-  2. Better:
-     1. Using hashset and checking if it already exists.
-     2.  TC: O(N), SC: O(N)  
-  3. Optimal:
-     1. Cannot modify the array: `Floyd's Tortoise and Hare Algorithm: Linked List Cycle Detection`
-        1. Use slow and fast pointers and find the cycle
-        2. Set fast to nums[0]
-        3. move both same till same again
-        4. TC: O(N)
+   1. Brute Force:
+      1. Sort the array and iterate to find same consequetive number
+      2. TC: O(N*logN)+O(N)
+   2. Better:
+      1. Using hashset and checking if it already exists.
+      2.  TC: O(N), SC: O(N)  
+   3. Optimal:
+      1. Cannot modify the array: `Floyd's Tortoise and Hare Algorithm: Linked List Cycle Detection`
+         1. Use slow and fast pointers and find the cycle
+         2. Set fast to nums[0]
+         3. move both same till same again
+         4. TC: O(N)
             <details>
             <summary>Code</summary>
             <div markdown="1">
@@ -420,7 +419,7 @@
             }
             ```
             </div></details>
-     2. Can modify the array: `Cycle Sort`
+      2. Can modify the array: `Cycle Sort`
 5. *[Contains Duplicate](https://leetcode.com/problems/contains-duplicate/solutions/)
    1. Brute Force: `Use Two loops`
       1. TC: O(N^2)
@@ -464,14 +463,47 @@
     }
     ```
     </div></details>
-7. []()
+7. *[Insert Interval](https://leetcode.com/problems/insert-interval/)
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
+
+    ```kotlin
+    fun insert(intervals: Array<IntArray>, newInterval: IntArray): Array<IntArray> {
+        var n = intervals.size
+        val ans = mutableListOf<IntArray>()
+        //add intervals ending before newOne 
+        var i = 0
+        while(i<n && intervals[i][1]<newInterval[0]){
+            ans.add(intervals[i])
+            i++
+        }
+        //merge the overlapping ones
+        var start = newInterval[0]
+        var end = newInterval[1]
+        while(i<n && intervals[i][0]<=end){
+            start = minOf(intervals[i][0],start)
+            end = maxOf(intervals[i][1],end)
+            i++
+        }
+        ans.add(intArrayOf(start,end))
+        //add the rest intervals
+        while(i<n){
+            ans.add(intervals[i])
+            i++
+        }
+        return ans.toTypedArray()
+    }
+    ```
+    </div></details>
+8. []()
 
 ### <a name='Day3'></a>Day 3: Array III
 1. [Search in a sorted 2D matrix](https://leetcode.com/problems/search-a-2d-matrix/description/)
-  1. Brute Force:
+   1. Brute Force:
      1. Iterate matrix using two loops and find
      2. TC: O(M*N)
-  2. Better: `Two Pointers`
+   2. Better: `Two Pointers`
      1. Use two pointers, `i at 0,m-1`, `j at (col.size-1,0)` 
      2. If mat[i][j]>target, j--, else i++
      3. TC: O(M+N)
@@ -495,10 +527,10 @@
         }
         ```
         </div></details>
-  3. Optimal: `Treat matrix as flattend array and use binary search`
-     1. Put start at 0, and end at m*n-1
-     2. Calculate mid, and find the `curItem = matrix[mid/n][mid%n]`
-     3. TC: O(log(M*N))
+   3. Optimal: `Treat matrix as flattend array and use binary search`
+      1. Put start at 0, and end at m*n-1
+      2. Calculate mid, and find the `curItem = matrix[mid/n][mid%n]`
+      3. TC: O(log(M*N))
         <details>
         <summary>Code</summary>
         <div markdown="1">
@@ -523,13 +555,13 @@
         ```
         </div></details>
 2. [Majority Element n/2](https://leetcode.com/problems/majority-element/)
-  1. Brute Force:
+   1. Brute Force:
      1. Use two loops and find frequency for each element, return when it crosses n/2
      2. TC: O(N*N)
-  2. Better:
+   2. Better:
      1. Use HashMap to store the frequency and keep checking while increasing the count. Stop once it's count reaches n/2
      2. TC: O(N), SC: O(N)
-  3. Optimal: `Moore's Voting Algorithm`
+   3. Optimal: `Moore's Voting Algorithm`
      1. Use count, element variables
      2. TC: O(N) 
         <details>
@@ -550,11 +582,11 @@
         ```
         </div></details>
 3. [Majority Element n/3](https://leetcode.com/problems/majority-element-ii/)
-  1. Same as n/2
-  2. Same as n/2
-  3. Optimal: `Extended Boyer Moore’s Voting Algorithm` 
-     1. Use c1,e1 & c2,e2 to store the variables as there could be atmost 2 elements that can reach n/3 times
-     2. TC: O(N)
+   1. Same as n/2
+   2. Same as n/2
+   3. Optimal: `Extended Boyer Moore’s Voting Algorithm` 
+      1. Use c1,e1 & c2,e2 to store the variables as there could be atmost 2 elements that can reach n/3 times
+      2. TC: O(N)
         <details>
         <summary>Code</summary>
         <div markdown="1">
