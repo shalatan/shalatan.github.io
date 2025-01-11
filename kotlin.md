@@ -512,11 +512,23 @@ hashMap.remove(key)
 ```kotlin
 //initialize
 val queue: Queue<Int> = LinkedList()
-val stack = Stack<Int>()
 
 //add
-x.push()
+queue.add(n)  //if fails, throws exception
+queue.offer(n)  //returns true if success, otherwise false due to capacity restrictions
 //remove
+queue.remove() //if failes, throws exception
+queue.poll()  //returns null if empty
+queue.peek()
+//misc
+queue.size()
+queue.clear()
+queue.contains(n)
+queue.isEmpty()
+
+val stack = Stack<Int>()
+stack.push()
+
 x.pop()
 x.peek()
 ```

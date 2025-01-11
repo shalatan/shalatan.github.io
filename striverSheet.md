@@ -22,6 +22,8 @@
 - [Day 20: Binary Search Tree](#day-20-binary-search-tree)
 - [Day 21: Binary Search Tree II](#day-21-binary-search-tree-ii)
 - [Day 22: Binary Tree (Miscellaneous)](#day-22-binary-tree-miscellaneous)
+- [Day 23: Graph](#day-23-graph)
+- [Day 23: Graph II](#day-23-graph-ii)
 
 <!-- vscode-markdown-toc-config
 	numbering=false
@@ -40,6 +42,12 @@
 2. Data Structures
    1. Heap:
       1. 
+3. Types:
+   1. `Interval problems`
+      1. Sorting: Most problems require sorting intervals by the start time.
+      2. Edge Cases: Test with single intervals, completely overlapping intervals, and adjacent intervals.
+      3. Efficient Merging: Use a stack or list to merge intervals efficiently.
+      4. Two Pointers: Common for overlapping or meeting room problems.
 
 
 ### <a name='Day1'></a>Day 1: Array I
@@ -464,6 +472,10 @@
     ```
     </div></details>
 7. *[Insert Interval](https://leetcode.com/problems/insert-interval/)
+   1. Optimal:
+      1. Add all intervals ending before newOne start
+      2. Merge the overlapping ones
+      3. Add the rest left over intervals
     <details>
     <summary>Code</summary>
     <div markdown="1">
@@ -496,7 +508,31 @@
     }
     ```
     </div></details>
-8. []()
+8. [Non-overlapping Intervals](https://leetcode.com/problems/non-overlapping-intervals/description/)
+   1. Optimal:
+      1. Sort by end
+      2. Create pairEnd and update it based on `if(intervals[0] >= pairEnd)`
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
+
+    ```kotlin
+    fun eraseOverlapIntervals(intervals: Array<IntArray>): Int {
+        intervals.sortBy { it[1] }
+        var count = 0
+        var pairEnd = Int.MIN_VALUE
+        for(interval in intervals){
+            if(interval[0]>=pairEnd){
+                pairEnd = interval[1]
+            }else{
+                count++
+            }
+        }
+        return count
+    }
+    ```
+    </div></details>
+9. []()
 
 ### <a name='Day3'></a>Day 3: Array III
 1. [Search in a sorted 2D matrix](https://leetcode.com/problems/search-a-2d-matrix/description/)
@@ -2684,6 +2720,104 @@
     </div></details>
 
 ### <a name='Day22'></a>Day 22: Binary Tree (Miscellaneous)
+
+### <a name='Day23'></a>Day 23: Graph
+```kotlin
+fun main() {
+    // Graph as an adjacency list
+    val graph = mapOf(
+        0 to listOf(1, 2),
+        1 to listOf(0, 3, 4),
+        2 to listOf(0, 5, 6),
+        3 to listOf(1),
+        4 to listOf(1),
+        5 to listOf(2),
+        6 to listOf(2)
+    )
+}
+```
+1. [Breadth First Search]()
+   1. Create hashSetof() to store visited elements
+   2. Create queue to iterate the elements
+   3. Create mutableListof() to store the answer
+   4. add starting node in queue and visited, and iterate all neighbour till queue is empty while add in queue and visited after checking if visited=false
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
+
+    ```kotlin
+    fun bfs(graph: Map<Int, List<Int>>, startNode: Int): List<Int> {
+        val visited = hashSetOf<Int>()
+        val result = mutableListOf<Int>()
+        val queue: Queue<Int> = LinkedList()
+        
+        queue.add(startNode)
+        visited.add(startNode)
+        
+        while(queue.isNotEmpty()){
+            val node = queue.poll()
+            result.add(node)
+            
+            for(neighbour in graph[node] ?: emptyList()){
+                if(!visited.contains(neighbour)){
+                    queue.add(neighbour)
+                    visited.add(neighbour)
+                }
+            }   
+        }
+        return result
+    }
+    ```
+    </div></details>
+2. [Depth First Search]()
+   1. TC: O(N) + (2*Edges) ,SC: O(N)+O(N)+O(N) ~ O(N)
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
+
+    ```kotlin
+    //recursive
+    fun dfsRecursive(graph: Map<Int, List<Int>>, curNode: Int, visited: MutableSet<Int>, result: MutableList<Int>) {
+        visited.add(curNode)
+        result.add(curNode)
+        
+        for(neighbour in graph[curNode] ?: emptyList()){
+            if(neighbour !in visited){
+                dfsRecursive(graph, neighbour, visited, result)
+            }
+        }
+    }
+
+    //iterative
+    fun dfsIterative(graph: Map<Int, List<Int>>, startNode: Int): List<Int> {
+        val visited = mutableSetOf<Int>()
+        val stack = Stack<Int>()
+        val result = mutableListOf<Int>()
+        
+        stack.push(startNode)
+        
+        while(stack.isNotEmpty()){
+            var cur = stack.pop()
+            
+            if(cur !in visited){
+                visited.add(cur)
+                result.add(cur)
+                
+                for(neighbour in graph[cur] ?: emptyList()){
+                    if(neighbour !in visited){
+                        stack.push(neighbour)
+                    }
+                }
+            }
+        }
+        return result
+    }
+    ```
+    </div></details>
+3. []()
+4. []()
+
+### <a name='Day23'></a>Day 23: Graph II
 
     
     <details>
