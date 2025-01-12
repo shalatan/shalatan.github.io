@@ -41,7 +41,14 @@
       5. Optimization Problem: Problem demands result to be minimized or maximized.
 2. Data Structures
    1. Heap:
-      1. 
+   2. Monotonic Stack: 
+      1. A monotonic stack is a type of stack data structure that is either entirely non-increasing or non-decreasing.
+      2. Useful for:
+         1. Next Greater/Next Smaller
+         2. Histogram Problems
+         3. Stock Span
+         4. Sliding Window: Helps in maintaining the maximum value in a sliding window efficiently.
+     
 3. Types:
    1. `Interval problems`
       1. Sorting: Most problems require sorting intervals by the start time.
@@ -722,8 +729,77 @@
         return ans
     }
     ```
-6. []()
+6. [Daily Temperatures](https://leetcode.com/problems/daily-temperatures/description/)
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
 
+    ```kotlin
+    fun dailyTemperatures(arr: IntArray): IntArray {
+        var n = arr.size
+        var result = IntArray(n){0}
+        var stack = Stack<Int>()
+        for(i in arr.indices){
+            while(stack.isNotEmpty() && arr[stack.peek()]<arr[i]){
+                var index = stack.pop()
+                result[index] = i-index
+            }
+            stack.push(i)
+        }
+        return result
+    }
+    ```
+    </div></details>
+7. [Next Greater Element I](https://leetcode.com/problems/next-greater-element-i/description/)
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
+
+    ```kotlin
+    fun nextGreaterElement(nums1: IntArray, nums2: IntArray): IntArray {
+        val n = nums1.size
+        var map = hashMapOf<Int,Int>()
+        var stack = Stack<Int>()
+        for(num in nums2){
+            while(stack.isNotEmpty() && stack.peek() < num){
+                map.put(stack.pop(), num)
+            }
+            stack.push(num)
+        }
+        for(i in nums1.indices){
+            nums1[i] = map.getOrDefault(nums1[i], -1)
+        }
+        return nums1
+    }
+    ```
+    </div></details>
+8. [Next Greater Element II](https://leetcode.com/problems/next-greater-element-ii/description/)
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
+
+    ```kotlin
+    fun nextGreaterElements(nums: IntArray): IntArray {
+        var stack = Stack<Int>()
+        val n = nums.size
+        var res = IntArray(n){-1}
+        for(i in 0 until n*2){
+            var curIndex = i%n
+            while(stack.isNotEmpty() && nums[stack.peek()] < nums[curIndex]){
+                var n = stack.pop()
+                res[n] = nums[curIndex]
+            }
+            if(i<n){
+                stack.push(curIndex)
+            }
+        }
+        return res
+    }
+    ```
+    </div></details>
+9. []()
+
+    <br>
     <details>
     <summary>Code</summary>
     <div markdown="1">
@@ -732,6 +808,7 @@
 
     ```
     </div></details>
+
 ### <a name='Day4'></a>Day 4: Array IV
 1. [2-sum Problem](https://leetcode.com/problems/two-sum/)
    1. Brute Force:
@@ -1931,7 +2008,6 @@
     ```
     </div></details>
 6. []()
-7. []()
 
 ### <a name='Day14'></a>Day 14: Stack and Queues II
 1. [Next Smaller Element]()
@@ -2218,6 +2294,10 @@
             if(currDepth == result.size){
                 result.add(root.`val`)
             }
+            //for right side view
+            rightView(root.right, currDepth+1)
+            rightView(root.left, currDepth+1)
+            //for left side view
             rightView(root.left, currDepth+1)
             rightView(root.right, currDepth+1)
         }
@@ -2815,7 +2895,6 @@ fun main() {
     ```
     </div></details>
 3. []()
-4. []()
 
 ### <a name='Day23'></a>Day 23: Graph II
 
