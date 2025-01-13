@@ -786,8 +786,8 @@
         for(i in 0 until n*2){
             var curIndex = i%n
             while(stack.isNotEmpty() && nums[stack.peek()] < nums[curIndex]){
-                var n = stack.pop()
-                res[n] = nums[curIndex]
+                var index = stack.pop()
+                res[index] = nums[curIndex]
             }
             if(i<n){
                 stack.push(curIndex)
@@ -1672,6 +1672,35 @@
     }
     ```
     </div></details>
+7. [Next Greater Node In Linked List](https://leetcode.com/problems/next-greater-node-in-linked-list/description/)
+   1. Create list of value and apply `monotonic stack`
+    <br>
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
+
+    ```kotlin
+    fun nextLargerNodes(head: ListNode?): IntArray {
+        var list = mutableListOf<Int>()
+        var cur = head
+        while(cur!=null){
+            list.add(cur.`val`)
+            cur=cur.next
+        }
+        var stack = Stack<Int>()
+        var result = IntArray(list.size){0}
+        for(i in list.indices){
+            while(stack.isNotEmpty() && list[stack.peek()] < list[i]){
+                val index = stack.pop()
+                result[index] = list[i]
+            }
+            stack.push(i)
+        }
+        return result
+    }
+    ```
+    </div></details>
+8. []()
 
 ### <a name='Day8'></a>Day 8: Greey Algorithm
 
