@@ -581,6 +581,7 @@ import java.util.PriorityQueue
 // Initialization
 val pq = PriorityQueue<Int>()
 val pqWithElements = PriorityQueue(listOf(5, 10, 1, 3))
+val minHeap = PriorityQueue<Int>()
 val maxHeap = PriorityQueue<Int>(compareByDescending { it }) //max-heap using custom comparator
 val minHeap = PriorityQueue<Pair<Int,Int>>(compareBy {it.second})
 

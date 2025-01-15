@@ -714,8 +714,6 @@
         var start = 0
         var end = height.size-1
         var ans = 0
-        var maxRight = 0
-        var maxLeft = 0
         while(start<end){
             var left = height[start]
             var right = height[end]
@@ -797,9 +795,64 @@
     }
     ```
     </div></details>
-9. []()
+9. [Grid Unique Paths](https://leetcode.com/problems/unique-paths/)
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
 
-    <br>
+    ```kotlin
+    //using dp + matrix
+    fun uniquePaths(m: Int, n: Int): Int {
+        val dp = Array(m) { IntArray(n) {1} }
+
+        for(i in 1 until m){
+            for(j in 1 until n){
+                dp[i][j] = dp[i-1][j] + dp[i][j-1]
+            }
+        }
+        return dp[m-1][n-1]
+    }
+
+    //using dp + array
+    fun uniquePaths(m: Int, n: Int): Int {
+        val dp = IntArray(n) {1}
+
+        for(i in 1 until m){
+            for(j in 1 until n){
+                dp[j] = dp[j] + dp[j-1]
+            }
+        }
+        return dp[n-1]
+    }
+    ```
+    </div></details>
+10. [Grid Unique Paths II](https://leetcode.com/problems/unique-paths-ii/)
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
+
+    ```kotlin
+    fun uniquePathsWithObstacles(grid: Array<IntArray>): Int {
+        var row = grid.size
+        var col = grid[0].size
+        val arr = IntArray(col)
+        arr[0] = 1
+
+        for(i in 0 until row){
+            for(j in 0 until col){
+                if(grid[i][j]==1){
+                    arr[j] = 0
+                }else if(j>0){
+                    arr[j] = arr[j] + arr[j-1]
+                }
+            }
+        }
+        return arr[col-1]
+    }
+    ```
+    </div></details>
+1.  []()
+
     <details>
     <summary>Code</summary>
     <div markdown="1">
@@ -1703,7 +1756,6 @@
 8. []()
 
 ### <a name='Day8'></a>Day 8: Greey Algorithm
-
 
 ### <a name='Day9'></a>Day 9: Recursion
 1. [Combination Sum 1-2-3](https://leetcode.com/problems/combination-sum/description/)
@@ -2786,7 +2838,39 @@
 
 ### <a name='Day21'></a>Day 21: Binary Search Tree II
 1. []()
-2. []()
+2. [Find Median from Data Stream](https://leetcode.com/problems/find-median-from-data-stream/description/)
+   1. Create minHeap, maxHeap, isEven
+   2. `addNum()`: if(even) add num in minHeap, and add minHeap.poll() to maxHeap, else vice versa
+   3. `findMedian()`: if(even) `maxHeap.peek()+minHeap.peek()/2.0` `else maxHeap.peek()`
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
+
+    ```kotlin
+    val maxHeap = PriorityQueue<Int>(compareByDescending {it})
+    val minHeap = PriorityQueue<Int>()
+    var isEven = true
+
+    fun addNum(num: Int) {
+        if(isEven){
+            minHeap.add(num)
+            maxHeap.add(minHeap.poll())
+        }else{
+            maxHeap.add(num)
+            minHeap.add(maxHeap.poll())
+        }
+        isEven = !isEven
+    }
+
+    fun findMedian(): Double {
+        return if(isEven){
+            (maxHeap.peek()+minHeap.peek())/2.0
+        } else {
+            maxHeap.peek().toDouble()
+        }
+    }
+    ```
+    </div></details>
 3. []()
 4. [Two Sum: Binary Search Tree](https://leetcode.com/problems/two-sum-iv-input-is-a-bst/description/)
     <details>
@@ -2809,8 +2893,7 @@
     ```
     </div></details>
 5. []()
-6. []()
-7. *[Sum Root To Leaf Number](https://leetcode.com/problems/sum-root-to-leaf-numbers/)
+6. *[Sum Root To Leaf Number](https://leetcode.com/problems/sum-root-to-leaf-numbers/)
     <details>
     <summary>Code</summary>
     <div markdown="1">
@@ -2829,6 +2912,44 @@
     </div></details>
 
 ### <a name='Day22'></a>Day 22: Binary Tree (Miscellaneous)
+1. [Kth Largest Element in a Stream](https://leetcode.com/problems/kth-largest-element-in-a-stream/)
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
+
+    ```kotlin
+    val heap = PriorityQueue<Int>(k)
+    init {
+        for(num in nums){
+            add(num)
+        }
+    }
+
+    fun add(v: Int): Int {
+        heap.add(v)
+        if(heap.size > k) heap.poll()
+        return heap.peek()
+    }
+    ```
+    </div></details>
+2. [K-th largest element in an unsorted array](https://leetcode.com/problems/kth-largest-element-in-an-array/)
+   1. Use `PriorityQueue`
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
+
+    ```kotlin
+    fun findKthLargest(nums: IntArray, k: Int): Int {
+        val minHeap = PriorityQueue<Int>()
+        for(num in nums){
+            minHeap.add(num)
+            if(minHeap.size>k) minHeap.poll()
+        }
+        return minHeap.peek()
+    }
+    ```
+    </div></details>
+3. []()
 
 ### <a name='Day23'></a>Day 23: Graph
 ```kotlin
@@ -2923,7 +3044,60 @@ fun main() {
     }
     ```
     </div></details>
-3. []()
+3. *[Rotten Oranges](https://leetcode.com/problems/rotting-oranges/)
+   1. Create queue of Triple(row,col, time) and add all the rotten orange cordinates, and count freshOranges
+   2. Create list of Pairs representing all 4 directions allowed
+   3. Iterate queue till empty, using poll() and find newRow and newCol using 4 directions
+   4. Check if newRow and newCol are valid and contains fresh orange
+      1. if true, add in queue, mark fresh(1) as rotten (2) and freshOranges--,
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
+
+    ```kotlin
+    fun orangesRotting(grid: Array<IntArray>): Int {
+        var row = grid.size
+        var col = grid[0].size
+        var queue: Queue<Triple<Int, Int, Int>> = LinkedList()
+        var freshOranges = 0
+        //create queue using current state of grid
+        for(i in 0 until row){
+            for(j in 0 until col){
+                when(grid[i][j]){
+                    2 -> queue.add(Triple(i,j,0))
+                    1 -> freshOranges++
+                }
+            }
+        }
+        if(freshOranges==0) return 0
+        val directions = listOf(
+            Pair(0, 1),  // Right
+            Pair(1, 0),  // Down
+            Pair(0, -1), // Left
+            Pair(-1, 0)  // Up
+        )
+        var minutes = 0
+        //bfs
+        while(queue.isNotEmpty()){
+            val (r, c, time) = queue.poll()
+            minutes = time
+            //spread rot to all 4 directions
+            for((dx,dy) in directions){
+                val newRow = r+dx
+                val newCol = c+dy
+                //check if new cordinates are valid and fresh
+                if(newRow in 0 until row && newCol in 0 until col && grid[newRow][newCol]==1) {
+                    grid[newRow][newCol] = 2
+                    freshOranges--
+                    queue.add(Triple(newRow, newCol, time+1))
+                }
+            }
+        }
+        return if (freshOranges == 0) minutes else -1
+    }
+    ```
+    </div></details>
+4. []()
 
 ### <a name='Day23'></a>Day 23: Graph II
 
