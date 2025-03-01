@@ -23,7 +23,11 @@
     - [List](#list)
     - [HashSet](#hashset)
     - [HashMap](#hashmap)
+    - [Queue \& Stack](#queue--stack)
+    - [Array Deque](#array-deque)
+    - [Priority Queue](#priority-queue)
     - [Loop](#loop)
+    - [BinaryTree](#binarytree)
 
 <!-- vscode-markdown-toc-config
 	numbering=false
@@ -84,7 +88,7 @@
   - [⭐](#interview-questions)
     `lateinit` : used to declare the variable with a gurantee to initialize it before using, otherwise would throw exception, used with *var*. Use `isInitialized` to check if variable has been initialized.
   - [⭐](#interview-questions)
-    `object` : used to create *Singleton*, ensure that only one instance of that class is created even if 2 threads try to create it, it's a *lazy* instance, hence will be created once the object is accessed, otherwise it won't even be created.
+    `object` : used to create *Singleton Object or Companion Object (static-like members)*, ensure that only one instance of that class is created even if 2 threads try to create it, it's a *lazy* instance, hence will be created once the object is accessed, otherwise it won't even be created.
   - [⭐](#interview-questions)
     Q: Are `Object` declarations thread safe, even if two threads tries to create it at same time?
     A: Yes, **object** is thread safe by construction. As it's just final class with static instance initializations, when decompiled. [ref](https://stackoverflow.com/a/30190567)
@@ -107,6 +111,8 @@
     ```
     cons: 
     - Can't be inherited, but can inherit.
+      - why? - Data classes rely on automatic implementations of equals(), hashCode(), and copy(), which could
+        break if a subclass modifies properties.
     - a data class may have properties that are not part of its constructor, they will not be regarded in any of the functions that are generated.
     ```kotlin
     data class DollarBill(val amount: Int) {
@@ -284,8 +290,8 @@ fun main(){
 
 ### <a name='ScopeFunctions'></a>Scope Functions
 [🔝](#table-of-contents)[⭐](#interview-questions)
-- `Scope` : Section of code where you can declare or use any particular varibale or function.
-  - `Statement Scope` : You can only use something that was declared in a statement scope after the point where it was declared.
+- `Scope` : Section of code where you can declare or use any particular variable or function.
+  - `Statement Scope`: You can only use something that was declared in a statement scope after the point where it was declared.
   ```kotlin
   fun circumference(): Double {
         fun diameter() = radius * 2     //right
@@ -294,7 +300,7 @@ fun main(){
         return result
     }
   ```
-  - `Declaration Scope` : Unlike statement scopes, things declared within a declaration scope can be used from a point in the code either before or after that declaration.
+  - `Declaration Scope`: Unlike statement scopes, things declared within a declaration scope can be used from a point in the code either before or after that declaration.
   ```kotlin
   class Circle(val radius: Double) {
     val circumference = pi * diameter()
@@ -314,7 +320,7 @@ The point of a scope function is to take an existing object - called a *context 
     street2 = "Apartment 255"
   }
   ```
-  - `run` : works same a `with` but it's an extension function instead of a normal, top-level function. As it's a extension function, it can be inserted into a call chain. The run() function returns the result of the lambda.
+  - `run` : works same as `with` but it's an extension function instead of a normal, top-level function. As it's a extension function, it can be inserted into a call chain. The run() function returns the result of the lambda.
   ```kotlin
   address.run {
     street1 = "9801 Maple Ave"
@@ -477,6 +483,9 @@ hashSet.size
 ### <a name='HashMap'></a>HashMap
 ```kotlin
 var hashMap: HashMap<String,Int>= HashMap<String,Int>()
+for(num in nums) {
+  frequencyMap[num] = frequencyMap.getOrDefault(num, 0) + 1
+}
 
 // printing hashmap
 print(hashMap)
@@ -489,8 +498,9 @@ hashMap.replace("IronMan",99) // for updating
 // getting from hashmap
 hashMap.get(key)
 
-// traverssing hashmap keys
-for(key in hashmap.keys){
+// traversing hashmap keys
+for(key in hashmap.keys){}
+for ((num, freq) in frequencyMap) {}
 
 // misc
 hashMap.size
@@ -499,10 +509,119 @@ hashMap.clear()
 hashMap.containsKey(key)
 hashMap.containsValue(value)
 hashMap.remove(key)
-//increase the count by 1 if present, else insert
-map.put(num,(map.get(num)?:0)+1)
+```
+### <a name='Queue&Stack'></a>Queue & Stack
+```kotlin
+//initialize
+val queue: Queue<Int> = LinkedList()
+
+//add
+queue.add(n)  //if fails, throws exception
+queue.offer(n)  //returns true if success, otherwise false due to capacity restrictions
+//remove
+queue.remove() //if failes, throws exception
+queue.poll()  //returns null if empty
+queue.peek()
+//misc
+queue.size()
+queue.clear()
+queue.contains(n)
+queue.isEmpty()
+
+val stack = Stack<Int>()
+stack.push()
+
+x.pop()
+x.peek()
+```
+
+### <a name='ArrayDeque'></a>Array Deque
+```kotlin
+// Empty ArrayDeque
+val deque = ArrayDeque<Int>()
+val dequeWithElements = ArrayDeque(listOf(1, 2, 3))
+
+val isEmpty = deque.isEmpty()
+val size = deque.size
+val containsElement = deque.contains(10)
+val list = deque.toList()
+
+//add
+deque.add(10)
+deque.addFirst(5)
+deque.addLast(20)
+
+//remove
+val removedFirst = deque.removeFirst()
+val removedLast = deque.removeLast()
+//remove specific element (returns true if removed)
+val isRemoved = deque.remove(10)
+
+//clear
+deque.clear()
+
+//acess
+val first = deque.firstOrNull() //peek without removing
+val last = deque.lastOrNull() //peek without removing
+
+// Access using indices
+val elementAtIndex = deque.elementAt(0)
+
+//iteration
+for (element in deque) {
+    println(element)
+}
+for (element in deque.asReversed()) {
+    println(element)
 }
 ```
+
+### <a name='PriortiyQueue'></a>Priority Queue
+```
+import java.util.PriorityQueue
+
+// Initialization
+val pq = PriorityQueue<Int>()
+val pqWithElements = PriorityQueue(listOf(5, 10, 1, 3))
+val minHeap = PriorityQueue<Int>()
+val maxHeap = PriorityQueue<Int>(compareByDescending { it }) //max-heap using custom comparator
+val minHeap = PriorityQueue<Pair<Int,Int>>(compareBy {it.second})
+
+// Check if empty
+val isEmpty = pq.isEmpty()
+val size = pq.size
+val list = pq.toList()
+
+// Check if an element exists
+val containsElement = pq.contains(10)
+
+// Add elements
+pq.add(10)
+pq.offer(5) // Alternative to add()
+
+// Remove elements
+val removedElement = pq.poll() // Retrieves and removes the highest priority element
+val peekedElement = pq.peek() // Retrieves but does not remove the highest priority element
+
+// Clear the PriorityQueue
+pq.clear()
+
+// Iterate over elements (unordered because PriorityQueue doesn't maintain insertion order)
+for (element in pq) {
+    println(element)
+}
+
+// Example with custom comparator (Max-Heap)
+val maxHeapWithElements = PriorityQueue<Int>(compareByDescending { it }).apply {
+    add(10)
+    add(1)
+    add(20)
+}
+while (maxHeapWithElements.isNotEmpty()) {
+    println(maxHeapWithElements.poll()) // Elements will be removed in descending order
+}
+```
+
 ### <a name='Loop'></a>Loop
 ```kotlin
 - val nums = {1,2,3,4,5}
@@ -523,3 +642,31 @@ map.put(num,(map.get(num)?:0)+1)
 - for(i in text.indices)
     : 0,1,2,3,4
 ```
+
+### <a name='Binary Tree'></a>BinaryTree
+1. Where is it used
+   1. File System
+   2. Databases
+   3. Algo/Networking
+   4. Maths
+   5. Decision Tree: ML
+   6. Compression of files
+   7. Future Data Structures: Head, Graphs
+2. Types
+   1. Complete Binary Tree:
+      1. All level full
+      2. Last level full from left to right
+   2. Full/Strict Binary Tree
+      1. Each node has either 0 child or 2 child
+   3. Perfect Binary Tree:
+      1. All levels are full
+   4. Height Balanced Tree:
+      1. Avg Height O(logN)
+   5. Skewed Binary Tree:
+      1. Every node has only 1 child
+   6. Ordered Binary Tree:
+      1. Every node has some property or condition
+      2. Like Binary Search Tree
+3. Algorithms:
+   1. BFS: (When the result lies near the root, need level order calculation)
+      1. Level Order Traversal
