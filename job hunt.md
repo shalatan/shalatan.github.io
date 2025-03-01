@@ -1,17 +1,107 @@
-## Currently Hiring
-- Jar
-- EloElo
-- ApnMart
-- DriveU
-- Alle
 
-- Linkdeln: Describe why this job is top choice: Hey, I, Shashank Singh, am a passionate Android developer with 1.3 years of experience as a full-time Android Developer and around 1 year of experience as an intern Android Developer at multiple fast-paced startups, was looking for new cool job opportunities that align with my passion for sustainable future using cutting edge technologies which help in my personal growth too....
-Regards,
-Shashank
+## Shortlisted(s)
 
-- Hey Farhan, I, am Shashank, a passionate Android developer with 1+ YOE as an Android Developer and around 1 YOE as an Intern, all at fast-paced startups. Came across a job opportunity with a similar requirement at Swiggy. It would be great if we could discuss more about it in detail.
+#### Round 1 (Feb'23)
+- [Ola](mail)
+    - 19 Feb: Recruiting Agency Shortlisted
+    - 20 Feb: Round 1: Android
+    - 24 Feb: Round 2: Android
+    - 05 Mar: HR Contacted
+    - Placed
+- [Zomato](https://www.linkedin.com/jobs/view/3835382089)
+    - 27 Feb: Shortlisted
+    - 01 Mar: Round 1: Android
 
-## Date
+#### Round 2 (Sept'23)
+- [Vymo](mail) (2+ year)
+    - 22 Aug: Shortlisted
+    - 23 Aug: Round 1: Sr. Engineering Manager
+- [Artium Academy](https://wellfound.com/jobs/3086027-android-developer) (2+ year)
+    - 04 Sept: Shortlisted
+    - 06 Sept: Round 1: Lead Mobile Developer
+    - 09 Sept: Round 2: Assignemnt
+    - 26 Sept: Mailed HR for update.
+- [Recro: Cheq](mail)
+    - 03 Sept: Shortlisted
+    - 05 Sept: Round 1: OA
+    - 10 Sept: Round 2: Cheq (Client)
+- [MyShubhLife](mail)
+    - 10 Sept: Shortlisted
+    - 11 Sept: Round 1: Senior Android Developer
+- [Nosh](mail) (IOT 1+ yoe)
+    - 18 Sept: Shortlisted
+- [DailyRounds/Marrow](https://dailyrounds.skillate.com/jobs/53487?utm_source=LINKEDIN&utm_medium=SOCIAL_MEDIA)
+    - 20 Sept: Shortlisted
+    - 26 Sept: Applied again Site
+
+#### Round 3 ('24)
+1. [Google: L3]()
+   1. 08 Dec: Recruiter Approched
+   2. 12 Dec: Screen Round ✅
+   3. 09 Jan: Round 1 (DSA) ✅
+   4. 19 Jan: Round 2 (DSA) ❌
+2. [SimpleViralGames: Android Developer](https://wellfound.com/jobs/2489488-android-developer)
+   1. 15 Feb: Applied
+   2. 17 Feb: Shortlisted ✅
+   3. 18 Feb: Assignment ✅
+   4. 19 Feb: Round 1 (DSA) ✅
+   5. 20 Feb: Round 2 (Android) ?
+3. [BlackBuck: SDE Android]()
+   1. 24 Feb: Call from recuriter through Naukri
+   2. 26 Feb: Round 1 (Android+DSA) ✅
+4. [HashMint: Founding Android/UI/UX Engineer]()(2+ yoe)
+   1. 26 Feb: Recruiter approached through Flexiple
+   2. 04 Mar: Round 1 (Cultural Fitment: Founder) ?
+5. [AsliPundit: Founding Android Engineer]()(3+ yoe)
+   1. 26 Feb: Recruiter approached through Linkedin
+6. [LightMetrics: SDE Android]()
+   1. 28 Feb: Recruiter approached through Linkedin
+
+
+## ROUND 2
+
+- 17 July
+    - [Meesho]()
+        - 17 July: HR Contacted
+        - 20 July: 1st Round Interview (Postponed)
+    - [PhonePe](https://www.linkedin.com/jobs/view/3976025871)(1-2 yoe)
+        - 24 July: Applied
+- 24 July    
+    - [Hike]()
+        - 24 July: HR Contacted
+        - 26 July: 1st Round Interview with Product Manager
+    - [Rapido](https://www.linkedin.com/jobs/view/3980759644)(1+ yoe)
+        - 24 July: Applied
+- 26 July
+    - [American Express](https://aexp.eightfold.ai/careers/job/23930751?domain=aexp.com&utm_source=linkedin)
+        - 26 July: Applied
+    - [MediBuddy](https://medibuddy.hire.trakstar.com/jobs/fk0xw85/)
+        - 26 July: Applied
+    - [FRND](https://www.linkedin.com/jobs/view/3982688463)
+        - 26 July: Applied
+- 13 Aug
+    - [Arting Digital](https://wellfound.com/jobs?job_listing_id=3064750)
+    - [Circuit House Technologies](https://wellfound.com/jobs?job_listing_id=2987619)
+    - [Apna Mart](https://wellfound.com/jobs?job_listing_id=1870313)
+    - [Copods Design Technology Solutions](https://wellfound.com/jobs?job_listing_id=2791261)
+    - [Enpass Technologies](https://wellfound.com/jobs?job_listing_id=2978589)
+    - [Spotify](https://jobs.lever.co/spotify/4ede09b7-5c3c-44da-be41-9e9d6a13d056/apply?ref=androiddev.careers&utm_source=androiddev.careers)
+- 23 Aug
+    - [Vymo]
+- 09 Sept
+    - [Juno](https://careers.kula.ai/juno/115)
+- 19 Sept
+    - [Google](https://www.google.com/about/careers/applications/apply/bb1f9a02-398b-42fe-bbc4-835ce3c4e4f8/review) (Android 1+ yoe)
+    - [Bumble]() (1+ yoe)
+    - [Circuit House Technologies](https://wellfound.com/jobs/2987619-android-developer) (2+ yoe)
+- 20 Sept
+    - [Marrow](https://dailyrounds.skillate.com/jobs/53487?utm_source=LINKEDIN&utm_medium=SOCIAL_MEDIA)(Android 1.5+ yoe)
+    - [MediBuddy](https://medibuddy.hire.trakstar.com/jobs/fk0xw85/)(Android 1.5+ yoe)
+    - [Juno](https://careers.kula.ai/juno/115)(0-2 yoe)
+    - [SynaMedia](https://synamedia.sumtotal.host/Careers/search(slideout:job/2170))(1+ yoe)
+    - [Arting Digital](https://artingdigital.zohorecruit.in/jobs/Careers/107457000018794392/Android-Developer?source=LinkedIn-Basic&embedsource=LinkedIn%2BLimited%2BListings)(1+ yoe)
+    
+## Round 1
 - 18th Jan
     1. [News Corp: Engineer Android](https://newscorp.com/careers/news-corp/engineer-android/) (2-5yoe)
         - Applied: 18th Jan
@@ -97,82 +187,3 @@ Shashank
     - [Swiggy: Android Developer](https://www.linkedin.com/feed/update/urn:li:activity:7170994492227895296/)(0-1.5 yoe)
         - 06 Mar: Applied
         - 06 Mar: Messaged HR Linkdeln
-
-## Shortlisted(s)
-
-- [Ola](mail)
-    - 19 Feb: Recruiting Agency Shortlisted
-    - 20 Feb: Round 1: Android
-    - 24 Feb: Round 2: Android
-    - 05 Mar: HR Contacted
-    - Placed
-- [Zomato](https://www.linkedin.com/jobs/view/3835382089)
-    - 27 Feb: Shortlisted
-    - 01 Mar: Round 1: Android  
-
-# ROUND 2
-
-- 17 July
-    - [Meesho]()
-        - 17 July: HR Contacted
-        - 20 July: 1st Round Interview (Postponed)
-    - [PhonePe](https://www.linkedin.com/jobs/view/3976025871)(1-2 yoe)
-        - 24 July: Applied
-- 24 July    
-    - [Hike]()
-        - 24 July: HR Contacted
-        - 26 July: 1st Round Interview with Product Manager
-    - [Rapido](https://www.linkedin.com/jobs/view/3980759644)(1+ yoe)
-        - 24 July: Applied
-- 26 July
-    - [American Express](https://aexp.eightfold.ai/careers/job/23930751?domain=aexp.com&utm_source=linkedin)
-        - 26 July: Applied
-    - [MediBuddy](https://medibuddy.hire.trakstar.com/jobs/fk0xw85/)
-        - 26 July: Applied
-    - [FRND](https://www.linkedin.com/jobs/view/3982688463)
-        - 26 July: Applied
-- 13 Aug
-    - [Arting Digital](https://wellfound.com/jobs?job_listing_id=3064750)
-    - [Circuit House Technologies](https://wellfound.com/jobs?job_listing_id=2987619)
-    - [Apna Mart](https://wellfound.com/jobs?job_listing_id=1870313)
-    - [Copods Design Technology Solutions](https://wellfound.com/jobs?job_listing_id=2791261)
-    - [Enpass Technologies](https://wellfound.com/jobs?job_listing_id=2978589)
-    - [Spotify](https://jobs.lever.co/spotify/4ede09b7-5c3c-44da-be41-9e9d6a13d056/apply?ref=androiddev.careers&utm_source=androiddev.careers)
-- 23 Aug
-    - [Vymo]
-- 09 Sept
-    - [Juno](https://careers.kula.ai/juno/115)
-- 19 Sept
-    - [Google](https://www.google.com/about/careers/applications/apply/bb1f9a02-398b-42fe-bbc4-835ce3c4e4f8/review) (Android 1+ yoe)
-    - [Bumble]() (1+ yoe)
-    - [Circuit House Technologies](https://wellfound.com/jobs/2987619-android-developer) (2+ yoe)
-- 20 Sept
-    - [Marrow](https://dailyrounds.skillate.com/jobs/53487?utm_source=LINKEDIN&utm_medium=SOCIAL_MEDIA)(Android 1.5+ yoe)
-    - [MediBuddy](https://medibuddy.hire.trakstar.com/jobs/fk0xw85/)(Android 1.5+ yoe)
-    - [Juno](https://careers.kula.ai/juno/115)(0-2 yoe)
-    - [SynaMedia](https://synamedia.sumtotal.host/Careers/search(slideout:job/2170))(1+ yoe)
-    - [Arting Digital](https://artingdigital.zohorecruit.in/jobs/Careers/107457000018794392/Android-Developer?source=LinkedIn-Basic&embedsource=LinkedIn%2BLimited%2BListings)(1+ yoe)
-        
-
-## Shortlisted(s)
-
-- [Vymo](mail) (2+ year)
-    - 22 Aug: Shortlisted
-    - 23 Aug: Round 1: Sr. Engineering Manager
-- [Artium Academy](https://wellfound.com/jobs/3086027-android-developer) (2+ year)
-    - 04 Sept: Shortlisted
-    - 06 Sept: Round 1: Lead Mobile Developer
-    - 09 Sept: Round 2: Assignemnt
-    - 26 Sept: Mailed HR for update.
-- [Recro: Cheq](mail)
-    - 03 Sept: Shortlisted
-    - 05 Sept: Round 1: OA
-    - 10 Sept: Round 2: Cheq (Client)
-- [MyShubhLife](mail)
-    - 10 Sept: Shortlisted
-    - 11 Sept: Round 1: Senior Android Developer
-- [Nosh](mail) (IOT 1+ yoe)
-    - 18 Sept: Shortlisted
-- [DailyRounds/Marrow](https://dailyrounds.skillate.com/jobs/53487?utm_source=LINKEDIN&utm_medium=SOCIAL_MEDIA)
-    - 20 Sept: Shortlisted
-    - 26 Sept: Applied again Site

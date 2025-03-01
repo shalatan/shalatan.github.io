@@ -1,6 +1,7 @@
 # <a name='Android'></a>Android
 
 ## <a name='guide'></a>Guide
+
 - Click 🔝 Icons To Jump To Table of Contents
 - Topic With ⭐ Icons are questions asked from me in Interviews, Click on it to jump to ***Interview Questions Section***
 - Click 💉 before topics for detailed section of it.
