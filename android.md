@@ -490,8 +490,52 @@ SOLID is a set of five principles for designing maintainable, flexible, and scal
 > [⭐](#interview-questions)
   **Q**: What is a difference between Threads & Coroutines? <br>
   **Ans**: Threads are expensive, require context switches which are costly, and number of threads that can be launched is limited by the underlying operating system whereas, Coroutines can be thought of as light-weight threads, means the creating of coroutines doesn't allocate new thread, instead they use predefined thread pools and smart scheduling for the purpose of which task to execute next and which tasks later. <br>
-  **Q**: What happens when launches coroutines finishes it's works
+  **Q**: What happens when launches coroutines finishes it's works<br>
   **Ans**: Once the coroutine finishes, its resources are released, and it will no longer consume memory or power. And coroutine along with any data associated with it, becomes eligible for garbage collection, as there would be no active references to it.
+  <details>
+  <summary>Sample Code for mostly asked in interviews</summary>
+  <div markdown="1">
+
+  ```kotlin
+  import kotlinx.coroutines.*
+  import kotlin.system.measureTimeMillis
+
+  fun main() = runBlocking {
+      val timeTaken = measureTimeMillis {	
+          //sequential: will work in 7 seconds
+  //      println(api1()) // Suspends for 2 sec
+  //     	println(api2()) // Suspends for 5 sec
+
+          //parallel: will work in 5 seconds
+          coroutineScope {
+              //can be done without coroutineScope, but to do in structured scope and better management
+              val result1 = async { api1() }
+              val result2 = async { api2() }
+              try {
+                  val pair = Pair(result1.await(), result2.await())
+                  println(pair)
+              }catch(e: Exception){
+                  result1.cancel()
+                  result2.cancel()
+                  println("error: $e.message")
+              }
+          }     
+      }
+      println("timeTaken: $timeTaken")
+  }
+
+  suspend fun api1(): String {
+      delay(2000)
+  //     throw RuntimeException("API 1 failed")
+      return "hello"
+  }
+
+  suspend fun api2(): String {
+      delay(5000)
+      return "world"
+  }
+  ```
+</div></details>
 
 ### <a name='flow'></a>Flow
 [🔝](#table-of-contents)
