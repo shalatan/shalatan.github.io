@@ -88,7 +88,7 @@
   - [⭐](#interview-questions)
     `lateinit` : used to declare the variable with a gurantee to initialize it before using, otherwise would throw exception, used with *var*. Use `isInitialized` to check if variable has been initialized.
   - [⭐](#interview-questions)
-    `object` : used to create *Singleton*, ensure that only one instance of that class is created even if 2 threads try to create it, it's a *lazy* instance, hence will be created once the object is accessed, otherwise it won't even be created.
+    `object` : used to create *Singleton Object or Companion Object (static-like members)*, ensure that only one instance of that class is created even if 2 threads try to create it, it's a *lazy* instance, hence will be created once the object is accessed, otherwise it won't even be created.
   - [⭐](#interview-questions)
     Q: Are `Object` declarations thread safe, even if two threads tries to create it at same time?
     A: Yes, **object** is thread safe by construction. As it's just final class with static instance initializations, when decompiled. [ref](https://stackoverflow.com/a/30190567)
@@ -111,6 +111,8 @@
     ```
     cons: 
     - Can't be inherited, but can inherit.
+      - why? - Data classes rely on automatic implementations of equals(), hashCode(), and copy(), which could
+        break if a subclass modifies properties.
     - a data class may have properties that are not part of its constructor, they will not be regarded in any of the functions that are generated.
     ```kotlin
     data class DollarBill(val amount: Int) {
@@ -288,8 +290,8 @@ fun main(){
 
 ### <a name='ScopeFunctions'></a>Scope Functions
 [🔝](#table-of-contents)[⭐](#interview-questions)
-- `Scope` : Section of code where you can declare or use any particular varibale or function.
-  - `Statement Scope` : You can only use something that was declared in a statement scope after the point where it was declared.
+- `Scope` : Section of code where you can declare or use any particular variable or function.
+  - `Statement Scope`: You can only use something that was declared in a statement scope after the point where it was declared.
   ```kotlin
   fun circumference(): Double {
         fun diameter() = radius * 2     //right
@@ -298,7 +300,7 @@ fun main(){
         return result
     }
   ```
-  - `Declaration Scope` : Unlike statement scopes, things declared within a declaration scope can be used from a point in the code either before or after that declaration.
+  - `Declaration Scope`: Unlike statement scopes, things declared within a declaration scope can be used from a point in the code either before or after that declaration.
   ```kotlin
   class Circle(val radius: Double) {
     val circumference = pi * diameter()
@@ -318,7 +320,7 @@ The point of a scope function is to take an existing object - called a *context 
     street2 = "Apartment 255"
   }
   ```
-  - `run` : works same a `with` but it's an extension function instead of a normal, top-level function. As it's a extension function, it can be inserted into a call chain. The run() function returns the result of the lambda.
+  - `run` : works same as `with` but it's an extension function instead of a normal, top-level function. As it's a extension function, it can be inserted into a call chain. The run() function returns the result of the lambda.
   ```kotlin
   address.run {
     street1 = "9801 Maple Ave"

@@ -54,3 +54,5 @@
 - `09 December`:
   - [What is SSL](https://www.cloudflare.com/learning/ssl/what-is-ssl/) 
   - [Kotlin 2.1.0: Smarter when with Guard Conditions](https://tomsabel.com/kotlin-2-1-0-smarter-when-with-guard-conditions-4541160d67a0)
+- `25 February`:
+  - [Use Git like a senior engineer](https://levelup.gitconnected.com/use-git-like-a-senior-engineer-ef6d741c898e)
