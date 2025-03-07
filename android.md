@@ -790,7 +790,7 @@ DI framework build on top of *Dagger*, brings benefits like **compile time corre
   - `Recomposition` : When composables (and their children) gets redrawn automatically when the value is updated. The only way to modify the Composition is through recomposition.
   - `State` : State or MutableState are interfaces that can hold some value and trigger UI updates whenever that value changes.
 - `Annotations` : 
-  - `@Composable`: Composable funtions are the functions where you define app's UI programmatically by describing how it should look and providing data dependencies.
+  - `@Composable`: These are the building blocks of Compose UIs, annotated with @Composable. They can emit UI elements and call other composable functions.
   - `@Preview`: Annotation to preview the composable functions within Android Studio. Not applicable for composable functions which does not take in parameters.
 - `Modifiers` : Modifier tell a UI elemnet how to lay out, display, or behave within its parent layout, add high-level interactions, such as making element clickable. *As a best practice, your function should include a Modifier parameter that is assigned an empty Modifier by default.*
   - `ContentPadding` : To maintain the same padding, but still scroll your content within the bounds of your parent list without clipping it, all lists provide a parameter called contentPadding
@@ -806,14 +806,57 @@ DI framework build on top of *Dagger*, brings benefits like **compile time corre
 - `APIs` : 
   - `remember` : To preserve state across *recompositions*. Can store both mutable & immutable objects.
   - `remeberSavable` : same as *remember* but also stores them in *bundle* hence survives configuration changes. Store primitive types automatically like Int, String, boolean but custom objects/data classes needs to be parecelized.
+  - `rememberCoroutineScope`: Preserves a CoroutineScope across recompositions, useful for launching effects that need to survive recomposition:
+  - `rememberUpdatedState`: Ensures a callback holds the latest state without restarting the effect.
   - `mutableStateOf` : creates an observable MutableState<T>
   - `collectAsState` : Collects value from StateFlow and represents its latest value via State. <br> *StateFlow.value* is used as an initial value, and everytime a new value is posted into the *StateFlow*, the returned *State* updates, causing recomposition of every *State.value* usage.
   ```kotlin
   var value by remember { mutableStateOf(default) }
   ```
-- `State hoisting`(lift/elevate) : State that is read or modified by multiple functions should live in common ancestor. This avoids duplicating state, bugs, helps resue composables, easier for testing.
-- `Unidirectional Data Flow (UDF)` : Deisng pattern in which state *flows down* and events *flow up*. By using UDF, we can decouple composables that **display state** in the UI from the parts of your app that **store and change state**.
-- Jetpack Compose supports other observables types also. But before reading another observable type in Jetpack COmpose, you must convert it to a `State<T>` so that Compose can automatically recompose when the state changes.
+  - `produceState`: For converting external data to state.
+  - `LaunchedEffect`: Runs once when the Composable first enters Composition, or restarts when keys change.
+  - `DisposableEffect`: Runs when the Composable enters Composition and cleans up when removed.
+  ```kotlin    
+    LaunchedEffect(userId) {
+      fetchUserData(userId)  // Called when `userId` changes
+    }
+    DisposableEffect(Unit) {
+        val sensor = startSensorListener()
+        onDispose { stopSensorListener(sensor) }  // Cleanup when removed
+    }
+  ```
+  - `derivedStateOf`: ensures that expensive calculations only run when dependent value change, instead of triggering recompositions unnecessarily.
+  ```kotlin
+    var text by remember { mutableStateOf("") }
+    var isValid by remember { derivedStateOf {text.length > 5}}
+    //without derivedStateOf, isValid would be recalculated on every recomposition.
+  ```
+- `Side EfFect`: A side effect in Jetpack Compose is any operation that affects or interacts with the outside world and is not directly related to UI rendering, like network call, logging, database write.
+  - Types of Side Effects:
+    - `One-time side effects`: These should only run once when a composable appears. `LaunchedEffect(Unit)` ensures logging runs only when the composables first enters composition.
+    - `Continour Effect`: When side effect depend on a changing state, they should re-run when that state updates. `LaunchedEffect(userId)` will rexeucte whenever userId changes, ensuring fresh data.
+    - `Continous Listening`: When continiously collecting from `StateFlow` or `SharedFlow`, use collectAsState or LaunchedEffect. CollectAsState() is for UI state, while LaunchedEffect is for one-time event handling.
+- `Optimiarion Techniques for Recomposition`:
+  - `Key-Based recomposition control`: Using keys to control which parts of the UI are preserved during recomposition.
+  - `Stable Types and Immutability`: Using immutable data classes with stable equals() implementation reduces recompositions.
+  ```kotlin
+    @Immutable
+    data class User(val name: String, val age: Int)
+
+    @Composable
+    fun UserProfile(user: User) { /* Won't recompose unnecessarily */ }
+    //using immutable prevents unncessary recompsitions.
+  ```
+  - `derivedStateOf for computed properties`: When a state computation is expensive or shouldn't trigger recomposition on every intermediate value.
+  - `SideEffect for Non-compose operations`: Use SideEffect for operations that should happen on every successful recomposition.
+  - `LaunchedEffect for lifecycle-aware corotuines`: Run suspending operations safely with the composition lifecycle.
+- `State hoisting`(lift/elevate) : State hoisting is a pattern where state is lifted to a higher level composable and passed down to child composables. This creates a clear, unidirectional data flow and makes components more reusable.
+- `When is composable destroyed`:
+  - When it is no longer needed in the UI like navigating to another screen.
+  - It's parent composable is removed.
+  - A condition inside `if` causes it to disappear.
+- `Unidirectional Data Flow (UDF)` : Desing pattern in which state *flows down* and events *flow up*. By using UDF, we can decouple composables that **display state** in the UI from the parts of your app that **store and change state**.
+- Jetpack Compose supports other observables types also. But before reading another observable type in Jetpack Compose, you must convert it to a `State<T>` so that Compose can automatically recompose when the state changes.
   - `Flow` : *collectAsStateWithLifecycle()* collects value from a flow in lifecycle-aware manner, allowing app to save unneeded app resources and tranforms it into Compose State. (*collectAsStateWithLifecycle() uses *repeatOnLifecycle* API under the hood, which is the recommended way to collect flows in Andorid using the View system.)
   - `Flow` : *collectAsState()* similar to *collectAsStateWithLifecycle()*. Use *collectAsState* for platform-agnostic code instead of *collectAsStateWithLifecycle()*, which is android-only.
   - `LiveData`: *observeAsState()* starts observing the LiveData and represents its values via State.

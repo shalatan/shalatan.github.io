@@ -7,7 +7,7 @@ author:
   name: shalatan
   email: shalatan6688@gmail.com
   
-show_excerpts: false # set to true to show excerpts on the homepage
+show_excerpts: true # set to true to show excerpts on the homepage
 
 minima:
   social_links:
