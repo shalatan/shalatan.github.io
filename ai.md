@@ -10,6 +10,7 @@
   - [History of AI](#history-of-ai)
   - [How does AI Learn](#how-does-ai-learn)
   - [Types of AI](#types-of-ai)
+  - [Fundamental Approaches to AI](#fundamental-approaches-to-ai)
   - [Augmented Intelligence](#augmented-intelligence)
   - [Branches of AI](#branches-of-ai)
   - [AI Agents](#ai-agents)
@@ -85,8 +86,7 @@
 
 ### <a name='FundamentalApproachesToAI'></a>Fundamental Approaches to AI
 - `Discriminative AI`: Approach that learns to distinguish between different classes of data, best for classification task and cannot understand context or generate new content.
-- `Generative AI`: Generates new content based on training data, i
-
+- `Generative AI`: Generates new content based on training data, i......
 
 ### <a name='Augmented-intelligence'></a>Augmented Intelligence
 - Combines human strengths with machine intelligence.
