@@ -171,23 +171,24 @@
 
 ### <a name='GenerativeAi'></a>Generative AI
 - Generative AI refers to a class of artificial intelligence technologies that enable machines to autonomously create new content.
-- `Language Models`
-    - GPT Models: Used for text generation (e.g., ChatGPT).
-    - Palm Models: Focused on text-in and out workflows.
-    - Gemini Models: Multimodal capabilities, including text and image processing.
-- `Image Generation Models`
-    - Stable Diffusion: Advanced text-to-image technology.
-    - DAL-E Model: Generates images that match input text.
-    - StyleGAN: Produces high-quality images of faces and objects.
-    - Super Resolution: Enhances image resolution by increasing pixel count.
-- `Voice and Music Generation Models`
-    - Murph: AI voice generation technology that replicates human speech nuances.
-    - OpenAI Whisper: Transcription and translation model.
-    - Jukedeck and Amper Music: AI-powered music generators for original tracks.
-    - AIVA: Generates songs in various styles.
-- `Video Generation Models`
-    - Google's Imogen Video: Generates high-definition videos.
-    - OpenAI Sora: Creates realistic scenes from text instructions.
+- **Sub-models**
+    - `Language Models`
+        - GPT Models: Used for text generation (e.g., ChatGPT).
+        - Palm Models: Focused on text-in and out workflows.
+        - Gemini Models: Multimodal capabilities, including text and image processing.
+    - `Image Generation Models`
+        - Stable Diffusion: Advanced text-to-image technology.
+        - DAL-E Model: Generates images that match input text.
+        - StyleGAN: Produces high-quality images of faces and objects.
+        - Super Resolution: Enhances image resolution by increasing pixel count.
+    - `Voice and Music Generation Models`
+        - Murph: AI voice generation technology that replicates human speech nuances.
+        - OpenAI Whisper: Transcription and translation model.
+        - Jukedeck and Amper Music: AI-powered music generators for original tracks.
+        - AIVA: Generates songs in various styles.
+    - `Video Generation Models`
+        - Google's Imogen Video: Generates high-definition videos.
+        - OpenAI Sora: Creates realistic scenes from text instructions.
 - **Generative AI Models**
   - Generative AI models are AI systems that learn patterns from large datasets to create new content such as text, images, music, or video. Their design varies based on the task and data type.
 
@@ -200,7 +201,53 @@
     Models can be:
     - `Unimodal`: Input and output are the same type (e.g., GPT-3: text-to-text).
     - `Multimodal`: Handle multiple data types (e.g., DALL-E: text-to-image; ImageBind: combines text, audio, visuals).
-- ****
+- **Generative AI vs Traditional AI**
+    - Traditional AI focuses on analyzing and predicting from existing data, while generative AI creates new data that resembles the training data.
+    - Generative AI represents a shift from rule-based systems to creative models that can invent and generate content independently.
+- **Text Geneation: Large Language Models (LLMs)**
+    - LLMs interpret context, grammar, and semantics to generate coherent text based on learned patterns.
+    - Examples of LLMs include GPT (Generative Pre-trained Transformer) and Google Bard (powered by PaLM as LLM, where PaLM is a combination of trasnformer model and Google's Pathways AI platofrm), which have evolved into multimodal models.
+    - `Capabilities of Text Generation Tools`:
+        - ChatGPT can handle both text and image inputs, providing context based responses and assisting in creative tasks like slide creation.
+        - Problem solving through basic mathematics and statistics, financial analysis, investment research, code geenration etc.
+    - `Other text generators`:
+        - `Jasper`: Generates high quality marketing content tailored to brand's voice.
+        - `Rytr`: Contect for blogs, email, SEO metadata, and ads on social media.
+        - `Copy.ai`: Content for social media, marketing, and product descriptions.
+        - `Writesonic`: Specific templates for different types of text.
+    - `Tools for specific use cases`:
+        - `Resoomer`: Text Summarization
+        - `uClassify`: Text classfiication
+        - `Brand24, Repostate`: Sentiment Analysis
+        - `Weaver`: Language Translation
+- **Image Generation**
+    - Generative AI can create new images, modify images based on text prompts.
+    - `Image Generation Models`:
+        - `DALL-E by OpenAI`: Based on GPT, can generate high resolution images in multiple styles, new versions can generate multiple image variations.
+        - `Stable Diffusion`: Open-source model, creates high-resolution images, generated images based on text prompts, and used for image-to-image translation, inpainting, and outpainting.
+        - `StyleGAN`: Enables precise control for manipulating speivif features, seperate image content and image style and evovled to generate higher resolution images.
+    - `Image Genetation Tools`: 
+        - `Freepik, Craiyon, PicsArt, Firefly`: Free tools
+        - `Fotor and Deep Art Effects`: Offer vairous pretrained styles and allow custom styles.
+        - `DeepArt.io`: Turns photos into artwork
+        - `MidJourney`: Enables image generator communities and helps artists and designers to create image using AI.
+- **Audio/Video Generation**
+    - `Speech generation`:
+    - `Music creation`:
+    - `Audio enhancement tools`:
+- **Code Generation**
+    - Generates code based on natural language input leveraging Deep learning and NLP to understand context
+    - These models can generate new code snippets, complete partial code, optimize existing code, convert code programming languages.
+    - `Tools & Models`:
+        - `GPT`: Generates human-like text and code.
+        - `Github Copilot`: Powered by OpenAI Codex, and trained on natural langugage text and source code like github, integrates with code editors.
+        - `PolyCoder`: Open source AI code generator, based on GPT, trained on github repositories, can create, review, refine code snippets.
+        - `IBM Watson, Amazon CodeWhisperer, Tabnine, Replit`
+    - `Benefits`:
+        - Increase productivity and quality of code.
+        - Enable rapid prototyping to iterate on design ideas.
+        - Enables cross-platform compatibility and migration.
+        - Foster consistent coding standards.
 
 ### <a name='PromptEngineering'></a>Prompt Engineering
 - Process of designing effective prompts to leverage the full capabilities of generative AI models and producing optimal responses.
