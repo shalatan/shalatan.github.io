@@ -204,6 +204,15 @@
 - **Generative AI vs Traditional AI**
     - Traditional AI focuses on analyzing and predicting from existing data, while generative AI creates new data that resembles the training data.
     - Generative AI represents a shift from rule-based systems to creative models that can invent and generate content independently.
+- **Generative AI vs Agentic AI**
+    - `Generative AI`:
+        - Reactive (works on prompt)
+        - Prompts -> Generate Content
+        - Usecase: Content creation, which then is reviewd, refined, directed by a human
+    - `Agentic AI`:
+        - Proacitve (can work independently)
+        - Prompts -> Actions (Percive -> Decide -> Execute -> Learn)
+        - Usecase: Multi-Step process (uses reasoning power of LLMs) to break down complex tasks into smaller, logical steps also known as chain of though reasoning (ref prompt eng)
 - **Text Geneation: Large Language Models (LLMs)**
     - LLMs interpret context, grammar, and semantics to generate coherent text based on learned patterns.
     - Examples of LLMs include GPT (Generative Pre-trained Transformer) and Google Bard (powered by PaLM as LLM, where PaLM is a combination of trasnformer model and Google's Pathways AI platofrm), which have evolved into multimodal models.
@@ -248,6 +257,43 @@
         - Enable rapid prototyping to iterate on design ideas.
         - Enables cross-platform compatibility and migration.
         - Foster consistent coding standards.
+- **Large Language Models and Transformers**
+    - LLMs use deep learning techniques on massive datasets containing books, articles, and websites.
+    - LLMs excel in natural language processing
+    - `Popular LLMs`:
+        - OpenAi's GPT
+        - Google's LaMDA
+        - Meta's Llama
+        - Antropic's Claude
+    - `Capabilities of LLMs`:
+        - Generating code templated and snippets
+        - Assisting with documents and comments
+        - Automated testing and QA
+        - Supporting collaborative coding environments
+- **Natural Language Processing**
+    - NLP involves computational techniques to analyze, understand, and generate human language, integrating linguistics, computer science, and artificial intelligence.
+    - Key NLP techniques include sentiment analysis, named entity recognition, text classification, and machine translation.
+    - `Libraries and Tools`:
+        - Common NLP libraries and tools include IBM Watson, Google Cloud NLP API, NLTK, SpaCy, and Stanford Core NLP.
+    - `Use cases`:
+        - `Sentiment Analysis`: Analyzes text to determine the sentiment expressed. Commonly used in social media monitoring and customer feedback analysis.
+        - `Named Entity Recognition (NER)`: Identifies and classifies key entities in text, such as names of people, organizations, and locations. Useful for information extraction and data organization.
+        - `Text Classification`: Automatically categorizes text into predefined labels or categories. Applications include spam detection in emails and topic categorization in news articles.
+        - `Machine Translation`: Translates text from one language to another using NLP techniques. Enhances communication across language barriers, as seen in translation apps and services.
+        - `Chatbots and Conversational Agents`: Simulates human conversation to assist users with queries and tasks. Utilizes NLP for understanding user intent and generating appropriate responses.
+        - `Information Extraction`: Extracts structured information from unstructured text data. Applications include resume parsing and extracting key details from documents.
+        - `Summarization`: Generates concise summaries of lengthy texts, making it easier to grasp essential information quickly. 
+
+        - Analyze sentiments in text: Assigning polairty scores to wrods or phrases.
+        - Implement sentiments analysis algorithms: Includes rule-based methods, machine learning algorithms such as naive bais, support vector machines, and deep learning models like recurrent neural networks or transformers.
+        - Extract named entities from text using NER: Classifying named entities in text using patterns and rules.
+        - Build NER models: Using supervised or unsupervised learning approaches.
+        - Build chatbots
+        - Implement ML translation models
+        - Design conversational agents
+
+
+### <a name='GenAIinSoftwareDev'></a>Generative AI in Software Developement
 
 ### <a name='PromptEngineering'></a>Prompt Engineering
 - Process of designing effective prompts to leverage the full capabilities of generative AI models and producing optimal responses.
@@ -339,6 +385,19 @@
         - *Indirect Prompting*: Asking for information in roundabout ways to avoid direct restrictions
         - *Context Manipulation*: Providing misleading context to trick the model
     - **Security Implications**: Understanding prompt hacking helps in developing better safety measures and robust AI systems
+
+### <a name='GenAITools'></a>Gen AI Tools
+- `Refact.ai`: Streamline code organization, refactor repeated code blocks.
+- `OpenAI Codex`: Generates sample code for various architectures, ensures structure and consistency.
+- `DiagramGPT`: A tool for converting natural language descriptions into architectural diagrams.
+- `Leonardo.ai`: A tool for converting natural language descriptions into architectural diagrams.
+- `Lucidchart`: A diagramming application that integrates AI features for auto-generating system diagrams.
+- `Microsoft's Visio`: A diagramming tool that can incorporate AI features for creating visual representations of data.
+- `PlantUML`: A tool that allows developers to create UML diagrams from plain text descriptions.
+- ``:
+- ``:
+- ``:
+
 
 ## <a name='Keyconcepts'></a>Key Concepts
 [🔝](#table-of-contents)
