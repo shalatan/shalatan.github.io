@@ -9,5 +9,6 @@
    2. [Waah somethingTech Notes](somethingTech.md)
    3. [Waah Misc Notes](misc.md)
 4. learning
-   1. [DSA notes](striverSheet.md)
-   2. [Android blogs](dailyUpdate.md)
+   1. [StriverSDE Sheet](striverSheet.md)
+   2. [DSA questions](dsaSheet.md)
+   3. [Android blogs](dailyUpdate.md)
