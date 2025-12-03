@@ -1,4 +1,3 @@
-<!-- vscode-markdown-toc -->
 - [Important Notes](#important-notes)
 - [Day 1: Array I](#day-1-array-i)
 - [Day 2: Array II](#day-2-array-ii)
@@ -25,11 +24,6 @@
 - [Day 23: Graph](#day-23-graph)
 - [Day 23: Graph II](#day-23-graph-ii)
 
-<!-- vscode-markdown-toc-config
-	numbering=false
-	autoSave=true
-	/vscode-markdown-toc-config -->
-<!-- /vscode-markdown-toc -->
 ### <a name='ImportantNotes'></a>Important Notes
 1. Algorithms
    1. Greedy:
