@@ -1376,7 +1376,7 @@
         }
         ```
         </div></details>
-5. [Remove Duplicare From Sorted Array](https://leetcode.com/problems/remove-duplicates-from-sorted-array/)
+5. [Remove Duplicates From Sorted Array](https://leetcode.com/problems/remove-duplicates-from-sorted-array/)
    1. Brute Force:
       1. Use HashSet to store distinct elements
    2. Optimal: `Use Two Pointers`
@@ -1452,7 +1452,7 @@
     }
     ```
     </div></details>
-8. []()
+
 
 ### <a name='Day8'></a>Day 8: Greey Algorithm
 
@@ -1656,7 +1656,7 @@
     }
     ```
     </div></details>
-5. **[Sliding Window Maximum](https://leetcode.com/problems/sliding-window-maximum/description/)
+5. [Sliding Window Maximum](https://leetcode.com/problems/sliding-window-maximum/description/)
     <details>
     <summary>Code</summary>
     <div markdown="1">

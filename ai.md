@@ -18,7 +18,9 @@
   - [Prompts](#prompts)
 - [Brief](#brief)
   - [Generative AI](#generative-ai)
+  - [Generative AI in Software Development](#generative-ai-in-software-development)
   - [Prompt Engineering](#prompt-engineering)
+  - [Gen AI Tools](#gen-ai-tools)
 - [Key Concepts](#key-concepts)
 - [Popular Algorithms](#popular-algorithms)
 - [Tools and Libraries](#tools-and-libraries)
@@ -208,14 +210,14 @@
     - `Generative AI`:
         - Reactive (works on prompt)
         - Prompts -> Generate Content
-        - Usecase: Content creation, which then is reviewd, refined, directed by a human
+        - Use-case: Content creation, which then is reviewed, refined, directed by a human
     - `Agentic AI`:
-        - Proacitve (can work independently)
+        - Pro-active (can work independently)
         - Prompts -> Actions (Percive -> Decide -> Execute -> Learn)
-        - Usecase: Multi-Step process (uses reasoning power of LLMs) to break down complex tasks into smaller, logical steps also known as chain of though reasoning (ref prompt eng)
+        - Use-case: Multi-Step process (uses reasoning power of LLMs) to break down complex tasks into smaller, logical steps also known as chain of though reasoning (ref prompt eng)
 - **Text Geneation: Large Language Models (LLMs)**
     - LLMs interpret context, grammar, and semantics to generate coherent text based on learned patterns.
-    - Examples of LLMs include GPT (Generative Pre-trained Transformer) and Google Bard (powered by PaLM as LLM, where PaLM is a combination of trasnformer model and Google's Pathways AI platofrm), which have evolved into multimodal models.
+    - Examples of LLMs include GPT (Generative Pre-trained Transformer) and Google Bard (powered by PaLM as LLM, where PaLM is a combination of transformer model and Google's Pathways AI platofrm), which have evolved into multimodal models.
     - `Capabilities of Text Generation Tools`:
         - ChatGPT can handle both text and image inputs, providing context based responses and assisting in creative tasks like slide creation.
         - Problem solving through basic mathematics and statistics, financial analysis, investment research, code geenration etc.
@@ -293,7 +295,40 @@
         - Design conversational agents
 
 
-### <a name='GenAIinSoftwareDev'></a>Generative AI in Software Developement
+### <a name='GenAIinSoftwareDev'></a>Generative AI in Software Development
+- **CI/CD**:
+  - Continuous Integration & Continuous Development
+  - `Role of AI in CI/CD`
+    - Code Analysis and optimization
+    - Employs machine learning algorithms
+    - Detects patterns and code issues
+    - Recommends optimization
+    - Enhances code quality and security
+    - Adheres to coding standards
+    - Ensures higher-quality code
+    - Faciliates faster delivery cycle
+  - `Tools and Platforms`
+    - Jenkins: Possess CI?CD capabilities
+    - IBM Watson Studio and Watson Machine Learning: Offers DevOps automations for machine learning
+    - Codefresh: Enhances the development process by predictive scaling
+    - Gitlab CI/CD: Streamlines CI/CD management
+    - PagerDuty AIOps: Aids engineering teams in incident response
+    - harness: Helps software release process
+    - Snyk: Automates security testing using AI and ML
+- **Security in Software**
+  - `Secure Coding Tools`: 
+    - Tools like Qwiet AI Pre-Zero, Snyk Code, and GitHub Advanced Security help identify and remediate code vulnerabilities.
+    - AI-driven cybersecurity solutions, such as Sophos Intercept X and IBM QRadar, enhance endpoint protection.
+  - `Cybersecurity Solutions`: 
+    - Sophos Intercept X uses deep learning for endpoint protection, and Symantec Endpoint Security employs machine learning to identify vulnerabilities.
+  - **Software Testing**
+    - `Use-Cases`:
+      - `Test data generation`: Generate diverse and representative test data through strategies like data synthesis, ensuring the data accurately reflects real-world scenarios.
+      - `Automated Test Input Generation`: Machine learning algorithms automatically generate test inputs based on the software's behavior, maximizing code coverage and targeting specific areas of interest.
+      - `Automated Test Generation`: Simplifies the creation of effective test cases from software requirements, automating the process through machine learning and NLP.
+      - `Combinatorial Testing`: This technique generates a minimal set of test cases that cover all combinations of input parameters, ensuring comprehensive coverage while reducing the number of required test cases.
+
+
 
 ### <a name='PromptEngineering'></a>Prompt Engineering
 - Process of designing effective prompts to leverage the full capabilities of generative AI models and producing optimal responses.

@@ -396,6 +396,9 @@ var n = (Math.log10(num)) //find number of digits in number
 nums[j] = nums[i].also { nums[i] = nums[j] } //swap two numbers in array
 var max = maxOf(a,b) //get max value
 var min = minOf(a,b) //get min value
+ 
+//prefer 
+IntArray(n) over mutableListOf<Int>(), as its faster
 ```
 - `Find number of digits in number`: 
 
@@ -414,7 +417,7 @@ for(char in str)
 - `IntArray` is an int[], in it no boxing will occur, becuase it translates to Java primitive array.
 ```kotlin
 val arr = intArrayOf(1,2,3,4,5)
-var arr = IntArray(10)
+var arr = IntArray(n)
 var arr = IntArray(5) {0}   // {0,0,0,0,0}
 arr.size    //4
 ```
