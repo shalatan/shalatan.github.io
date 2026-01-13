@@ -1380,8 +1380,9 @@
    1. Brute Force:
       1. Use HashSet to store distinct elements
    2. Optimal: `Use Two Pointers`
-      1. Use i to iterate array and newIndex pointer which moves with removed duplicates.
+      1. Use i to iterate array and newIndex pointer replacing the repeated ones
       2. TC: O(N)
+      3. Hint: `var newIndex = 1`
         <details>
         <summary>Code</summary>
         <div markdown="1">
@@ -1389,9 +1390,9 @@
         ```kotlin
         fun removeDuplicates(nums: IntArray): Int {
             var newIndex = 1
-            for(num in nums){
-                if(num != nums[newIndex-1]){
-                    nums[newIndex++]=num
+            for(i in nums.indices){
+                if(i != 0 && nums[i]!=nums[i-1]){
+                    nums[newIndex++]=nums[i]
                 }
             }
             return newIndex

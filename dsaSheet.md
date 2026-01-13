@@ -7,11 +7,12 @@
 ### <a name='Array'></a>Array
 
 1. [Rotate Elements by K](https://leetcode.com/problems/rotate-array/description/)
-   1. Right rotation by K:
+   1. remember: **normalize k first and then reverse 3 times**
+   2. Right rotation by K:
       1. Reverse entire array
       2. Reverse the first 'k' elements
       3. Reverse the rest (from k to end)
-   2. Left rotation by K:
+   3. Left rotation by K:
       1. Reverse the first 'k' elements
       2. Reverse the rest (from k to end)
       3. Reverse entire array
@@ -228,7 +229,7 @@
    ```
    </div></details>
 
-9. [Next Greater Element I](https://leetcode.com/problems/next-greater-element-i/description/)
+9.  [Next Greater Element I](https://leetcode.com/problems/next-greater-element-i/description/)
    <details>
    <summary>Code</summary>
    <div markdown="1">
@@ -336,7 +337,108 @@
     ```
     </div></details>
 
+13. [Move Zeroes](https://leetcode.com/problems/move-zeroes/)
+    1.  remember: **one index i for all items and one index nonZero for non-zero items**
+        <details>
+        <summary>Code</summary>
+        <div markdown="1">
+
+        ```kotlin
+        fun moveZeroes(nums: IntArray): Unit {
+            val n = nums.size
+            var nonZero = 0
+            for(i in nums.indices){
+                if(nums[i]!=0){
+                    nums[nonZero] = nums[i]
+                    nonZero++
+                }
+            }
+            for(i in nonZero..n-1){
+                nums[i] = 0
+            }
+        }
+        ```
+        </div></details>
+
+14. [Missing Number](https://leetcode.com/problems/missing-number/)
+    1.  remember: **cyclic sort or (expected sum - current sum)**
+        <details>
+        <summary>Code</summary>
+        <div markdown="1">
+
+        ```kotlin
+        fun missingNumber(nums: IntArray): Int {
+            val n = nums.size
+            var i = 0
+            while(i<n){
+                val curInd = nums[i]
+                if(curInd < n && nums[curInd] != nums[i]){
+                    val temp = nums[curInd]
+                    nums[curInd] = nums[i]
+                    nums[i] = temp
+                } else{
+                    i++
+                }
+            }
+            for(i in nums.indices){
+                if(i != nums[i]) return i
+            }
+            return n
+        }
+        ```
+        </div></details>
 ### <a name='String'></a>String
+
+1. [Palindrome String]()
+   1. Two Pointers
+        <details>
+        <summary>Code</summary>
+        <div markdown="1">
+
+        ```kotlin
+        fun isPalindrome(str: String): Boolean {
+            val s = str.lowercase()
+            if(s.isEmpty()) return true
+            var start = 0
+            var end = s.length-1
+            while(start<end){
+                if(s[start].isLetterOrDigit().not()) {
+                // if(s[start] < 'a' || s[start] > 'z') {
+                    start++
+                    continue
+                }
+
+                if(s[end].isLetterOrDigit().not()) {
+                // if(s[end] < 'a' || s[end] > 'z'){
+                    end--
+                    continue    
+                }
+
+                if(s[start]==s[end]){
+                    start++
+                    end--
+                }else{
+                    return false
+                }
+            }
+            return true
+        }
+        ```
+        </div></details> 
+    2. InBuilt
+        <details>
+        <summary>Code</summary>
+        <div markdown="1">
+
+        ```kotlin
+        fun isPalindrome(s: String): Boolean {
+            val sanitized = s.filter { it.isLetterOrDigit() }.lowercase()
+            return sanitized==sanitized.reversed()
+        }
+        ```
+        </div></details> 
+
+
 ### <a name='BinarySearch'></a>Binary Search
 ### <a name='HashMap'></a>HashMap
 ### 

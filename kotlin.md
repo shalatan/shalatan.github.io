@@ -409,7 +409,39 @@ var str = "KOTLIN"
 str.size    //5
 
 //iterate string
-for(char in str)
+for(char in str) {}
+for(i in str.indices) {}
+
+//basics
+str.lowercase()
+str.uppercase()
+str.isLetter()
+str.isDigit()
+str.isLowerCase()
+str.isUpperCase()
+str.isLetterOrDigit()
+str.[0] = "a"           //not allowed
+//that's why we use StringBuilder, CharArray, Frequency Arrays/Maps
+str.substring(1,3)      //OT
+str.substring(3)        //KOT
+//substring would be used in sliding window, parsing problems, prefix/suffix checks
+str.contains("LI")      //true
+str.contains("O")       //true
+str.startsWith("KO")    //true
+str.endsWith("LIN)      //true
+str.indexOf("LIN")      //3
+str.lastIndexOf("I")    //4, -1 if not found
+str.replace("OT","MO")  //KMOLIN
+str.split("T")          //List<String>
+//split would be used in parsing, tokenization, word problems
+str1 == str2            //value comparison
+str1 === str2           //reference comparison
+"abc".compareTo("abd")  //lexicographical comparison
+
+//depth
+val freq = IntArray(26) //frequency counting
+for(c in str){ a[c-'a']++ }
+//would be used in Anagrams, Permutations, PalindromeCheck, SlidingWindow
 ```
 
 ### <a name='Arrays'></a>Arrays
