@@ -198,8 +198,9 @@
         1. We can remove the third loop by adding the new item into previous sum of subarray, `sum+=arr[j]`, and get `maxOf(sum,max)`
         2. TC: O(N^2)
     3. Optimal: Kadane's algorithm
-        1. The intuition of the algorithm is not to consider the subarray as a part of the answer if its sum is less than 0.
-        2. TC: O(N)
+        1. Prefix sum, store max after each iteration
+        2. when `sum < 0` then `sum = 0`
+        3. TC: O(N)
             <details>
             <summary>Code</summary>
             <div markdown="1">
@@ -208,10 +209,18 @@
             fun maxSubArray(nums: IntArray): Int {
                 var max = Int.MIN_VALUE
                 var sum = 0
+                //var tempStart = 0; var start = 0; var end = 0  //if print sub-array
                 for(i in 0 until nums.size){
-                    sum+=nums[i]
-                    max = maxOf(sum,max)
-                    if(sum<0) sum = 0
+                    sum+=nums[i] 
+                    if(sum>max){
+                        max = sum
+                        //start = tempStart            //if print sub-array
+                        //end = i                      //if print sub-array
+                    }
+                    if(sum<0) {
+                        sum = 0
+                        //tempStart = i + 1            //if print sub-array
+                    }
                 }
                 return max
             }
@@ -683,8 +692,9 @@
       1. Sort the array and easily find the consecutive sequence
       2. TC: O(N*logN)+O(N)
    3. Optimal:
-      1. Using Set data structure
-      2. TC: O(N)+O(2*N), SC: O(N)
+      1. Put all items in HashSet
+      2. Iterate each item from (num-1) till sequence follows
+      3. TC: O(N)+O(2*N), SC: O(N)
         <details>
         <summary>Code</summary>
         <div markdown="1">
@@ -710,30 +720,27 @@
         }
         ```
         </div></details>
-4. [Largest Subarray With K Sum](https://leetcode.com/problems/subarray-sum-equals-k/)
+4. [Subarray Sum Equals K](https://leetcode.com/problems/subarray-sum-equals-k/)
    1. Brute Force:
       1. Use two loops and find sum of all the possible subarrays
       2. TC: O(N)
    2. Optimize: `Prefix Sum`
-      1. Use sum to store the sum of all the elements till the current element
-      2. Store the sum and its count in HashMap as key and value respectively
-      3. Also find if map already contains `sum-k` element, if true add the index to the count
+      1. Use hashmap + Prefix sum
+      2. Add (0,1) for negative values support, then count `sum-k` for each number, and increase `sum` quantity in map
         <details>
         <summary>Code</summary>
         <div markdown="1">
 
         ```kotlin
         fun subarraySum(nums: IntArray, k: Int): Int {
-            var map = HashMap<Int,Int>()
+            val map = mutableMapOf<Int,Int>()
             map.put(0,1)
             var count = 0
             var sum = 0
             for(num in nums){
                 sum += num
-                if(map.contains(sum-k)){
-                    count += map.get(sum-k)!!
-                }
-                map.put(sum,(map.get(sum)?:0)+1)
+                count += map.get(sum-k) ?: 0
+                map[sum] = map.getOrDefault(sum,0)+1
             }
             return count
         }
