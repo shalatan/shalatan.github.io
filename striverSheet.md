@@ -290,8 +290,9 @@
     1. Brute Force:
         1. Take two loops and find the max profit
         2. TC: O(N*N)
-    2. Optimal:
-        1. TC: O(N)
+    2. Optimal: 
+        1. Maintain `minLeft`, find `profitIfSoldToday`, update `maxProfit`
+        2. TC: O(N)
         <details>
         <summary>Code</summary>
         <div markdown="1">
@@ -642,7 +643,10 @@
       2. TC: O(N^3*log(M)),n-> size of array, m-> number of elements in set
    3. Optimal:
       1. Use two loops and two pointers i.e. start and end
-      2. TC: O(N^3)
+      2. i from 0..n-3, skip till same and when i>0
+      3. j from 0..n-2, skip till same and when j>i+1
+      4. same logic as 3 sum, fix: start, end, find sum
+      5. TC: O(N^3)
         <details>
         <summary>Code</summary>
         <div markdown="1">
